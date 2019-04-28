@@ -1,0 +1,49 @@
+<!--
+@File   : listar_nomiados.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 2018-8-29 19:28:26
+-->
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block ">
+            <div class="header">
+                <!--block-fill-white-->
+                <h2><b> Gerar codigo de segurança</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cadastro</th>
+                            <th>Atualização</th>
+                            <th>Eliminação</th>
+                            <th>listar</th>
+                            <th>Gerar novo codigo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>{{ codigo.cadastro }}</td>
+                            <td>{{ codigo.atualizar }}</td>
+                            <td>{{ codigo.eliminar }}</td>
+                            <td>{{ codigo.listar }}</td>
+                            <td>
+                                <a href="{% url 'pessoal_quadro:atualizar-novo-codigo' %}" class="btn btn-primary tip" title="Novo Codigo">
+                                    <span class="icon-edit"></span> </a>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

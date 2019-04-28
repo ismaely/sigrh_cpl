@@ -1,0 +1,65 @@
+ {% extends 'transferencia/menu_transferencia.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b>Lista de Agentes que efectuaram troca</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Orgão de Origem</th>
+                            <th>Orgão de Destino</th>
+                            <th>Patente</th>
+
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Orgão de Origem</th>
+                            <th>Orgão de Destino</th>
+                            <th>Patente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for list in lista %}
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ list.primeiro_agente.foto_fardado }}" width=38px class="img-circle ">
+                                </a>
+                            </td>
+                            <td>
+                                {{ list.primeiro_agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td>{{ list.origem_primeiro }}</td>
+                            <td>{{ list.destino_primeiro }}</td>
+                            <td>{{ list.primeiro_agente.patente}}</td>
+                            <td>
+                                <a><img src="/media/{{ list.segundo_agente.foto_fardado }}" width=38px class="img-circle ">
+                                </a>
+                            </td>
+                            <td>
+                                {{ list.segundo_agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td>{{ list.origem_segundo }}</td>
+                            <td>{{ list.destino_segundo }}</td>
+                            <td>{{ list.segundo_agente.patente}}</td>
+
+                            <!-- <td>
+
+                                <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>-->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href=" {% static '/css/materialize.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static '/css/costumizado.css' %}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/material-design-icons-3.0.1/iconfont/material-icons.css' %}">
+    <link rel="shortcut icon" href="{% static '/img/icons.ico' %}"
+
+    <title></title>
+</head>
+
+<body class="blue-grey darken-4">
+
+
+
+<div class="row">
+    <div class="col s12 m12 l12">
+
+                <div class="card-panel">
+                    <h4 class="header2">Dados do Formando</h4>
+                    <li class="divider teal"></li>
+                    <!-- fotos  -->
+                    <div class="row">
+                        <!-- a primeira imagem       src="{% static '/img/perfil/user.jpg' %}"-->
+                        <div class="col s5  z-depth-2 ">
+                            <img class="col s6 container responsive-img " src="/media/{{ agente.foto_fardado }} ">
+
+                        </div>
+
+                        <!-- segunda imagem-->
+                        <div class="col s5 offset-m2 z-depth-2">
+                            <img class="col s6 responsive-img" src="/media/{{ agente.foto_civil }} ">
+
+                        </div>
+
+                    </div>
+                    <li class="divider"></li>
+
+                    <!-- ZONA DA INFORMAÇÃO -->
+                    <div class="row">
+
+
+                        <!-- DADOS PESSOAL  -->
+                        <div class="col s12 m4 z-depth-2">
+                            <table class="bordered striped responsive-table highlight hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <strong>Informação Pessoal</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>Nome: <strong>{{ pessoa.nome }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nome do Pai: <strong>{{ pessoa.nome_pai }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nome da Mae: <strong>{{ pessoa.nome_mae }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nacionalidade: <strong>{{ pessoa.nacionalidade }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Naturalidade: <strong>{{ pessoa.naturalidade }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Nascimento: <strong>{{ pessoa.data_nascimento }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bi Nª: <strong>{{ pessoa.bi }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estado Civil: <strong>{{ pessoa.estado_civil }}</strong></td>
+                                    </tr>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- DADOS DA  MORADA -->
+
+
+                        <div class="col s12 m4 z-depth-2">
+                            <table class="bordered striped responsive-table highlight hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <strong>Informação da Residencia</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>Municipio: <strong>{{ pessoa.municipio }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bairro: <strong>{{ pessoa.bairro }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residencia: <strong>{{ pessoa.residencia }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Casa Nª: <strong> {{ pessoa.casa_numero }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>telefone: <strong>{{ pessoa.telefone }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telefone de Parente: <strong>{{ pessoa.telefone_parente }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>E-mail: <strong>{{ pessoa.email }}</strong></td>
+                                    </tr>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- DADOS POLICIAL -->
+
+
+
+                        <div class="col s12 m4 z-depth-2">
+                            <table class="bordered striped responsive-table highlight hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <strong>Informação Profissional </strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nª de Contribuite: <strong>{{ agente.numero_contribuite }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nª da caixa social: <strong>{{ agente.numero_caixa_social }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Orgao de Colocação: <strong>{{ agente.orgao_colocacao }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nivel Academico: <strong>{{ agente.nivel_academmico }} </strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Função: <strong>{{ agente.funcao }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nip: <strong>{{ agente.numero_caixa_social }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patente: <strong>{{ agente.patente}}</strong> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data de Igresso : <strong>{{  agente.data_igresso }}</strong></td>
+                                    </tr>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+
+                            <div class=" right-align">
+                                <a href="" class=" teal darken-1 btn waves-effect waves-light hoverable">Imprimir</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+    </div>
+
+</div>
+
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/js/materialize.min.js' %}"></script>
+<script src="{% static '/js/js_sofil.js' %}"></script>
+<script src="{% static '/js/sweetalert.js' %}"></script>
+</body>
+
+</html>

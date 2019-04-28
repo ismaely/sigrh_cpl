@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% load static %} {% block titulo %}
+<title>SALAKIAKU FALHA</title>
+{% endblock %} {% block corpo %}
+
+
+<body class="bg-img-num4">
+
+    <div class="container">
+
+        <div class="block-error">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-logo"><img src=" {% static '/asset/img/policia.png' " /></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-code">
+                        505: Gateway time-out ERROR - SALAKIAKU
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-text">AVISA A EQUIPA</div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <button class="btn btn-default btn-clean btn-block" onClick="history.back();">VOLTAR</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+{% endblock %}

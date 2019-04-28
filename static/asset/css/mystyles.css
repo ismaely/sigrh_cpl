@@ -1,0 +1,20 @@
+ul.errorlist {
+    color: #e53935;
+    padding: 0;
+    margin-top: -1px;
+    margin-left: 9px;
+    list-style: none
+}
+
+.avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+span.error {
+    color: #e53935;
+    padding: 0;
+    margin-top: -1px;
+    margin-left: 9px;
+}

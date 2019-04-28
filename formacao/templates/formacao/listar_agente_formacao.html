@@ -1,0 +1,52 @@
+{% extends 'formacao/menu_formacao.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b>Agentes a frequentar formação</b></h2>
+            </div>
+            <div class="content">
+
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Genero</th>
+                            <th>Municipio</th>
+                            <th>Formação a freq.. </th>
+                            <th>Data de seleção</th>
+                            <th>Data de presença</th>
+                            <th>Nivel academico</th>
+                            <th> Patente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for list in lista %}
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ list.agente.foto_fardado }}" width=38px class="img-circle ">
+                                </a>
+                            </td>
+                            <td>
+                                {{ list.agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td>{{ list.agente.pessoa.genero }}</td>
+                            <td>{{ list.agente.pessoa.municipio }}</td>
+                            <td> {{ list.selecionado.curso }}</td>
+                            <td> {{ list.selecionado.data }}</td>
+                            <td> {{ list.data }}</td>
+                            <td> {{ list.agente.nivel_academico }}</td>
+                            <td> {{ list.agente.patente }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

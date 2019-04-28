@@ -1,0 +1,70 @@
+<!--
+@File   : listar_nomiados.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 2018-8-29 19:28:26
+-->
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b> Lista de agentes despromovidos</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Genero</th>
+                            <th>Motivo </th>
+                            <th>Data de Entrada</th>
+                            <th>Suspensão</th>
+                            <th>Função</th>
+                            <th> Patente</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for des in desp %}
+                        <tr>
+                            {% autoescape on %}
+                            <td>
+                                <a><img src="/media/{{ des.agente.foto_fardado }}" width=38px class="img-circle ">
+
+                                </a>
+                            </td>
+                            <td>
+                                {{ des.agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td>{{ des.agente.pessoa.genero }}</td>
+                            <td>{{ des.motivo }}</td>
+                            <td>{{ des.data}}</td>
+                            <td>{{ des.suspensao|striptags|capfirst|truncatewords:3 }}</td>
+                            <td>{{ des.agente.funcao|striptags|capfirst }}</td>
+                            <td>{{ des.agente.patente }}</td>
+                            {% endautoescape %}
+                            <td>
+                                <a href="{% url 'pessoal_quadro:informacao-pessoal' des.agente.pessoa.id %}" class="btn btn-warning tip" title="Visualizar informação">
+                                    <span class="icon-user"></span>
+                                </a>
+                                <a onclick=editarDespromocao({{ des.id }}) class="btn btn-primary tip" title="Editar os Dados">
+                                    <span class="icon-edit"></span>
+                                </a>
+                                <a onclick="remover_despromocao({{ des.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

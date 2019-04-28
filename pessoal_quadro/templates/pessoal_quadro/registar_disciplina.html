@@ -1,0 +1,91 @@
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %}
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="block block-fill ">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-group"></span> Registar Processo Disciplinar</b> </h4>
+                </div>
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %} {% if valor %}
+                    <form class="" action="{% url 'pessoal_quadro:atualizar-despromocao' %}" method="POST">
+                        {% else %}
+                        <form class="" action="{% url 'pessoal_quadro:Processo-displinar' %}" method="POST">
+                            {% endif %} {% csrf_token %} {% autoescape on %}
+                            <div class="form-row">
+                                {% if pessoa %}
+                                <div class="col-md-6">
+                                    <b>Nip ou BI Nº:</b> {{ pessoa.bi }} {{ pessoa.bi.errors }} </div>
+                                {% else %}
+                                <div class="col-md-6">
+                                    <b>Nip ou BI Nº:</b> {{ form.bi }} {{ form.bi.errors }}</div>
+                                {% endif %}
+                                <div class="col-md-6"><b>Numero de Processo:</b> {{ form.numero_processo }} {{ form.numero_processo.errors }} </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>Motivo:</b>{{ form.motivo }} {{ form.motivo.errors }}
+                                </div>
+                                <div class="col-md-6"><b>Despacho:</b> {{ form.dispacho }} {{ form.dispacho.errors }} </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>Pena:</b>{{ form.pena }} {{ form.pena.errors }}
+                                </div>
+                                <div class="col-md-6"><b>Data:</b>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><span class="icon-calendar"></span></div>
+                                        {{ form.data }} {{ form.data.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-12"><b>Descrição:</b> {{ form.descricao }} {{ form.descricao.errors }} </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button class="btn btn-primary " type="submit">Enviar</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endautoescape %}
+                        </form>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,311 @@
+<html lang="en">
+{% load static %}
+
+<head>
+    <title> SALAKIAKU </title>
+    <meta name="description" content="Comando provincial de Luanda  ">
+    <meta name="keywords" content="comando provincial de luanda , sistema integrado de recursos humano,">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="SALAKIAKU" content="Steelcoders" />
+    <link rel="icon" href="{% static '/asset/img/favicon/poli5.png' %}" sizes="32x32">
+
+    <link href="{% static '/asset/css/stylesheets.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/mystyles.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/js/plugins/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/codemirror/theme/midnight.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/sweetalert2.css' %}" rel="stylesheet">
+
+    <script src="{% static '/asset/js/plugins/jquery/jquery.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-ui.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-migrate.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/globalize.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/bootstrap/bootstrap.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/tagsinput/jquery.tagsinput.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/cleditor/jquery.cleditor.min.js'%}"></script>
+    <script src="{% static '/asset/js/meu/foto.js' %}"></script>
+    <!-- <script src="{% static '/asset/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'%}"></script>-->
+    <script src="{% static '/asset/js/plugins/uniform/jquery.uniform.min.js'%}"></script>
+    <!--<script type='text/javascript' src="{% static '/asset/js/plugins/datatables/jquery.dataTables.min.js'%}"></script>-->
+    <script src="{% static 'webcam/webcam.min.js' %}"></script>
+
+
+
+    <script src="{% static '/asset/js/plugins/knob/jquery.knob.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/sparkline/jquery.sparkline.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/flot/jquery.flot.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/flot/jquery.flot.resize.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/codemirror/codemirror.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/addon/edit/matchbrackets.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/htmlmixed/htmlmixed.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/xml/xml.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/javascript/javascript.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/css/css.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/clike/clike.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/php/php.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/uniform/jquery.uniform.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/tinymce/tinymce.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/select2/select2.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/tagsinput/jquery.tagsinput.min.js'%}"></script>
+    <!-- <script type='text/javascript' src="{% static '/asset/js/plugins/jquery/jquery-ui-timepicker-addon.js'%}"></script>-->
+    <script src="{% static '/asset/js/plugins/validationengine/languages/jquery.validationEngine-en.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/validationengine/jquery.validationEngine.js' %}"></script>
+
+    <script src="{% static '/asset/js/plugins/maskedinput/jquery.maskedinput.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/stepy/jquery.stepy.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/noty/jquery.noty.js' %}"></script>
+    <script src="{% static '/asset/js/plugins/noty/themes/default.js' %}"></script>
+
+    <script src="{% static '/asset/js/validacao.js' %}"></script>
+
+    <!--<script type='text/javascript' src="{% static '/asset/js/settings.js' %}"></script>-->
+    <script src="{% static '/asset/js/meu/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/asset/js/meu/table-data.js' %}"></script>
+    <script src="{% static 'asset/js/meu/chart.min.js' %}"></script>
+    <script src="{% static 'asset/js/meu/ui.datepicker-pt.js' %}"></script>
+
+    <script src="{% static 'asset/js/meu/jquery.inputmask.js' %}"></script>
+
+    <script src="{% static '/asset/js/plugins.js' %}"></script>
+    <script src="{% static '/asset/js/actions.js' %}"></script>
+
+    <!-- <script src="{% static '/asset/js/jquery.validate.min.js' %}"></script>-->
+
+    <!--<script src="{% static '/asset/js/validacao-2.js' %}"></script>-->
+</head>
+
+<body class="bg-img-num1">
+
+
+    <!-- A QUE É ONDE TERMOS O MENU -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <nav class="navbar brb" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-reorder"></span>
+                    </button>
+                        <a class="navbar-brand" href="#"><img src="{% static '/asset/img/poli5.png' %}" width="35px" class="img-circle" /></a>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-group"></span> Novo Processo</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+
+                                    <li><a href="{% url 'pessoal_quadro:cadastrar' %}">Novo Agente</a></li>
+
+                                    <li><a href="{% url 'pessoal_quadro:efectuar-colocacao' %}">Registar Colocação do Agente</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-todos' %}">Listar Agentes Registados</a></li>
+                                    <!-- <li><a onclick="consultar_dados_atualizar()">Atualizar Dados do Agente</a></li>
+                                <li><a href="#" >Atualizar as Fotos</a></li>-->
+                                    <li><a href="{% url 'pessoal_quadro:consultar-dados' %}"> Consultar Dados do agente</a></li>
+                                    <!--li><a href=""> Imprimir a Ficha Pessoal</a></li>-->
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-pencil"></span> Reforma</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'pessoal_quadro:registar-reforma' %}">Registar Reforma Anticipada</a></li>
+
+                                    <li><a href="{% url 'pessoal_quadro:listar-reforma' %}">Listar Agentes na Reforma</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-arrow-down"></span> Baixa</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-baixa' %}"> Registar Baixa</a> </li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-baixas' %}">Listar Baixa</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-star"></span> Promoção</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-nomiacao' %}">Nomeação do Agente</a></li>
+                                    <li><a onclick="patente_atualizar_recebe()">Atualizar Patente do Agente</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-nomiacao' %}">Listar Agentes Nomiados</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:listar-efetividade' %}">Listar Tempo de Efetividade</a></li>
+
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-sort-by-attributes"></span> Despromoção</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-despromocao' %}">Registar Despromoção</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-despromocao' %}">Listar Agentes Despromovidos</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-book"></span> Documentação</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'pessoal_quadro:documento' %}">Registar Referencia Documental</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:listar-docs' %}">Listar documentos</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:consultar-docs' %}">Consultar documento</a></li>
+
+                                </ul>
+                            </li>
+                            {% if user.email == 'Gestor' %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span> Utilizador</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'utilizador:adicionar-utilizador' %}">Novo Utilizador</a></li>
+                                    <li><a href="{% url 'utilizador:listar' %}">Listar Utilizadores</a></li>
+                                    <li><a class="" href="{% url 'pessoal_quadro:gerar-codigo' %}">Codigo da Operações</a></li>
+
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> AREAS DE TRABALHO</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'estatistica:area' %}"> ESTATISTICA</a></li>
+                                    <li><a href="{% url 'transferencia:area-transferencia' %}">TRANSFERENCIA</a></li>
+                                    <li><a href="{% url 'formacao:area-formacao' %}">FORMAÇÃO</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">PESSOAL E QUADRO</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+
+
+                        <div class="navbar-header navbar-right dropdown">
+                            <a class=" dropdown-toggle" data-toggle="dropdown" href="#">
+
+                           {{ user.username }}
+
+                            <img src="{% static '/asset/img/user.jpg' %}" width="35px" class="img-circle " />
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
+                            <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
+
+                            </ul>
+                            </a>
+                        </div>
+                    </div>
+
+                </nav>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block block-drop-shadow">
+                    {% block corpo %} {% endblock %}
+                </div>
+            </div>
+
+        </div>
+        &nbsp;&nbsp;
+        <div class="row">
+            <div class="col-lg-12">
+                &nbsp;
+                <p>
+
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+        Webcam.set({
+            width: 200,
+            height: 200,
+            image_format: 'png',
+            jpeg_quality: 100
+        });
+
+        var ctx = document.getElementById("reformaGrafico");
+        var residencia = JSON.parse('{{ residencia|safe }}');
+        var casa = JSON.parse('{{ casa|safe }}');
+        var reformaGrafico = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: residencia,
+                datasets: [{
+                    label: 'Agentes',
+                    data: casa,
+                    backgroundColor: [
+                        'rgba(255, 99, 132)',
+                        'rgba(0, 0, 238)',
+                        'rgba(255, 255, 0)',
+                        'rgba(75, 192, 192)',
+                        'rgba(153, 102, 255)',
+                        'rgba(255, 159, 64)',
+                        'rgba(0, 134, 139)',
+                        'rgba(255, 64, 65)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(0, 0, 238)',
+                        'rgba(255, 255, 0)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(0, 134, 139)',
+                        'rgba(255, 64, 65, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(":input").inputmask();
+        });
+    </script>
+    {% block javascript %}
+    <script src="{% static 'asset/js/meu/pessoal_quadro.js' %}"></script>
+    <script src="{% static 'asset/js/meu/transferencia.js' %}"></script>
+    <script src="{% static 'asset/js/meu/formacao.js' %}"></script>
+    <script src="{% static 'asset/js/meu/documento.js' %}"></script>
+    <script src="{% static 'asset/js/meu/sweetalert2.js' %}"></script>
+    {% endblock %} {% load sweetify %} {% sweetify %}
+</body>
+
+</html>

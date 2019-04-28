@@ -1,0 +1,238 @@
+{% extends 'base_salakiaku.html' %}{% block menu %}{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <nav class="navbar brb" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-reorder"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><img src="{% static '/asset/img/poli5.png' %}" width="35px" class="img-circle" /></a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{% url 'formacao:area-formacao' %}">
+                                <span class="icon-home"></span> SALAKIAKU
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-pencil"></span> Formação</a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="{% url 'formacao:adicionar-agente-formacao' %}">Selecionar Agente Para Formação</a></li>
+                                <li><a href="{% url 'formacao:conclusao-formacao' %}">Registar Conclusão da Formação</a></li>
+                                <li><a href="{% url 'formacao:listar-selecionados' %}">Listar Agentes Selecionado </a></li>
+                                <li><a href="{% url 'formacao:listar-concluiram' %}">Listar Agentes que Concluiram </a></li>
+                                <!--<li><a href="{% url 'formacao:listar-agente-formacao' %}">Listar Agentes em Formação  </a></li>-->
+                                <li><a href="#buscar_selecionado_atualizacao" data-toggle="modal" class=" btn-block btn-clean">Atualizar Dados da Formação</a></li>
+                                <li><a href="#modal_consultar" data-toggle="modal" class=" btn-block btn-clean">Consultar Dados da Formação</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-book"></span> Documentação</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'formacao:documento' %}">Registar Referencia Documental</a></li>
+                                <li><a href="{% url 'formacao:listar-docs' %}">Listar documentos</a></li>
+                                <li><a href="{% url 'formacao:consultar-documento' %}">Consultar documento</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> ÁREAS DE TRABALHO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'estatistica:area' %}"> ESTATÍSTICA</a></li>
+                                <li><a href="{% url 'transferencia:area-transferencia' %}">TRANSFERÊNCIA</a></li>
+                                <li><a href="{% url 'formacao:area-formacao' %}">FORMAÇÃO</a></li>
+                                <li><a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">PESSOAL E QUADRO</a></li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <div class="navbar-header navbar-right dropdown">
+                        <a class=" dropdown-toggle" data-toggle="dropdown" href="#">
+
+                           {{ user.username }}
+
+                            <img src="{% static '/asset/img/user.jpg' %}" width="35px" class="img-circle " />
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
+                        <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
+
+                        </ul>
+                        </a>
+                    </div>
+                </div>
+
+            </nav>
+
+        </div>
+    </div>
+    <div class="row">
+
+
+        <div class="col-md-12">
+
+            <div class="block block-drop-shadow">
+
+                {% block corpo %} {% endblock %}
+
+            </div>
+        </div>
+
+    </div>
+    &nbsp;&nbsp;
+    <div class="row">
+        <div class="col-lg-12">
+            &nbsp;
+            <p>
+
+            </p>
+        </div>
+    </div>
+
+
+    <!-- selecionado buscar-->
+
+    <div class="modal" id="buscar_selecionado_atualizacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Buscar dados para alteração da formação</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="user bg-default bg-light-rtl">
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="block block-fill-white ">
+                                    <div class="header">
+                                        <p></p>
+                                        <h4><b><span class=""></span></b> </h4>
+                                    </div>
+
+                                    <div class="content controls container">
+                                        <form class="" action="{% url 'formacao:buscar-selecionado' %}" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %} {% autoescape on %}
+                                            <div class="form-row">
+                                                <div class="col-md-3">Nip:</div>
+                                                <div class="col-md-9"><input type="text" name="bi" class="form-control" class="validate[required,minSize[14],maxSize[14]]" /></div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-5">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <button class="btn btn-primary " type="submit">Enviar</button>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            {% endautoescape %}
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Consultar dados -->
+
+    <div class="modal" id="modal_consultar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Consultar dados da formação</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="user bg-default bg-light-rtl">
+                        <div class="row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="block block-fill-white ">
+                                    <div class="header">
+                                        <p></p>
+                                    </div>
+
+                                    <div class="content controls container">
+                                        <form class="" action="{% url 'formacao:consultar-formacao' %}" method="POST">
+                                            {% csrf_token %} {% autoescape on %}
+                                            <div class="form-row">
+                                                <div class="col-md-6">Nip ou Numero de Agente</div>
+                                                <div class="col-md-8"><input type="text" name="busca" class="form-control" class="validate[required,minSize[14],maxSize[14]]" /></div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-5">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <button class="btn btn-primary " type="submit">Consultar</button>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            {% endautoescape %}
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- <div class="page-footer">
+            <div class="page-footer-wrap">
+                <div class="side text-center">
+                    © SALAKIAKU - (SIGRH-CPL) Todo Direito Reservado.
+                </div>
+            </div>
+        </div>
+           </div>-->
+    </div>
+
+</div>
+{% endblock %}

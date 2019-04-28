@@ -1,0 +1,195 @@
+{% extends 'formacao/menu_formacao.html' %} {% load static %} {% block corpo %}
+<div class="">
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_fardado }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <span class=" text-center">
+                 <h5>República de Angola <br>Ministério do Interior <br>Comando Provincial de Luanda D.P.R.H</h5>
+                </span> &nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_civil }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="">
+        <div class=" ">
+            <div class="header">
+                <h3><b>Ficha Pessoal do Agente/ Formação</b></h3>
+            </div>
+            <div class="block block-drop-shadow">
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nome do Pai</th>
+                            <th>Genero</th>
+                            <th>Nome da Mae</th>
+                            <th>Patente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.agente.pessoa.nome }} </td>
+                            <td> {{ lista.agente.pessoa.nome_pai }}</td>
+                            <td> {{ lista.agente.pessoa.genero }}</td>
+                            <td> {{ lista.agente.pessoa.nome_mae }}</td>
+                            <td>{{ lista.agente.patente }}</td>
+
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Data de Nascimento</th>
+                            <th>Provincia</th>
+                            <th>Estado Civil</th>
+                            <th>Bi Nº</th>
+                            <th>Numero de Agente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.agente.pessoa.data_nascimento }}</td>
+                            <td> {{ lista.agente.pessoa.provincia }}</td>
+                            <td> {{ lista.agente.pessoa.estado_civil }} </td>
+                            <td> {{ lista.agente.pessoa.bi }}</td>
+                            <td> {{ lista.agente.numero_agente }}</td>
+
+                        </tr>
+
+                        <thead>
+                            <tr>
+
+
+                                <th>Residencia</th>
+                                <th>Telefone</th>
+                                <th>Telefone de Parente</th>
+                                <th>E-mail</th>
+                                <th>Nip</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td> {{ lista.agente.pessoa.residencia }}</td>
+                                <td> {{ lista.agente.pessoa.telefone }}</td>
+                                <td> {{ lista.agente.pessoa.telefone_parente }}</td>
+                                <td> {{ lista.agente.pessoa.email }}</td>
+                                <td>{{ lista.agente.nip }}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th> Nª de Contribuite </th>
+                                <th>Nivel Academico</th>
+                                <th>Curso</th>
+                                <th>Função</th>
+                                <th>Orgao de Colocação</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> {{ lista.agente.numero_contribuite }}</td>
+                                <td> {{ lista.agente.nivel_academico }}</td>
+                                <td> {{ lista.agente.curso }}</td>
+                                <td>{{ lista.agente.funcao }}</td>
+                                <td> {{ lista.orgao_colocacao }}</td>
+                            </tr>
+                        </tbody>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="">
+                <div class="header">
+                    <h2> Formações Realizadas</h2>
+                </div>
+                <ul class="content list-group">
+                    <div class="content">
+                        <table class="table table-bordered table-striped table-hover">
+                            {% autoescape on %} {% for forma in formacao %}
+                            <thead>
+                                <tr>
+                                    <th>Curso</th>
+                                    <th>Pais de Realização</th>
+                                    <th>Data de Conclusão</th>
+                                    <th>Despacho</th>
+                                    <th>Aproveitamento</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td> {{ forma.curso|capfirst|default:"########" }} </td>
+                                    <td>{{ forma.pais }}</td>
+                                    <td> {{ forma.data_conclusao|default:"########" }}</td>
+                                    <td> {{ forma.dispacho|default:"########" }}</td>
+                                    <td> {{ forma.aproveitamento|default:"########" }}</td>
+                                </tr>
+
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th> Instituição</th>
+                                    <th>Bolsa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> {{ forma.instituicao }}</td>
+                                    <td> {{ forma.razao_posse }} </td>
+                                </tr>
+
+                            </tbody>
+                            {% endfor %} {% endautoescape %}
+
+                        </table>
+                    </div>
+                </ul>
+            </div>
+
+            <div class="block block-drop-shadow  right-sidebar">
+                <div class="header">
+                    <h2><b><a href="{% url 'formacao:imprimir-ficha' lista.agente.pessoa.id %}" class=" btn btn-primary tip" title="Imprimir a Ficha" target="_blank">
+                            <span class="icon-print col-md-12 "></span>
+                        </a></b></h2>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

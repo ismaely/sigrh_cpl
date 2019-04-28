@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title> SALAKIAKU </title>
+    <meta name="description" content="Comando provincial de Luanda  ">
+    <meta name="keywords" content="comando provincial de luanda , sistema integrado de recursos humano,">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="SALAKIAKU" content="Steelcoders" />
+    <link rel="icon" href="{% static '/asset/img/favicon/poli5.png' %}" sizes="32x32">
+
+    <link href="{% static '/asset/css/stylesheets.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/mystyles.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/js/plugins/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/codemirror/theme/midnight.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static '/asset/css/sweetalert2.css' %}" rel="stylesheet">
+
+    <script src="{% static '/asset/js/plugins/jquery/jquery.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-ui.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-migrate.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/globalize.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/bootstrap/bootstrap.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/tagsinput/jquery.tagsinput.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/cleditor/jquery.cleditor.min.js'%}"></script>
+
+    <!-- <script src="{% static '/asset/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'%}"></script>-->
+    <script src="{% static '/asset/js/plugins/uniform/jquery.uniform.min.js'%}"></script>
+    <!--<script type='text/javascript' src="{% static '/asset/js/plugins/datatables/jquery.dataTables.min.js'%}"></script>-->
+
+
+
+    <script src="{% static '/asset/js/plugins/knob/jquery.knob.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/sparkline/jquery.sparkline.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/flot/jquery.flot.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/flot/jquery.flot.resize.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/codemirror/codemirror.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/addon/edit/matchbrackets.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/htmlmixed/htmlmixed.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/xml/xml.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/javascript/javascript.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/css/css.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/clike/clike.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/codemirror/mode/php/php.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/uniform/jquery.uniform.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/tinymce/tinymce.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/select2/select2.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/tagsinput/jquery.tagsinput.min.js'%}"></script>
+    <!-- <script type='text/javascript' src="{% static '/asset/js/plugins/jquery/jquery-ui-timepicker-addon.js'%}"></script>-->
+    <script src="{% static '/asset/js/plugins/validationengine/languages/jquery.validationEngine-en.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/validationengine/jquery.validationEngine.js' %}"></script>
+
+    <script src="{% static '/asset/js/plugins/maskedinput/jquery.maskedinput.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/stepy/jquery.stepy.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/noty/jquery.noty.js' %}"></script>
+    <script src="{% static '/asset/js/plugins/noty/themes/default.js' %}"></script>
+
+    <script src="{% static '/asset/js/validacao.js' %}"></script>
+    <script src="{% static '/asset/js/validacao-2.js' %}"></script>
+
+    <!--<script type='text/javascript' src="{% static '/asset/js/settings.js' %}"></script>-->
+    <script src="{% static '/asset/js/meu/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/asset/js/meu/table-data.js' %}"></script>
+    <script src="{% static 'asset/js/meu/chart.min.js' %}"></script>
+    <script src="{% static 'asset/js/meu/ui.datepicker-pt.js' %}"></script>
+    <script src="{% static 'asset/js/meu/jquery.inputmask.js' %}"></script>
+
+    <script src="{% static '/asset/js/plugins.js' %}"></script>
+    <script src="{% static '/asset/js/actions.js' %}"></script>
+
+    <script src="{% static 'asset/js/meu/foto.js' %}"></script>
+    <script src="{% static '/webcam/webcam.js' %}"></script>
+    <!-- <script src="{% static '/asset/js/jquery.validate.min.js' %}"></script>-->
+
+    <!---->
+</head>
+
+<body class="bg-img-num1">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <nav class="navbar brb" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-reorder"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><img src="{% static '/asset/img/poli5.png' %}" width="35px" class="img-circle" /></a>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                {% if pessoalQuadro %}
+                                <a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %} {% if formacaoes %}
+                                <a href="{% url 'formacao:area-formacao' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %} {% if transferencias %}
+                                <a href="{% url 'transferencia:area-transferencia' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %} {% if estatistcas %}
+                                <a href="{% url 'estatistica:area' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %} {% if documentos %}
+                                <a href="{% url 'documentacao:area-documentacao' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %} {% if perfil %}
+                                <a href="{% url 'utilizador:home' %}">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                                {% endif %}
+                            </li>
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-group"></span> Novo Processo</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+
+                                    <li><a href="{% url 'pessoal_quadro:cadastrar' %}">Novo Agente</a></li>
+
+                                    <li><a href="{% url 'pessoal_quadro:efectuar-colocacao' %}">Registar Colocação do Agente</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-todos' %}">Listar Agentes Registados</a></li>
+                                    <!-- <li><a onclick="consultar_dados_atualizar()">Atualizar Dados do Agente</a></li>
+                                    <li><a href="#" >Atualizar as Fotos</a></li>-->
+                                    <li><a href="{% url 'pessoal_quadro:consultar-dados' %}"> Consultar Dados do agente</a></li>
+                                    <!--li><a href=""> Imprimir a Ficha Pessoal</a></li>-->
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-pencil"></span> Reforma</a>
+                                <ul class="dropdown-menu">
+                                    <li><a onclick=reforma_anticipada()>Registar Reforma Anticipada</a></li>
+
+                                    <li><a href="{% url 'pessoal_quadro:listar-reforma' %}">Listar Agentes na Reforma</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-arrow-down"></span> Baixa</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-baixa' %}"> Registar Baixa</a> </li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-baixas' %}">Listar Baixa</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-star"></span> Promoção</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-nomiacao' %}">Nomeação do Agente</a></li>
+                                    <li><a onclick="patente_atualizar_recebe()">Atualizar Patente do Agente</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-nomiacao' %}">Listar Agentes Nomiados</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:listar-efetividade' %}">Listar Tempo de Efetividade</a></li>
+
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-sort-by-attributes"></span> Despromoção</a>
+                                <ul class="dropdown-menu">
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'pessoal_quadro:registar-despromocao' %}">Registar Despromoção</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'pessoal_quadro:listar-despromocao' %}">Listar Agentes Despromovidos</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-book"></span> Documentação</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'documentacao:registar' %}">Registar Referencia Documental</a></li>
+                                    <li><a href="{% url 'documentacao:listar-documento' %}">Listar documentos</a></li>
+                                    <li><a href="{% url 'documentacao:consultar-documento' %}">Consultar documento</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span> Utilizador</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'utilizador:adicionar-utilizador' %}">Novo Utilizador</a></li>
+                                    <li><a href="{% url 'utilizador:listar' %}">Listar Utilizadores</a></li>
+                                    <li><a class="" href="{% url 'pessoal_quadro:gerar-codigo' %}">Codigo da Operações</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> AREAS DE TRABALHO</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'estatistica:area' %}"> ESTATISTICA</a></li>
+                                    <li><a href="{% url 'transferencia:area-transferencia' %}">TRANSFERENCIA</a></li>
+                                    <li><a href="{% url 'documentacao:area-documentacao' %}">DOCUMENTAÇÃO</a></li>
+                                    <li><a href="{% url 'formacao:area-formacao' %}">FORMAÇÃO</a></li>
+                                    <li><a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">PESSOAL E QUADRO</a></li>
+
+                                </ul>
+                            </li>
+
+
+
+                        </ul>
+                        <!--
+                        <ul class="navbar-form navbar-right">
+
+                            <li class="dropdown navbar-right">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cog"></span> Definições</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
+                                    <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
+
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                                -->
+                        <div class="navbar-header navbar-right ">
+
+                            <a class="navbar-brand " href="#">
+
+                                <span class="">{{ user.username }}
+                               
+                            </ul>
+                            </span> <img src="{% static '/asset/img/user.jpg' %}" width="35px" class="img-circle" />
+                            </a>
+                        </div>
+                    </div>
+
+                </nav>
+
+            </div>
+        </div>
+        <div class="row">
+            <!--
+            <div class="col-md-2">
+
+                <div class="block block-drop-shadow">
+                    <div class="user bg-default bg-light-rtl">
+                        <div class="info">
+
+                            <img src="{% static '/asset/img/user.jpg' %}" class="img-circle img-thumbnail" />
+                        </div>
+                        <div class="content controls">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="title text-center">{{ user.username }}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="block block-drop-shadow">
+                    <div class="">
+
+                        <ul class="page-navigation">
+                            <li>
+                                <a href="#">
+                                    <span class="icon-th"></span> MENU
+                                </a>
+                            </li>
+
+                            {% if user.email == 'Gestor' or user.email == 'Agente' %}
+                            <li>
+                                <a href="#"><span class="icon-file-alt"></span> Formação<i class="icon-sort-down pull-right"></i></a>
+                                <ul>
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'formacao:adicionar-agente-formacao' %}">Selecionar Agente Para Formação</a></li>
+                                    <li><a href="{% url 'formacao:conclusao-formacao' %}">Conclusão da Formação</a></li>
+                                    <li><a href="{% url 'formacao:listar-concluiram' %}">Listar Agentes que Concluiram </a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'formacao:listar-selecionados' %}">Listar Agentes Selecionado </a></li>
+                                    <li><a href="{% url 'formacao:listar-agente-formacao' %}">Listar Agentes em Formação  </a></li>
+
+
+                                    <li><a href="#buscar_selecionado_atualizacao" data-toggle="modal" class=" btn-block btn-clean">Atualizar Dados da Formação</a></li>
+                                    <li><a href="#modal_consultar" data-toggle="modal" class=" btn-block btn-clean">Consultar Dados da Formação</a></li>
+                                </ul>
+                            </li>
+                            {% endif %} {% if user.email == 'Gestor' or user.email == 'Agente' %}
+                            <li>
+                                <a href="#"><span class="icon-refresh"></span> Transferencia<i class="icon-sort-down pull-right"></i></a>
+                                <ul>
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'transferencia:adicionar-transferencia' %}">Adicionar Transferencia</a></li>
+                                    <li><a href="{% url 'transferencia:troca' %}">Adicionar Troca</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'transferencia:listar-pedidos' %}">Listar Solicitação Transferencia</a></li>
+                                    <li><a href="{% url 'transferencia:listar' %}">Listar Agentes Transferidos</a></li>
+                                    <li><a href="{% url 'transferencia:listar-troca' %}">Listar Troca de Agente</a></li>
+                                    <li><a href="#consultar_transferencia" data-toggle="modal" class=" btn-block btn-clean">Consultar Transferencia</a></li>
+                                    <li><a href=""> Imprimir o Comprovativo</a></li>
+                                    
+                                </ul>
+                            </li>
+                            {% endif %} {% if user.email == 'Gestor' or user.email == 'Agente' %}
+                            <li>
+                                <a href="#"><span class="icon-file-text"></span> Gerar Lista PDF<i class="icon-sort-down pull-right"></i></a>
+                                <ul>
+                                    <li><a href="{% url 'estatistica:normal' %}">Normal</a></li>
+                                    <li><a href="{% url 'estatistica:nivel_academico' %}">Nivel academico</a></li>
+                                    {% if user.email == 'Gestor' %}
+                                    <li><a href="{% url 'estatistica:reforma' %}"> Reforma</a> </li>
+                                    <li><a href="{% url 'estatistica:baixa' %}">Baixa </a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'estatistica:formacao' %}">Formação</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><span class="icon-bar-chart"></span> Estatistica<i class="icon-angle-right pull-right"></i></a>
+                                <ul>
+                                    <li><a href="#">Transferenias</a></li>
+                                    <li><a href="#">Despromoção</a></li>
+                                    <li><a href="#">Baixas </a></li>
+                                    <li><a href="{% url 'estatistica:estatistica-reforma' %}"> Formação</a></li>
+                                    <li><a href="#">Reforma</a></li>
+
+                                </ul>
+                            </li>
+                            {% endif %} {% if perfil %}
+
+                            <li>
+                                <a href="#"><span class="icon-cogs"></span> Minha Conta<i class="icon-sort-down pull-right"></i></a>
+                                <!-- <ul>
+                                    <li><a href="#">Atualizar Morada</a></li>
+                                    <li><a href="#">Atualizar Telefone</a></li>
+                                    <li><a class="#" href="">Atualizar E-mail</a></li>
+                                    <li><a class="#" href="">Atualizar Senha</a></li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>-->
+
+            <div class="col-md-12">
+
+                <div class="block block-drop-shadow">
+
+                    {% block corpo %} {% endblock %}
+
+                </div>
+            </div>
+
+        </div>
+        &nbsp;&nbsp;
+        <div class="row">
+            <div class="col-lg-12">
+                &nbsp;
+                <p>
+
+                </p>
+            </div>
+        </div>
+
+
+        <!-- selecionado buscar-->
+
+        <div class="modal" id="buscar_selecionado_atualizacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Buscar dados para alteração da formação</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <div class="user bg-default bg-light-rtl">
+                            <div class="row">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="block block-fill-white ">
+                                        <div class="header">
+                                            <p></p>
+                                            <h4><b><span class=""></span></b> </h4>
+                                        </div>
+
+                                        <div class="content controls container">
+                                            <form class="" action="{% url 'formacao:buscar-selecionado' %}" method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %} {% autoescape on %}
+                                                <div class="form-row">
+                                                    <div class="col-md-3">Bi Nª</div>
+                                                    <div class="col-md-9"><input type="text" name="bi" class="form-control" class="validate[required,minSize[14],maxSize[14]]" /></div>
+                                                </div>
+
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-5">
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <button class="btn btn-primary " type="submit">Enviar</button>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                {% endautoescape %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Consultar dados -->
+
+        <div class="modal" id="modal_consultar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Consultar dados da formação</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <div class="user bg-default bg-light-rtl">
+                            <div class="row">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="block block-fill-white ">
+                                        <div class="header">
+                                            <p></p>
+                                            <h4><b></b> </h4>
+                                        </div>
+
+                                        <div class="content controls container">
+                                            <form class="" action="{% url 'formacao:consultar-formacao' %}" method="POST">
+                                                {% csrf_token %} {% autoescape on %}
+                                                <div class="form-row">
+                                                    <div class="col-md-3">Bi Nª</div>
+                                                    <div class="col-md-9"><input type="text" name="busca" class="form-control" class="validate[required,minSize[14],maxSize[14]]" /></div>
+                                                </div>
+
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-5">
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <button class="btn btn-primary " type="submit">Consultar</button>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                {% endautoescape %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Consultar Transferencia-->
+
+        <div class="modal" id="consultar_transferencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Consultar Transferencia</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <div class="user bg-default bg-light-rtl">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="block block-fill-white ">
+                                        <div class="header">
+                                            <p></p>
+                                            <h4><b></b> </h4>
+                                        </div>
+
+                                        <div class="content controls container">
+                                            <form class="" action="{% url 'transferencia:consultar-transferencia' %}" method="POST">
+                                                {% csrf_token %} {% autoescape on %}
+                                                <div class="form-row">
+                                                    <div class="col-md-4">Bi Nª ou Numero de Agente</div>
+                                                    <div class="col-md-8"><input type="text" name="busca" class="form-control" class="validate[required,minSize[14],maxSize[14]]" /></div>
+                                                </div>
+
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-5">
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <button class="btn btn-primary " type="submit">Consultar</button>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                {% endautoescape %}
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- <div class="page-footer">
+                <div class="page-footer-wrap">
+                    <div class="side text-center">
+                        © SALAKIAKU - (SIGRH-CPL) Todo Direito Reservado.
+                    </div>
+                </div>
+            </div>
+               </div>-->
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        Webcam.set({
+            width: 200,
+            height: 200,
+            image_format: 'png',
+            jpeg_quality: 100
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        var ctx = document.getElementById("reformaGrafico");
+        var residencia = JSON.parse('{{ residencia|safe }}');
+        var casa = JSON.parse('{{ casa|safe }}');
+        var reformaGrafico = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: residencia,
+                datasets: [{
+                    label: 'Agentes',
+                    data: casa,
+                    backgroundColor: [
+                        'rgba(255, 99, 132)',
+                        'rgba(0, 0, 238)',
+                        'rgba(255, 255, 0)',
+                        'rgba(75, 192, 192)',
+                        'rgba(153, 102, 255)',
+                        'rgba(255, 159, 64)',
+                        'rgba(0, 134, 139)',
+                        'rgba(255, 64, 65)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(0, 0, 238)',
+                        'rgba(255, 255, 0)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(0, 134, 139)',
+                        'rgba(255, 64, 65, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(":input").inputmask();
+        });
+    </script>
+    {% block javascript %}
+    <script src="{% static 'asset/js/meu/pessoal_quadro.js' %}"></script>
+    <script src="{% static 'asset/js/meu/transferencia.js' %}"></script>
+    <script src="{% static 'asset/js/meu/formacao.js' %}"></script>
+    <script src="{% static 'asset/js/meu/documento.js' %}"></script>
+    <script src="{% static 'asset/js/meu/sweetalert2.js' %}"></script>
+    {% endblock %} {% load sweetify %} {% sweetify %}
+</body>
+
+</html>

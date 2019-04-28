@@ -1,0 +1,100 @@
+ {% extends 'transferencia/menu_transferencia.html' %} {% block corpo %}
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <div class="block block-fill">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-random"></span> Adicionar troca de agente</b> </h4>
+                </div>
+
+
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %}
+                    <form action="{% url 'transferencia:troca' %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
+                        {% csrf_token %} {% autoescape on %}
+                        <fieldset title="Dados">
+                            <legend></legend>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>1ªSolicitante - Nip ou Bi Nª:</b> {{ form.bi1 }} {{ form.bi1.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <b>2ªSolicitante - Nip ou Bi Nª:</b> {{ form.bi2 }} {{ form.bi2.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>Orgão de origem:</b> {{ form.origem_primeiro }} {{ form.origem_primeiro.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <b>Orgão de origem:</b> {{ form.origem_segundo }} {{ form.origem_segundo.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>Orgão de destino:</b> {{ form.destino_primeiro }} {{ form.destino_primeiro.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <b>Orgão de destino:</b> {{ form.destino_segundo }} {{ form.destino_segundo.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <b>Motivo da troca: </b> {{ form.motivo }} {{ form.motivo.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-primary finish">Salvar</button>
+                            </div>
+                            <div class="col-md-5">
+                            </div>
+                        </div>
+
+
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'transferencia/menu_transferencia.html' %} {% block corpo %}
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-8">
+            <div class="block block-fill">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-refresh"></span> Registar Transferencia</b> </h4>
+                </div>
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %} {% if pedido.id %}
+
+                    <form class="" action="{% url 'transferencia:atualizar-pedido' pedido.id %}" method="POST" enctype="multipart/form-data">
+                        {% else %}
+                        <form class="" action="{% url 'transferencia:adicionar-transferencia' %}" method="POST" enctype="multipart/form-data">
+                            {% endif %} {% csrf_token %} {% autoescape on %}
+                            <div class="form-row">
+                                {% if pedido.id %}
+                                <div class="col-md-6">
+                                    <b>Nip ou BI Nº:</b> {{ form2.bi }} {{ form2.bi.errors }}
+                                    <span class="error" style="display:none"> </span></div>
+                                {% else %}
+                                <div class="col-md-6">
+                                    <b>Nip ou BI Nº:</b> {{ form.bi }} {{ form.bi.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                                {% endif %}
+                                <div class="col-md-6"><b>Orgão de Destino:</b> {{ form.orgao_destino }} {{ form.orgao_destino.errors }}</div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <b>Data de Transferencia:</b> {{ form.data_entrada }} {{ form.data_entrada.errors }}
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                                <div class="col-md-6"><b>Numero da Guia:</b> {{ form.numero_guia }} {{ form.numero_guia.errors }}
+
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6"><b>Despacho:</b> {{ form.dispacho }} {{ form.dispacho.errors }}
+
+                                    <span class="error" style="display:none"> </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span><b>Ficheiro:</b></span>
+                                    <div class="input-group file">
+                                        {{ form.arquivo }} {{ form.arquivo.errors }}
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary col-md-12" type="button">Ficheiro</button>
+                                         </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <b>Motivo de Transferencia:</b> {{ form.motivo }} {{ form.motivo.errors }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button class="btn btn-primary " type="submit">Salvar</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endautoescape %}
+                        </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'pessoal_quadro/menu_pessoal.html' %}{% block corpo %}{% load static %}
+
+
+<body class="">
+
+    <div class="container">
+
+        <div class="login-block">
+            <div class="block block-transparent">
+                <div class="head">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="">
+                        <p class="info"><span class=" center-align"> <b>Adicionar Novo Utilizador do Sistema</b></span></p>
+                    </div>
+
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="user">
+
+
+                        <div class="info">
+
+                            <img src="{% static '/asset/img/user.jpg' %}" width="180px" class="img-circle img-thumbnail" />
+                            <div class="user-change-button">
+                                <span class="icon-off"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                <div class="block container">
+                    <div class="alert alert-danger">
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="content controls npt">
+                    <form class="" action="{% url 'utilizador:adicionar-utilizador' %}" method="POST">
+                        {% csrf_token %} {% autoescape on %}
+                        <div class="form-row ">
+                            <div class="col-md-12">
+                                <b>Nip ou BI Nº:</b>
+                                <div class="input-group">
+
+                                    <div class="input-group-addon">
+                                        <span class="icon-user"></span>
+                                    </div>
+                                    {{ form.bi }}
+
+                                </div>
+                                <span>{{ form.bi.errors }}</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <b>Categoria:</b>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-home"></span>
+                                    </div>
+                                    {{ form.categoria }} {{ form.categoria.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary " type="submit">Adicionar</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+
+{% endblock %}

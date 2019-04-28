@@ -1,0 +1,232 @@
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %} {% load static %}
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="block block-fill">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-group"></span> Cadastrar Agente</b> </h4>
+                </div>
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %} {% if pessoa %}
+                    <form action="{% url 'pessoal_quadro:editar-cadastro' pessoa.id %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
+                        {% else %}
+                        <form action="{% url 'pessoal_quadro:cadastrar' %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
+                            {% endif %} {% csrf_token %} {% autoescape on %}
+                            <fieldset title="1ª Passo">
+                                <legend></legend>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Nome completo:</b> {{ form.nome }} {{ form.nome.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Nome do Pai:</b> {{ form.nome_pai }} {{ form.nome_pai.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Nome da Mãe:</b> {{ form.nome_mae }} {{ form.nome_mae.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4"><b>Data de Nascimento:</b>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar"></span></div>
+                                            {{ form.data_nascimento }} {{ form.data_nascimento.errors }}
+                                            <span class="error" style="display:none"> </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <b>Género:</b> {{ form.genero }} {{ form.genero.errors }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Estado Civil:</b> {{ form.estado_civil }} {{ form.estado_civil.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Província:</b> {{ form.provincia }} {{ form.provincia.errors }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>BI Nº:</b> {{ form.bi }} {{ form.bi.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Residência:</b> {{ form.residencia }} {{ form.residencia.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Número da Casa:</b> {{ form.casa_numero }} {{ form.casa_numero.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Telefone:</b> {{ form.telefone }} {{ form.telefone.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>E-mail:</b> {{ form.email }} {{ form.email.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset title="2ª Passo">
+                                <legend></legend>
+
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Número de Contribuite (NIF):</b> {{ form2.numero_contribuite}} {{ form2.numero_contribuite.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Número da Caixa Social:</b> {{ form2.numero_caixa_social }} {{ form2.numero_caixa_social.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Nível Acádemico:</b> {{ form2.nivel_academico }} {{ form2.nivel_academico.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+
+                                    <div class="col-md-4">
+                                        <b>Curso:</b> {{ form2.curso }} {{ form2.curso.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Patente:</b> {{ form2.patente }} {{ form2.patente.errors }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Número de Agente:</b> {{ form2.numero_agente }} {{ form2.numero_agente.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Nip:</b> {{ form2.nip }} {{ form2.nip.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+
+                                    <div class="col-md-4"><b>Data de Ingresso:</b>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar"></span></div>
+                                            {{ form2.data_igresso }} {{ form2.data_igresso.errors }}
+                                            <span class="error" style="display:none"> </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <b>Orgão de Colocação:</b> {{ form3.orgao_colocacao }} {{ form3.orgao_colocacao.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Função:</b> {{ form2.funcao }} {{ form2.funcao.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+
+                                </div>
+
+                            </fieldset>
+                            <fieldset title="3ª Passo">
+                                <legend></legend>
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        <b>Foto Civil</b>
+                                        <div class="block block-drop-shadow">
+                                            <div id="camera_civel" class=""></div>
+                                            <!--<img src="{% static '/assets/images/poli5.png' %}" width="90px" class=" img-thumbnail" />-->
+                                            <div class="content list-group">
+                                                <a class="list-group-item preview_snapshot" id="pre_take_buttons">FOTO</a>
+                                                <a class="list-group-item cancel_preview" id="post_take_buttons" style="display:none">Nova Foto</a>
+                                                <a class="list-group-item save_photo" id="salvar_foto" style="display:none">SALVAR </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <b>Foto Civil Resultado</b>
+                                        <div class="block block-drop-shadow">
+                                            <div class="content">
+                                                <div id="fotoCivel"></div>
+                                                <!-- <img src="{% static '/assets/images/poli5.png' %}" width="90px" class="img-circle img-thumbnail" />-->
+                                            </div>
+                                            <div class="content list-group">
+                                                <!--<input type="hidden" name="salva1" class="form-control" id="salva1" hidden>-->
+                                                {{ form2.foto_civil }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <b>Foto Fardado</b>
+                                        <div class="block block-drop-shadow">
+                                            <div id="camera_fardada" class=""></div>
+                                            <!--<img src="{% static '/assets/images/poli5.png' %}" width="90px" class=" img-thumbnail" />-->
+                                            <div class="content list-group">
+                                                <a class="list-group-item chama_camera" id="inicia_camera">FOTO</a>
+                                                <a class="list-group-item cancela_foto" id="cancelar_novo" style="display:none">Nova Foto</a>
+                                                <a class="list-group-item salva_fardado" id="salvarFoto" style="display:none">SALVAR </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <b>Foto Fardado Resultado</b>
+                                        <div class="block block-drop-shadow">
+                                            <div class="content">
+                                                <div id="fotoFardado" class=" "></div>
+                                                <!-- <img src="{% static '/assets/images/poli5.png' %}" width="90px" class="img-circle img-thumbnail" />-->
+                                            </div>
+                                            <div class="content list-group">
+                                                {{ form2.foto_fardado }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            {% endautoescape %}
+                            <div class="col-md-3">
+                            </div>
+
+                            <button type="submit" class="col-md-2 btn btn-primary finish">Salvar</button>
+
+                            <div class="col-md-3">
+                            </div>
+                        </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

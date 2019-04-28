@@ -1,0 +1,154 @@
+ {% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_fardado }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-6">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <span class=" text-center">
+                 <h5>República de Angola <br>Ministério do Interior <br>Comando Provincial de Luanda D.P.R.H</h5>
+                </span> &nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default bg-light-rtl">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_civil }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+
+        </div>
+    </div>-->
+
+
+    <div class="">
+        <div class=" ">
+            <div class="header">
+                <h3><b>Dados Pessoais</b></h3>
+            </div>
+            <div class="block block-drop-shadow">
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nome do Pai</th>
+                            <th>Genero</th>
+                            <th>Nome da Mae</th>
+                            <th>Patente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.agente.pessoa.nome }} </td>
+                            <td> {{ lista.agente.pessoa.nome_pai }}</td>
+                            <td> {{ lista.agente.pessoa.genero }}</td>
+                            <td> {{ lista.agente.pessoa.nome_mae }}</td>
+                            <td>{{ lista.agente.patente }}</td>
+
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Data de Nascimento</th>
+                            <th>Provincia</th>
+                            <th>Estado Civil</th>
+                            <th>Bi Nº</th>
+                            <th>Nip</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.agente.pessoa.data_nascimento }}</td>
+                            <td> {{ lista.agente.pessoa.provincia }}</td>
+                            <td> {{ lista.agente.pessoa.estado_civil }} </td>
+                            <td> {{ lista.agente.pessoa.bi }}</td>
+                            <td>{{ lista.agente.nip }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <div class="header">
+                <h3><b>Ficha do Processo Disciplinar</b></h3>
+            </div>
+            <div class="block block-drop-shadow">
+
+                {% for list in processo %}
+
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Numero de Processo</th>
+                            <th>Data</th>
+                            <th>Motivo</th>
+                            <th>Pena</th>
+                            <th>Dispacho</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ list.numero_processo }} </td>
+                            <td> {{ list.data }}</td>
+                            <td> {{ list.motivo }}</td>
+                            <td> {{ list.pena }}</td>
+                            <td>{{ list.dispacho }}</td>
+
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class=""> {{ list.descricao }}</td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+                {% endfor %}
+
+            </div>
+
+            <div class="block block-drop-shadow  right">
+                <div class="header ">
+                    <h2><b><a href="{% url 'pessoal_quadro:ficha-processo' lista.agente.pessoa.id %}" class=" btn btn-primary tip " title="Imprimir a Ficha de " target="_blank">
+                            <span class="icon-print col-md-12 "></span>
+                        </a></b></h2>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

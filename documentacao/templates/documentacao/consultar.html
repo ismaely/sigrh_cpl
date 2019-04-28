@@ -1,0 +1,75 @@
+{% extends 'salakiaku.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b>Consultar Documento</b></h2>
+            </div>
+            <div class="content controls container">
+                <form class="col s12 " action="{% url 'documentacao:consultar-documento' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} {% autoescape on %}
+                    <div class="form-row form-group">
+                        <div class="col-md-6">
+                            <b>Seleciona categoria:</b> {{ form.categoria }} {{ form.categoria.errors }}
+                        </div>
+
+                        &nbsp;
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <button class="btn btn-primary " type="submit">Enviar</button>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% endautoescape %}
+                </form>
+            </div>
+
+
+            {% if listar %}
+
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th> - # -</th>
+                            <th>Numero de ordem</th>
+                            <th>Categoria</th>
+                            <th>Data de Entrada</th>
+                            <th>Descrição</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for doc in listar %}
+                        <tr>
+                            <td> {{ doc.id }}</td>
+                            <td> {{ doc.numero_ordem }}</td>
+                            <td> {{ doc.categoria }}</td>
+                            <td> {{ doc.data_entrada }}</td>
+                            <td> {{ doc.descricao| truncatewords:"10" }}</td>
+                            <td>
+                                <a href="{% url 'documentacao:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                    <i class="icon-trash"></i>
+                                </a>
+
+                                <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

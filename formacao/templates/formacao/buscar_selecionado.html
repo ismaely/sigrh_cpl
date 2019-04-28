@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+@File   : buscar_selecionado.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 2018-10-16 02:56:46
+-->
+{% extends 'salakiaku.html' %} {% load static %} {% block corpo %}
+
+<main class="mn-inner">
+    <div class="search-header">
+        <div class="card card-transparent no-m">
+            <div class="card-content no-s">
+                <div class="z-depth-1 search-tabs">
+                    <div class="search-tabs-container">
+                        <div class="col s12 m12 l12">
+                            <div class="row search-tabs-row search-tabs-header">
+                                <div class=" col s12 m12 l12 left">
+                                    <a class="waves-effect waves-grey btn-flat search-tabs-button left">
+                                        <h5><i class="material-icons">list</i>
+
+                                            <b>Dados selecionado para alteração</b> </a>
+                                    </h5>
+                                </div>
+
+                            </div>
+                            <div class="row search-tabs-row search-tabs-container grey lighten-4">
+                                <div class="col s12 m6 l6">
+
+                                </div>
+                                <div class="col s12 m6 l6 right-align search-stats">
+                                    <span class="m-r-sm"> </span><span class="secondary-stats"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card no-m">
+        <div class="card-content invoice-relative-content search-results-container">
+            <div class="col s12 m12 l12">
+                <div class="">
+                    <table id="" class="display responsive-table  black-text">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>Genero</th>
+                                <th>Data de seleção</th>
+                                <th>Formação</th>
+                                <th>Orgão de colocação</th>
+                                <th> Patente</th>
+                                <th> Ação</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>{{ lista.id }}</td>
+                            <td>
+                                <a><img src="/media/{{ lista.agente.foto_fardado }}" width=52px alt="" class="black-textcircle responsive-img avatar">
+                                    <span class="black-text">{{ lista.agente.pessoa.nome }}</span>
+                                </a>
+                            </td>
+                            <td>{{ lista.agente.pessoa.genero}}</td>
+                            <td> {{ lista.data }}</td>
+                            <td> {{ lista.curso }}</td>
+                            <td> {{ orgao.orgao_colocacao }}</td>
+                            <td> {{ lista.agente.patente }}</td>
+                            <td>
+                                <a href="{% url 'formacao:atualizar-selecionado' lista.id %}" class=" blue darken-1 btn waves-effect waves-light hoverable tooltipped" data-position="top" data-delay="50" data-tooltip="Editar os Dados">
+                                    <i class="material-icons">edit</i> </a>
+
+                                <a onclick="remover_agente_selecionado({{ lista.id }})" class="red darken-1 btn waves-effect waves-light hoverable tooltipped" data-position="top" data-delay="50" data-tooltip="Remover da lista">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

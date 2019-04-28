@@ -1,0 +1,55 @@
+{% extends 'transferencia/menu_transferencia.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b>Consulta da Transferencia</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th>Nome</th>
+                            <th>Genero</th>
+                            <th>Orgão de Origem</th>
+                            <th>Orgão de Destino</th>
+                            <th>Data de entrada</th>
+                            <th>Data de aprovação</th>
+                            <th>Dispacho</th>
+                            <th>Patente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ lista.agente.foto_fardado }}" width=38px class="img-circle ">
+
+                                </a>
+                            </td>
+                            <td>
+                                {{ lista.agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td>{{ lista.agente.pessoa.genero}}</td>
+                            <td> {{ lista.orgao_origem }}</td>
+                            <td> {{ lista.orgao_destino}}</td>
+                            <td> {{ lista.data_entrada }}</td>
+                            <td> {{ lista.data }}</td>
+                            <td> {{ lista.dispacho }}</td>
+                            <td> {{ lista.agente.patente }}</td>
+                            <td>
+                                <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

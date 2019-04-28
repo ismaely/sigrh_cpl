@@ -1,0 +1,273 @@
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <nav class="" role="navigation">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <form class="navbar-form navbar-left col-md-12" action="{% url 'pessoal_quadro:consultar-dados' %}" method="post" role="search">
+                    {% csrf_token %}
+                    <div class="form-group ">
+                        Nip / Numero de agente
+                        <input type="text" class="form-control" type="search" name="busca" placeholder="Nip / Numero de agente " />
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <div class="row">
+            <div class=" col-md-12">
+                <p></p>
+            </div>
+        </div>
+        <div class="">
+
+            <div class="col-md-12">
+                {% if messages %}
+                <p>
+                    <div class="block">
+                        <div class="alert alert-danger">
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    </div>
+                </p>
+                {% endif %} {% if agente.pessoa_id %}
+
+
+
+                <div class="content">
+                    <table id="example" class="table table-bordered table-striped  datatable-example">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>Genero</th>
+                                <!-- <th>Data de Nasci...</th>-->
+                                <th>Data de ingresso</th>
+                                <th>Orgão de Colocação</th>
+                                <th>Nivel Academico</th>
+                                <th>Nª Agente</th>
+                                <th> Patente</th>
+                                <th> Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                {% autoescape on %}
+                                <td>
+                                    <a><img src="/media/{{ agente.foto_fardado }}" width=36px class="img-circle ">
+
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ agente.pessoa.nome|capfirst|safe }}
+                                </td>
+                                <td>{{ agente.pessoa.genero }}</td>
+                                <!--<td>{{ list.agente.pessoa.data_nascimento }}</td>-->
+                                <td>{{ agente.data_igresso }}</td>
+                                <td>{{ orgao.orgao_colocacao|striptags|capfirst }}</td>
+                                <td>{{ agente.nivel_academico }}</td>
+                                <td>{{ agente.numero_agente }}</td>
+                                <td>{{ agente.patente }}</td>
+                                {% endautoescape %}
+                                <td>
+                                    <a href="{% url 'pessoal_quadro:informacao-pessoal' agente.pessoa_id %}" class="btn btn-success tip" title="Visualizar informação">
+                                        <span class="icon-user"></span>
+                                    </a>
+                                    <a href="{% url 'pessoal_quadro:editar-cadastro' agente.pessoa_id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                        <span class="icon-edit"></span>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                {% endif %}
+                <!-- <div class="block">
+                    <div class="head bg-default bg-light-rtl np">
+                        <ul class="nav nav-tabs ">
+                            <li class="active"><a href="#tab16" data-toggle="tab"><i class="icon-double-angle-right"></i>Dados Pessoas</a></li>
+                            <li><a href="#tab17" data-toggle="tab"><i class="icon-double-angle-right"></i> Dados de Formação</a></li>
+                        </ul>
+                    </div>
+                    {% if orgao.agente.numero_agente is not None %}
+                    <div class="content tab-content bg-wdot10">
+                        <div class="tab-pane active" id="tab16">
+                            <div class="content np">
+                                <div class="list list-contacts">
+                                    <a href="#" class="list-item">
+                                        <div class="list-info">
+                                            <img src="/media/{{ orgao.agente.foto_civil }}" width="50px" class="img-circle" />
+                                        </div>
+                                        <div class="list-text">
+                                            <span class="list-text-name">{{ orgao.agente.pessoa.nome|capfirst }}</span>
+                                            <div class="list-text-info">
+                                                <i class="icon-star"></i> {{ orgao.agente.patente }}
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="">
+                                    <div class="header">
+                                    </div>
+                                    <ul class="content list-group">
+                                        <div class="content">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>NOME</th>
+                                                        <th>NOME DO PAI</th>
+                                                        <th>NOME DA MAE</th>
+                                                        <th>NACIONALIDADE</th>
+                                                        <th>PATENTE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% autoescape on %}
+                                                        <td> {{ orgao.agente.pessoa.nome|capfirst }} </td>
+                                                        <td> {{ orgao.agente.pessoa.nome_pai|capfirst }}</td>
+                                                        <td> {{ orgao.agente.pessoa.nome_mae|capfirst }}</td>
+                                                        <td> {{ orgao.agente.pessoa.nacionalidade|capfirst }}</td>
+                                                        <td> {{ orgao.agente.patente }} </td>
+                                                        {% endautoescape %}
+                                                    </tr>
+
+                                                </tbody>
+
+                                                <thead>
+                                                    <tr>
+                                                        <th>GENERO</th>
+                                                        <th>DATA DE NASCIMENTO</th>
+                                                        <th>NATURALIDADE</th>
+                                                        <th>BI Nª</th>
+                                                        <th>CATEGORIA</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% autoescape on %}
+                                                        <td> {{ orgao.agente.pessoa.genero }}</td>
+                                                        <td> {{ orgao.agente.pessoa.data_nascimento }}</td>
+                                                        <td> {{ orgao.agente.pessoa.naturalidade|capfirst }}</td>
+                                                        <td> {{ orgao.agente.pessoa.bi|upper }}</td>
+                                                        <td> {{ orgao.agente.categoria }}</td>
+                                                        {% endautoescape %}
+                                                    </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th>MUNICIPIO</th>
+                                                        <th>TELEFONE</th>
+                                                        <th>TELEF.. PARENTE</th>
+                                                        <th>E-MAIL</th>
+                                                        <th>FUNÇÃO</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% autoescape on %}
+                                                        <td> {{ orgao.agente.pessoa.municipio|capfirst }} </td>
+                                                        <td> {{ orgao.agente.pessoa.telefone }} </td>
+                                                        <td> {{ orgao.agente.pessoa.telefone_parente }} </td>
+                                                        <td> {{ orgao.agente.pessoa.email }}</td>
+                                                        <td> {{ orgao.agente.funcao|capfirst }}</td>
+                                                        {% endautoescape %}
+                                                    </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Nª CASA</td>
+                                                        <th>ORGÃO DE COLOCAÇÃO</th>
+                                                        <th>NIP</th>
+                                                        <th>DATA IGRESSO</th>
+                                                        <td>CURSO</td>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% autoescape on %}
+                                                        <td> {{ orgao.agente.pessoa.casa_numero }}</td>
+                                                        <td> {{ orgao.orgao_colocacao|capfirst }}</td>
+                                                        <td> {{ orgao.agente.nip }}</td>
+                                                        <td> {{ orgao.agente.data_igresso }}</td>
+                                                        <td> {{ orgao.agente.curso|capfirst }}</td>
+                                                        {% endautoescape %}
+                                                    </tr>
+                                                </tbody>
+
+
+                                            </table>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab17">
+                            <div class="content np">
+                                <div class="list list-contacts">
+                                    <a href="#" class="list-item">
+                                        <div class="list-info">
+                                            <img src="/media/{{ orgao.agente.foto_fardado }}" width="50px" class="img-circle" />
+                                        </div>
+                                        <div class="list-text">
+                                            <span class="list-text-name">{{ orgao.agente.pessoa.nome|capfirst }}</span>
+                                            <div class="list-text-info">
+                                                <i class="icon-star"></i> {{ orgao.agente.patente }}
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="">
+                                    <div class="header">
+                                        <h2>List group with dropdown</h2>
+                                    </div>
+                                    <ul class="content list-group">
+                                        <div class="content">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>CURSO</th>
+                                                        <th>DATA DE CONCLUSÃO</th>
+                                                        <th>DISPACHO</th>
+                                                        <th>APROVEITAMENTO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% autoescape on %} {% for forma in formacao %}
+                                                        <td> {{ forma.curso|capfirst|default:"########" }} </td>
+                                                        <td> {{ forma.data_conclusao|default:"########" }}</td>
+                                                        <td> {{ forma.dispacho|default:"########" }}</td>
+                                                        <td> {{ forma.aproveitamento|default:"########" }}</td>
+                                                        {% endfor %} {% endautoescape %}
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

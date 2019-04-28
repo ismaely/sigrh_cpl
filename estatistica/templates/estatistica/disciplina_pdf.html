@@ -1,0 +1,75 @@
+ {% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
+
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-6">
+            <div class="block block-fill ">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-file-text"></span>  Criar listagem de processo disciplinar</b> </h4>
+                </div>
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %}
+                    <form class="" action="{% url 'estatistica:lista-disciplinar' %}" method="POST" target="_blank">
+                        {% csrf_token %} {% autoescape on %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <b>Titulo da Lista:</b> {{ disciplia.titulo }} {{ disciplia.titulo.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6"><b>Motivo disciplinar:</b> {{ disciplia.motivo }} {{ disciplia.motivo.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Ano:</b> {{ disciplia.ano }} {{ disciplia.ano.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <b>Descrição:</b> {{ disciplia.descricao }} {{ disciplia.descricao.errors }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="col-md-5">
+                                </div>
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary " type="submit">Criar</button>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

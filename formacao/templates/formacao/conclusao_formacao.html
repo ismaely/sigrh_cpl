@@ -1,0 +1,102 @@
+{% extends 'formacao/menu_formacao.html' %} {% block corpo %}
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="block block-fill ">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-group"></span>Adicionar conclusão da formação</b> </h4>
+
+                </div>
+
+
+
+                <div class="content controls container">
+                    <p>
+                        {% if messages %}
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                    </p>
+                    {% if forma.id %}
+                    <form class="" action="{% url 'formacao:atualizar-conclusao' forma.id %}" method="POST" enctype="multipart/form-data">
+                        {% else %}
+                        <form class="" action="{% url 'formacao:conclusao-formacao' %}" method="POST" enctype="multipart/form-data">
+                            {% endif %} {% csrf_token %} {% autoescape on %}
+                            <div class="form-row">
+                                {% if forma.id %}
+                                <div class="col-md-6">
+                                    <b>Nip ou Bi Nª:</b> {{ form2.bi }} {{ form2.bi.errors }} </div>
+                                {% else %}
+                                <div class="col-md-6">
+                                    <b>Nip ou Bi Nª:</b> {{ form.bi }} {{ form.bi.errors }}</div>
+                                {% endif %}
+                                <div class="col-md-6"><b>Aproveitamento:</b> {{ form.aproveitamento }} {{ form.aproveitamento.errors }}</div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6"><b>Despacho:</b> {{ form.dispacho }} {{ form.dispacho.errors }} </div>
+                                <div class="col-md-6"><b>Data da conclusão:</b>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><span class="icon-calendar"></span></div>
+                                        {{ form.data_conclusao }} {{ form.data_conclusao.errors }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <span><b>Comprovativo:</b></span>
+                                    <div class="input-group file">
+                                        {{ form.comprovativo }} {{ form.comprovativo.errors }}
+                                        <span class="input-group-btn">
+                                                <button class="btn btn-primary col-md-12" type="button">Ficheiro</button>
+                                            </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-row">
+
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button class="btn btn-primary " type="submit">Salvar</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endautoescape %}
+                        </form>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

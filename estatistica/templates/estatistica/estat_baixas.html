@@ -1,0 +1,38 @@
+{% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
+
+
+<div class="row">
+
+    <div class=" col-md-2">
+
+        <div id="probido_ver" style="display:none">
+            <p id="total_Reforma"> {{ total_Reforma }}</p>
+            <p id="total_Demissao"> {{ total_Demissao }}</p>
+            <p id="total_Transferencia"> {{ total_Transferencia }}</p>
+            <p id="total_Falecimento"> {{ total_Falecimento }}</p>
+            <p id="total_Dificiencia"> {{ total_Dificiencia }}</p>
+            <p id="total_Invalidez"> {{ total_Invalidez }}</p>
+            <p id="total_Outro"> {{ total_Outro }}</p>
+            <p id="total_baixas"> {{ total_baixas }}</p>
+        </div>
+
+    </div>
+    <div class=" col-md-8">
+        <div class="head bg-dot30">
+            <h2></h2>
+
+            <div class="head-panel nm">
+                <div id="baixa_container" width="400" height="280"></<div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-2">
+
+    </div>
+</div>
+
+
+
+{% endblock %}

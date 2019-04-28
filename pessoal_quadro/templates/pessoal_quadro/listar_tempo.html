@@ -1,0 +1,67 @@
+<!--
+@File   : listar_nomiados.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 2018-8-29 19:28:26
+-->
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b> Listar tempo de efetividade</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Tempo no cargo</th>
+                            <th>Tempo na patente</th>
+                            <th>Tempo na policia</th>
+                            <th>Patente</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for key, value in policia.items %} {% for des in lista %} {% if key == des.id %}
+                        <tr>
+                            <td>
+                                {% autoescape on %}
+                                <a><img src="/media/{{ des.foto_fardado }}" width=34px class="img-circle ">
+
+                                </a>
+                            </td>
+                            <td>
+                                {{ des.pessoa.nome|capfirst|safe }}
+                            </td>
+
+                            {% for keys, values in cargo.items %} {% if keys == des.id %}
+
+                            <td>{{ values }}</td>
+                            {% else %}
+                            <td> Sem Cargo</td>
+                            {% endif %} {% endfor %}
+                            <td>#####</td>
+                            <td>{{ value }}</td>
+                            <td>{{ des.patente }}</td>
+                            {% endautoescape %}
+                            <td>
+                                <a href="" class="btn btn-success tip" title="Visualizar informação">
+                                    <span class="icon-user"></span>
+                                </a>
+
+                            </td>
+                        </tr>
+                        {% endif %} {% endfor %} {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

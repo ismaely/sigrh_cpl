@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% load static %} {% block titulo %}
+<title>SALAKIAKU</title>
+{% endblock %} {% block corpo %}
+
+
+<body class="bg-img-num1">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <nav class="navbar brb" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-reorder"></span>                            
+                        </button>
+                        <a class="navbar-brand" href="#"><img src="{% static '/asset/img/poli5.png' %}" width="35px" class="img-circle img-thumbnail" /></a>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="#">
+                                    <span class="icon-home"></span> SALAKIAKU
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-form navbar-right">
+
+                            <li class="dropdown navbar-right">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cog"></span> Definições</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
+                                    <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
+
+                                </ul>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+
+                </ol>
+            </div>
+        </div>
+
+
+        &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+        <div class="row">
+            &nbsp;&nbsp; &nbsp;
+
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="block block-transparent">
+
+                </div>
+
+            </div>
+
+            <div class="col-md-7">
+
+                <div class="block block-transparent">
+                    <div class="header">
+                        <div class="content controls npt">
+                            <h2 class="col-md-12"> ÁREAS DE TRABALHO</h2>
+                        </div>
+                    </div>
+                    &nbsp;&nbsp; &nbsp;
+                    <div class="content gallery-list">
+
+
+                        <div class="gallery-item">
+                            <div class="gallery-image">
+
+                                <a class="" rel="group" href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">
+                                    <img src="{% static '/asset/img/pessoal.jpg' %}" class="img-circle img-thumbnail"></a>
+                            </div>
+
+                            <div class="gallery-content">
+                                <div class="title text-center">PESSOAL E QUADRO</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-image">
+                                <a class="" rel="group" href="{% url 'formacao:area-formacao' %}"><img src="{% static '/asset/img/formacao.jpg' %}" class="img-circle img-thumbnail"></a>
+                            </div>
+
+                            <div class="gallery-content">
+                                <div class="title text-center">FORMAÇÃO</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-image">
+                                <a class="" rel="group" href="{% url 'transferencia:area-transferencia' %}"><img src="{% static '/asset/img/trasf.png' %}" class="img-circle img-thumbnail"></a>
+                            </div>
+
+                            <div class="gallery-content">
+                                <div class="title text-center">TRANSFERÊNCIA</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-image">
+                                <a class="" rel="group" href="{% url 'estatistica:area' %}"><img src="{% static '/asset/img/esta.png' %}" class="img-circle img-thumbnail"></a>
+                            </div>
+
+                            <div class="gallery-content">
+                                <div class="title text-center">ESTATÍSTICA</div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <div class="block block-transparent">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+
+{% endblock %}

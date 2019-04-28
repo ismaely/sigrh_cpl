@@ -1,0 +1,65 @@
+ {% extends 'pessoal_quadro/menu_pessoal.html' %}{% block corpo %}
+<main class="mn-inner">
+    <div class="row">
+        <div class="col s12 m12 l12 ">
+            <div class="card-panel z-depth-4">
+
+                <h4 class="header2"> <i class="medium material-icons">transfer_within_a_station</i> Dados da consulta</h4>
+                <div class="divider teal"></div>
+                <div class="row">
+
+                    <table class="bordered striped responsive-table highlight hoverable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>Genero</th>
+                                <th>Nacionalidade</th>
+                                <th>Data de Nasci...</th>
+                                <th>Data de igresso</th>
+                                <th>Orgão de Colocação</th>
+                                <th>Nivel academico</th>
+                                <th> Patente</th>
+                                <th> Ação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                {% autoescape on %}
+                                <td>{{ list.id }}</td>
+                                <td>
+                                    <a><img src="/media/{{ list.foto_fardado }}" width=52px class="black-text circle responsive-img avatar">
+                                        <span class="black-text">{{ list.agente.pessoa.nome|capfirst|safe }}</span>
+                                    </a>
+                                </td>
+                                <td>{{ list.agente.pessoa.genero }}</td>
+                                <td>{{ list.agente.pessoa.nacionalidade }}</td>
+                                <td>{{ list.agente.pessoa.data_nascimento }}</td>
+                                <td>{{ list.agente.data_igresso }}</td>
+                                <td>{{ list.orgao_colocacao|striptags|capfirst }}</td>
+                                <td>{{ list.agente.nivel_academico }}</td>
+                                <td>{{ list.agente.patente }}</td>
+                                {% endautoescape %}
+                                <td>
+                                    <a href="" class=" blue darken-1 btn waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Editar os Dados">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a href="" class="teal darken-1 btn waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Visualizar Informação">
+                                        <i class="material-icons">assignment_ind</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

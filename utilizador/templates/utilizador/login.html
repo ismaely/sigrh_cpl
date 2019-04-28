@@ -1,0 +1,99 @@
+ {% extends 'base.html' %} {% load static %} {% block titulo %}
+<title>Login Utilizador</title>
+{% endblock %} {% block corpo %}
+
+
+<body class="">
+
+    <div class="container">
+
+        <div class="login-block">
+            <div class="">
+
+                <div class=" col-md-12">
+                    <div class=" col-md-1">
+
+                    </div>
+
+                    <div class=" col-md-6">
+                        <div class="head">
+                            <div class="">
+                                <div class="">
+                                    <img src="{% static '/asset/img/poli5.png' %}" width="200px" height="200px" class="img-circle " />
+                                    <div class="user-change-button">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-3">
+
+                    </div>
+                    <p></p>
+                </div>
+
+                {% if messages %}
+                <div class="block container">
+                    <div class="alert alert-danger">
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="content controls npt">
+
+                    <form action="{% url 'utilizador:login' %}" method="post">
+
+                        {% csrf_token %} {% autoescape on %}
+                        <div class="form-row ">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-user"></span>
+                                    </div>
+                                    {{ form.nome_utilizador }} {{ form.nome_utilizador.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-key"></span>
+                                    </div>
+                                    {{ form.senha }} {{ form.senha.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-block"><span class="icon"></span> &nbsp; Login</button>
+
+                            </div>
+                        </div>
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+
+
+
+
+
+{% endblock %}

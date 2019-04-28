@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    {% block titulo %}
+    <title></title>
+    {% endblock %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+    <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+    <!-- Favicons-->
+    <link rel="icon" href="{% static '/asset/img/favicon/poli5.png' %}" sizes="32x32">
+
+
+    <link href="{% static '/asset/css/stylesheets.css' %}" rel="stylesheet" type="text/css" />
+
+    <script src="{% static '/asset/js/plugins/jquery/jquery.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-ui.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/jquery-migrate.min.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/jquery/globalize.js'%}"></script>
+    <script src="{% static '/asset/js/plugins/bootstrap/bootstrap.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins/uniform/jquery.uniform.min.js'%}"></script>
+
+    <script src="{% static '/asset/js/plugins.js'%}"></script>
+    <script rc="{% static '/asset/js/actions.js'%}"></script>
+    <!--<script type='text/javascript' src="{% static '/asset/js/settings.js'%}"></script>-->
+</head>
+{% block corpo %} {% endblock %}
+
+</html>

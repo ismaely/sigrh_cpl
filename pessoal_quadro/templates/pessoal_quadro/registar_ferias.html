@@ -1,0 +1,59 @@
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %}
+<main class="mn-inner">
+    <div class="row container">
+
+        <div class="col s12 m12 l12">
+            <div class="card-panel z-depth-4">
+                <span class="card-title black-text"> <i class="material-icons medium left">person_add</i> <h5>Registar pedido de licença disciplinar</h5></span>
+                <li class="divider teal"></li>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="red-text {{ message.tags }}" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                </ul>
+                <br> {% endif %} {% if feria %}
+                <form class="" action="{% url 'pessoal_quadro:editar-feria' feria.id %}" method="POST">
+                    {% else %}
+                    <form class="" action="{% url 'pessoal_quadro:registar-feria' %}" method="POST">
+                        {% endif %} {% csrf_token %} {% autoescape on %}
+                        <p>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    {% if feria %}
+                                    <label for="lastName" class="black-text active"> <b>Numero de Agente:</b></label> {{ form2.numero_agente }} {{ form2.numero_agente.errors }} {% else %}
+                                    <label for="lastName" class="black-text active"> <b>Numero de Agente:</b></label> {{ form.numero_agente }} {{ form.numero_agente.errors }} {% endif %}
+
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="lastName" class="black-text active"> <b>Situação da licença:</b></label> {{ form.situacao }} {{ form.situacao.errors }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <label for="lastName" class="black-text active"> <b>Data de inicio:</b></label> {{ form.data_inicio }} {{ form.data_inicio.errors }}
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <label for="lastName" class="black-text active"> <b>Data de fim:</b></label> {{ form.data_fim }} {{ form.data_fim.errors }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 center">
+                                    <button class="blue darken-1 btn waves-effect waves-light z-depth-1" type="submit" name="action">Enviar  </button>
+                                </div>
+                            </div>
+                        </p>
+                        {% endautoescape %}
+                    </form>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+{% endblock %}

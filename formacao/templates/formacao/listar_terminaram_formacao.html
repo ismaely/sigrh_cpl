@@ -1,0 +1,68 @@
+{% extends 'formacao/menu_formacao.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2> <b>Agentes que terminaram a Formação</b></h2>
+            </div>
+            <div class="content">
+
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Data de conclusão</th>
+                            <th>Pais</th>
+                            <th>Instituição</th>
+                            <th>Bolsa</th>
+                            <th>Formação</th>
+                            <th>Situação</th>
+                            <th> Patente</th>
+                            <th> Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for list in lista %}
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ list.agente.foto_fardado }}" width=38px class="img-circle ">
+                                </a>
+                            </td>
+                            <td>
+                                {{ list.agente.pessoa.nome|capfirst|safe }}
+                            </td>
+                            <td> {{ list.data_conclusao }}</td>
+                            <td>{{ list.pais }}</td>
+                            <td> {{ list.instituicao|striptags|capfirst|truncatechars:30 }}</td>
+                            <td> {{ list.razao_posse }}</td>
+                            <td> {{ list.curso }}</td>
+                            {% if list.aproveitamento == 'Aprovado' %}
+                            <td> <span class="success">{{ list.aproveitamento }}</span> </td>
+                            {% else %}
+                            <td> {{ list.aproveitamento }}</td>
+                            {% endif %}
+                            <td> {{ list.agente.patente }}</td>
+                            <td>
+                                <a href="{% url 'formacao:informacao-conclusao' list.agente.pessoa.id %}" class="btn btn-success tip" title="Visualizar informação">
+                                    <span class="icon-user"></span>
+                                </a>
+                                <a href="{% url 'formacao:atualizar-conclusao' list.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                    <span class="icon-edit"></span> </a>
+
+                                <a onclick="remover_conclusao({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

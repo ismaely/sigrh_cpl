@@ -1,0 +1,51 @@
+{% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
+
+
+<div class="row">
+    <div class=" col-md-2">
+
+    </div>
+
+    <div class=" col-md-8">
+        <div class="head bg-dot30">
+            <h2> </h2>
+
+            <div class="head-panel nm">
+                <div id="conclusao_container" width="400" height="280"></<div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-2">
+
+    </div>
+    <!--<div class=" col-md-6">
+        <div class="head bg-dot30">
+            <h2> </h2>
+
+            <div class="head-panel nm">
+                <div id="genero_container" width="400" height="280"></<div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+<div class="row">
+    <div class=" col-md-12">
+        <div id="probido_ver" style="display:none">
+            <p id="total_bolsaInterna"> {{ total_bolsaInterna }}</p>
+            <p id="total_bolsaExterna"> {{ total_bolsaExterna }}</p>
+            <p id="total_desistente"> {{ total_desistente }}</p>
+            <p id="total_aprovados"> {{ total_aprovados }}</p>
+            <p id="total_reprovado"> {{ total_reprovado }}</p>
+            <p id="total_conclusao"> {{ total_conclusao }}</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
