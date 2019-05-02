@@ -14,7 +14,7 @@ class PessoaForm_atualizar(ModelForm):
     nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
     nome_pai = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
     nome_mae = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
-    data_nascimento = forms.CharField(widget=forms.DateInput(attrs={'class': 'datepicker', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_nascimento = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     bi = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'class': 'form-control bi_mask'}))
     estado_civil = forms.CharField(max_length=20, widget=forms.Select(choices=ESTADO_CIVIL))
     provincia = forms.CharField(max_length=25, widget=forms.Select(choices=PROVINCIA))
@@ -30,8 +30,8 @@ class PessoaForm_atualizar(ModelForm):
 
     def clean_data_nascimento(self):
         data_nascimento = self.cleaned_data.get('data_nascimento')
-        data = data_nascimento.split('/')
-        ano = DATA_ANO - int (data[2])
+        data = data_nascimento.split('-')
+        ano = DATA_ANO - int (data[0])
         if ano < 18:
             raise forms.ValidationError(" E menor de idade não pode fazer parte da policia")
         else:
@@ -49,7 +49,7 @@ class AgenteForm_atualizar(ModelForm):
     categoria = forms.CharField(max_length=100, required=False)
     nip = forms.CharField(max_length=8, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}),)
     numero_agente = forms.CharField(max_length=10,  widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_3, validar_numeros])
-    data_igresso = forms.CharField(widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_igresso = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     foto_fardado = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'hidden', 'class': 'form-control', 'id': 'salva2'}))
     foto_civil = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'hidden', 'class': 'form-control', 'id': 'salva1'}))
     #widget=forms.TextInput(attrs={'type': 'hidden'})
@@ -76,7 +76,7 @@ class OrgaoForm_atualizar(ModelForm):
     bi_id = forms.CharField(max_length=14, required=False, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
     #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
-    data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}),)
     #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:

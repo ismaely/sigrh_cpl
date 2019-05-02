@@ -180,7 +180,6 @@
                                     {% if user.email == 'Gestor' %}
                                     <li><a href="{% url 'pessoal_quadro:registar-despromocao' %}">Registar Despromoção</a></li>
                                     {% endif %}
-                                    <li><a href="{% url 'pessoal_quadro:listar-despromocao' %}">Listar Agentes Despromovidos</a></li>
 
                                 </ul>
                             </li>
@@ -198,7 +197,6 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{% url 'utilizador:adicionar-utilizador' %}">Novo Utilizador</a></li>
                                     <li><a href="{% url 'utilizador:listar' %}">Listar Utilizadores</a></li>
-                                    <li><a class="" href="{% url 'pessoal_quadro:gerar-codigo' %}">Codigo da Operações</a></li>
 
                                 </ul>
                             </li>

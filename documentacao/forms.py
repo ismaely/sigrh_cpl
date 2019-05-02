@@ -24,8 +24,8 @@ class DocumentoForm(ModelForm):
 
         }
         widgets = {
-            'data_entrada': forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}),
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'length': 900})
+            'data_entrada': forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'length': 1900})
         }
 
 

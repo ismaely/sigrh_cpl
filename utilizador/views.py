@@ -21,8 +21,6 @@ def perfil_utilizador(request):
         id =0
         #lista = Agente.objects.get(id=int(id))
         dados = {'lista': lista, 'perfil': MENU_PERFIL}
-        #template =  header.rotas.TEMPLATE_UTILIZADOR['utilizador_perfil']
-        #return render(request, template, dados)
     except Exception as e:
         raise e
     template =  header.rotas.TEMPLATE_UTILIZADOR['utilizador_perfil']
@@ -80,7 +78,7 @@ def desativar_conta(request, id):
         return HttpResponseRedirect(reverse('utilizador:listar'))
     
 
-
+@login_required
 def eliminar_conta(request, id):
     if id > 0:
         user = User.objects.filter(id=id).delete()
@@ -91,7 +89,7 @@ def eliminar_conta(request, id):
         return HttpResponseRedirect(reverse('utilizador:listar'))
 
 
-
+@login_required
 def redifinir_senha(request, id):
     if id > 0:
         user = User.objects.get(id=id)

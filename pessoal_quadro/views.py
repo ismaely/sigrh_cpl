@@ -396,22 +396,22 @@ def listar_tempo_efetividade(request):
     agente = Agente.objects.select_related('pessoa').all()
     lista = Nomiacao_Cargo.objects.select_related('agente').all()
     for tempo in agente:
-        anoPol = tempo.data_igresso.split('/')
-        if DATA_ANO == int (anoPol[2]):
+        anoPol = tempo.data_igresso.split('-')
+        if DATA_ANO == int (anoPol[0]):
             tempo_policia[tempo.id] = 'Meses'
             
         else:
-            x = DATA_ANO - int (anoPol[2])
+            x = DATA_ANO - int (anoPol[0])
             tempo_policia[tempo.id] = str(x )+ ' ' + 'Anos'
 
     for temp in lista:
-        ano = temp.data.split('/')
-        if DATA_ANO == int (ano[2]):
+        ano = temp.data.split('-')
+        if DATA_ANO == int (ano[0]):
             tempo_cargo[temp.agente_id] = 'Meses'
             
         else:
             if temp.agente_id is not None:
-                x = DATA_ANO - int (ano[2])
+                x = DATA_ANO - int (ano[0])
                 tempo_cargo[temp.agente_id] = str(x )+ ' ' + 'Anos'
         
 
@@ -801,12 +801,15 @@ def cadastrar(request):
             orgao = form3.save(commit=False)
             orgao.agente_id = agente.id
             orgao.save()
-            if request.POST['foto_civil'] is not None and request.POST['foto_fardado'] is not None:
+            print(request.POST['foto_civil'])
+            print(len(request.POST['foto_fardado']))
+            if len(request.POST['foto_civil']) > 0 and len(request.POST['foto_fardado']) > 0:
                 um, dois = header.views_core.prepara_foto(request)
                 agent = Agente.objects.get(pessoa_id=agente.id)
                 agent.foto_civil = um
                 agent.foto_fardado = dois
                 agent.save()
+
             sweetify.success(request, 'Dados Registado com sucesso do agente!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 

@@ -10,7 +10,7 @@ import header
 class TransferenciaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     orgao_destino = forms.CharField(max_length=100, widget=forms.Select(choices=ORGAO_COMANDOS))
-    data_entrada = forms.CharField(widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_entrada = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     dispacho = forms.CharField(max_length=30, required=False)
     motivo = forms.CharField(max_length=900, required=False, widget=forms.Textarea(attrs={'length':900}))
     arquivo = forms.FileField(required=False)
@@ -28,7 +28,7 @@ class TrocaForm(ModelForm):
     destino_primeiro = forms.CharField(max_length=100, widget=forms.Select(choices=ORGAO_COMANDOS))
     origem_segundo = forms.CharField(max_length=100, required=False)
     destino_segundo = forms.CharField(max_length=100, required=False)
-    data = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data = forms.CharField(required=False, widget=forms.TextInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     motivo = forms.CharField(max_length=2000, required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'length':900}))
     class Meta:
         model = Troca
