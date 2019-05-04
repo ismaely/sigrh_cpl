@@ -253,31 +253,6 @@ def codigo_atualizar_recebe(request):
 
 
 
-#VIEWS QUE VALIDAR O CODIGO PARA FAZER ALTERAÇÃO DO AGENTE DESPROMOVIDO
-"""@login_required
-def codigo_validar_despromocao(request):
-    if request.method == 'POST':
-        dados = dict()
-        cod =[]
-        cod = request.body.decode('utf-8')
-        lista = json.loads(cod)
-        codigo = lista['codigo']
-        ids = lista['id']
-        print(codigo)
-        if header.views_core.validar_codigo_atualizar(codigo):
-            dados = {
-                'validade': True,
-                'msg': 'Acesso aceite'
-            }
-            return JsonResponse(dados)
-        else:
-            dados = {
-                'validade': False,
-                'msg': 'Acesso Negado!.. sem permisão'
-            }
-            return JsonResponse(dados)
-"""
-
 
 #views que vai eleiminar processo disciplinar
 def eliminar_processoDiciplinar(request):
@@ -401,8 +376,8 @@ def listar_tempo_efetividade(request):
             tempo_policia[tempo.id] = 'Meses'
             
         else:
-            x = DATA_ANO - int (anoPol[0])
-            tempo_policia[tempo.id] = str(x )+ ' ' + 'Anos'
+            x_anos = DATA_ANO - int (anoPol[0])
+            tempo_policia[tempo.id] = str(x_anos)+ ' ' + 'Anos'
 
     for temp in lista:
         ano = temp.data.split('-')
@@ -411,8 +386,8 @@ def listar_tempo_efetividade(request):
             
         else:
             if temp.agente_id is not None:
-                x = DATA_ANO - int (ano[0])
-                tempo_cargo[temp.agente_id] = str(x )+ ' ' + 'Anos'
+                x_anos = DATA_ANO - int (ano[0])
+                tempo_cargo[temp.agente_id] = str(x_anos )+ ' ' + 'Anos'
         
 
     template = TEMPLATE_PESSOAQUADRO['listar_tempo']
@@ -477,6 +452,7 @@ def listarReforma(request):
     dados = []
     try:
         dados = Agente.objects.select_related('pessoa').all()
+        #anticipada = Reforma.objects.select_related('agente').filter(reforma='Anticipada').all()
         anticipada = Reforma.objects.filter(reforma='Anticipada').all()
         for k in  dados:
             if header.views_core.retorna_idade(k.pessoa.data_nascimento) > 50:
@@ -489,9 +465,9 @@ def listarReforma(request):
                 except Reforma.DoesNotExist:
                     inser = Reforma.objects.create(agente_id=k.id)
         
-        for p, k in enumerate(anticipada, 1):
-            idade[k.agente_id] = 'Anticipada'
-            
+        for k in anticipada:
+            #ida = header.views_core.retorna_idade(k.agente_id.pessoa_id.data_nascimento)
+            idade[k.agente_id] = 'Anticipada/ '
         
     except Exception as e:
         print(e)
@@ -680,15 +656,18 @@ def registar_baixa(request):
     form = BaixaForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            baixa = form.save(commit=False)
-            motivo = form.cleaned_data.get('motivo_baixa')
-            tipo = form.cleaned_data.get('tipo_invalidez')
-            baixa.agente_id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
-            if motivo == 'Invalidez' and tipo == '':
-                baixa.tipo_invalidez = 'Parcial'
-            baixa.save()
-            sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='3100')
-            return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
+            try:
+                baixa = form.save(commit=False)
+                motivo = form.cleaned_data.get('motivo_baixa')
+                tipo = form.cleaned_data.get('tipo_invalidez')
+                baixa.agente_id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
+                if motivo == 'Invalidez' and tipo == '':
+                    baixa.tipo_invalidez = 'Parcial'
+                baixa.save()
+                sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='3100')
+                return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
+            except Exception as e:
+                messages.warning(request, ' O numero de Agente esta errado')
 
     context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['baixa']
@@ -809,6 +788,12 @@ def cadastrar(request):
                 agent.foto_civil = um
                 agent.foto_fardado = dois
                 agent.save()
+            else:
+                agent = Agente.objects.get(pessoa_id=agente.id)
+                agent.foto_civil = "foto/user.jpg"
+                agent.foto_fardado = "foto/user.jpg"
+                agent.save()
+
 
             sweetify.success(request, 'Dados Registado com sucesso do agente!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))

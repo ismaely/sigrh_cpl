@@ -153,8 +153,8 @@ def retorna_numero_agente_id(value):
 # função que vai retorna a idade
 def retorna_idade(value):
     aux = []
-    aux = value.split('/')
-    return DATA_ANO - int (aux[2])
+    aux = value.split('-')
+    return DATA_ANO - int (aux[0])
 
 
 

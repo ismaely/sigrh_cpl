@@ -90,7 +90,7 @@ class OrgaoForm(ModelForm):
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
     #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
     data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
-    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}),)
+    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999/99'"}),)
     #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:
         model = Orgao
@@ -110,19 +110,7 @@ class BaixaForm(ModelForm):
         model = Baixa
         fields = ['data_entrada', 'data_oucorrencia', 'motivo_baixa', 'descricao', 'dispacho', 'tipo_invalidez']
 
-    """def clean_data_oucorrencia(self):
-        data_oucorrencia = self.cleaned_data.get('data_oucorrencia')
-        data_entrada = self.cleaned_data.get('data_entrada')
-        data1 = data_oucorrencia.split('/')
-        data2 = data_entrada.split('/')
-        if data1[0] > data2[0] and data1[2] == data2[2]:
-            raise forms.ValidationError(" A data não é valida, verfica a data actual")
-        elif data1[1] > data2[1] and data1[2] > data2[2]:
-            raise forms.ValidationError(" A data não é valida, verifica a data")
-        elif data1[2] > data2[2]:
-            raise forms.ValidationError(" A data não é valida, verifica a data")
-        else:
-            return data_oucorrencia"""
+    
 
 
 

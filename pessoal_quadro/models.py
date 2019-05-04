@@ -53,7 +53,7 @@ class Orgao(models.Model):
     orgao_colocacao = models.CharField(max_length=60, null=True, default="cpl", choices=ORGAO_COMANDOS)
     #localizacao = models.CharField(max_length=40, blank=True, null=True, default="sem local")
     data_colocacao = models.CharField(max_length=20,  blank=True, null=True, default=DATE_FORMAT)
-    dispacho = models.CharField(max_length=20,  blank=True, null=True, default="Sem dispacho")
+    dispacho = models.CharField(max_length=18,  blank=True, null=True, default="Sem despacho")
     #unidade = models.CharField(max_length=90,  blank=True, null=True, default="cpl")
 
     def __str__(self):
@@ -68,7 +68,7 @@ class Baixa(models.Model):
     data_oucorrencia = models.CharField(max_length=20)
     motivo_baixa = models.CharField(max_length=30, choices=MOTIVO_BAIXA)
     descricao = models.CharField(max_length=420, null=True, default="Não descrita")
-    dispacho = models.CharField(max_length=30)
+    dispacho = models.CharField(max_length=18)
     tipo_invalidez = models.CharField(max_length=50, null=True, choices=INVALIDEZ, default="Não descrita")
 
     def __str__(self):
@@ -83,7 +83,7 @@ class Despromocao(models.Model):
     motivo = models.CharField(max_length=30 )
     suspensao = models.CharField(max_length=500, choices=SUSPENSAO)
     descricao = models.CharField(max_length=1000, null=True, default="#######")
-    dispacho = models.CharField(max_length=20, default="Sem despacho")
+    dispacho = models.CharField(max_length=18, default="Sem despacho")
 
     def __str__(self):
         return '%d' % (self.id)
@@ -106,7 +106,7 @@ class Reforma(models.Model):
     motivo = models.CharField(max_length=100, blank=True, null=True, default="Outro", choices=MOTIVO_REFORMA)
     reforma = models.CharField(max_length=20, blank=True, null=True, default="sim")
     data = models.CharField(max_length=10, null=True, default=DATE_FORMAT)
-    dispacho = models.CharField(max_length=20, null=True, default="Sem dispacho")
+    dispacho = models.CharField(max_length=18, null=True, default="Sem despacho")
     descricao = models.CharField(max_length=3500, null=True, default="Sem descrição")
 
     def __str__(self):
@@ -119,7 +119,7 @@ class Nomiacao_Cargo(models.Model):
     data = models.CharField(max_length=20)
     tipo = models.CharField(max_length=100, choices=NOMIACAO_TIPO)
     categoria = models.CharField(max_length=100, choices=NOMIACAO_CATEGORIA)
-    dispacho = models.CharField(max_length=20, null=True, default="Sem dispacho")
+    dispacho = models.CharField(max_length=18, null=True, default="Sem despacho")
     descricao = models.CharField(max_length=3500, null=True, default="#######")
 
     def __str__(self):
@@ -129,7 +129,7 @@ class Nomiacao_Cargo(models.Model):
 
 class Patentiamento(models.Model):
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
-    dispacho = models.CharField(max_length=20, null=True, default="Sem dispacho")
+    dispacho = models.CharField(max_length=18, null=True, default="Sem despacho")
     data = models.CharField(max_length=20, null=True, default=DATE_FORMAT)
 
 
@@ -141,7 +141,7 @@ class Disciplina(models.Model):
     data = models.CharField(max_length=20)
     motivo = models.CharField(max_length=4000, choices=MOTIVO_DISCILINAR)
     pena = models.CharField(max_length=800, choices=PENAS_DISCIPLINAR)
-    dispacho = models.CharField(max_length=20, null=True, default="Sem dispacho")
+    dispacho = models.CharField(max_length=18, null=True, default="Sem despacho")
     descricao = models.CharField(max_length=9500, null=True, default=" ")
     arquivo = models.FileField(upload_to="disciplina/%Y/", blank=True, null=True)
 
@@ -149,13 +149,5 @@ class Disciplina(models.Model):
         return '%d' % (self.id)
 
 
-"""
-class Avaliacao(models.Model):
-    agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
-    primeira_nota = models.CharField(max_length=4, null=True, default='0')
-    segunda_nota = models.CharField(max_length=4, null=True, default='0')
-    media = models.CharField(max_length=4, null=True, default="0")
 
-    def __str__(self):
-        return '%d' % (self.id)"""
 
