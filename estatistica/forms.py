@@ -61,7 +61,7 @@ class FormacaoLista_Form(forms.Form):
         if ANO.count((desp[2],desp[2])) == 0:
             ANO.append((str(desp[0]),str(desp[0])))
     for p in Formacao_conclusao.objects.select_related('agente').all():
-        desp = p.data_conclusao.split('/')
+        desp = p.data_conclusao.split('-')
         if ANO.count((desp[2],desp[2])) == 0:
             ANO.append((str(desp[2]),str(desp[2])))
     tipo = forms.CharField(max_length=100, widget=forms.Select(choices=TIPO_LISTA_FORMACAO))

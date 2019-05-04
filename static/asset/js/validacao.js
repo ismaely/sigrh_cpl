@@ -61,7 +61,8 @@ nome_mae.blur(validar_nomeMae);
 email.change(validar_email);
 residencia.keyup(validar_residencia);
 casa_numero.blur(validar_numeroCasa);
-data_nascimento.change(validar_dataNascimento);
+data_nascimento.blur(validar_dataNascimento);
+
 
 numero_caixa_social.blur(validar_numero_caixa_social);
 curso.keyup(validar_curso);
@@ -69,7 +70,7 @@ funcao.blur(validar_funcao);
 datas.blur(validar_datas_gerais);
 //formacao_bi_idade.blur(validar_bi_consultarIdade);
 
-data_igresso.keyup(validar_data_igresso);
+data_igresso.blur(validar_data_igresso);
 bi_agente.keyup(validar_bi_numeroAgente);
 //nip.keyup(validar_nip);
 telefone.keyup(validar_telefone);
@@ -345,27 +346,22 @@ function validar_dataNascimento(){
     var ano_data, dia, mes, idade, vetor_data, ano_atual;
     ano_atual = data_atual.getFullYear();
 
-    if (data_nascimento.val() != ''){
-
-        if(regex_data.test(data_nascimento.val())){
-            vetor_data = data_nascimento.val().split("/");
-            dia = parseInt(vetor_data[0], 10);
+    if (data_nascimento.val() != " "){
+           vetor_data = data_nascimento.val().split("-");
+            dia = parseInt(vetor_data[2], 10);
             mes = parseInt(vetor_data[1], 10);
-            ano_data = parseInt(vetor_data[2], 10);
+            ano_data = parseInt(vetor_data[0], 10);
             idade = ano_atual - ano_data;
             if( ano_data == ano_atual || ano_data > ano_atual || ano_data < 1550 || idade <= 17 ){
-                $('#id_data_nascimento').parent().children("span").text("A Data não é valida. Menor d idade.").show();
+                $('#id_data_nascimento').parent().children("span").text("A Data não é valida, Menor de idade.").show();
                 //data_nascimento.focus();
                 return false;
             }
             else{
-              
                     $("#id_data_nascimento").parent().children("span").text("").hide();
                     return true;
-                
             }
-        }
-
+       
     }else{
         data_nascimento.focus();
         return false;
@@ -374,39 +370,34 @@ function validar_dataNascimento(){
 
 // validar data de igresso na policia
 function validar_data_igresso(){
-    var ano_data, dia, mes, idade, vetor_data, ano_atual, vetor_dataNasci, anoNasci, ano_maior;
+    var ano_data, dia, mes, idade, vetor_data, ano_atual, vetor_dataNasci, anoNasci;
     ano_atual = data_atual.getFullYear();
-    vetor_dataNasci = data_nascimento.val().split("/");
-    anoNasci = parseInt(vetor_dataNasci[2], 10);
+    vetor_dataNasci = data_nascimento.val().split("-");
+    anoNasci = parseInt(vetor_dataNasci[0], 10);
 
-    if (data_igresso.val() != ' '){
-        if(regex_data.test(data_igresso.val())){
-            vetor_data = data_igresso.val().split("/");
-            dia = parseInt(vetor_data[0], 10);
+    if (data_igresso.val() != " "){
+        //if(regex_data.test(data_igresso.val())){
+            vetor_data = data_igresso.val().split("-");
+            dia = parseInt(vetor_data[2], 10);
             mes = parseInt(vetor_data[1], 10);
-            ano_data = parseInt(vetor_data[2], 10);
+            ano_data = parseInt(vetor_data[0], 10);
             idade = ano_atual - ano_data;
-            if(dia > 32 || mes > 12 || ano_data > ano_atual || ano_data < 1600){
+            if(dia >=32 || mes > 12 || ano_data > ano_atual || ano_data < 1600 ){
                 $('#id_data_igresso').parent().children("span").text("A Data de igresso não é valida..").show();
                 data_igresso.focus();
                 return false;
              }
-             if (idade < 15) {
-                $('#id_data_igresso').parent().children("span").text("É Menor de idade, não é permitido").show();
+             if (vetor_data == vetor_dataNasci) {
+                $('#id_data_igresso').parent().children("span").text("A data de igresso não pode ser igual a data de nascimento").show();
                 data_igresso.focus();
                 return false;
             }
             else{
-                if(ano_data == vetor_dataNasci){
-                    $('#id_data_igresso').parent().children("span").text("A data de igresso não pode ser igual a data de nascimento").show();
-                    data_igresso.focus();
-                    return false;
-                }else{
-                    $("#id_data_igresso").parent().children("span").text("").hide();
-                    return true;
-                }
+               
+                $("#id_data_igresso").parent().children("span").text("").hide();
+                return true;
+                
             }
-        }
 
     }else{
         data_igresso.focus();

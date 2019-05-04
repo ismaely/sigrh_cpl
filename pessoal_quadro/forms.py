@@ -30,8 +30,8 @@ class PessoaForm(ModelForm):
 
     def clean_data_nascimento(self):
         data_nascimento = self.cleaned_data.get('data_nascimento')
-        data = data_nascimento.split('/')
-        ano = DATA_ANO - int (data[2])
+        data = data_nascimento.split('-')
+        ano = DATA_ANO - int (data[0])
         if ano < 18:
             raise forms.ValidationError(" E menor de idade não pode fazer parte da policia")
         else:
@@ -89,7 +89,7 @@ class OrgaoForm(ModelForm):
     bi = forms.CharField(max_length=14, required=False, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi])
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
     #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
-    data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}),)
     #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:
@@ -100,8 +100,8 @@ class OrgaoForm(ModelForm):
 
 class BaixaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
-    data_entrada = forms.CharField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker', 'data-inputmask': "'mask' : '99/99/9999'"}))
-    data_oucorrencia = forms.CharField(widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_entrada = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data_oucorrencia = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     motivo_baixa = forms.CharField(max_length=60, widget=forms.Select(choices=MOTIVO_BAIXA))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'length':1000}))
     dispacho = forms.CharField(max_length=10)
@@ -128,7 +128,7 @@ class BaixaForm(ModelForm):
 
 class DespromocaoForm(ModelForm): 
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control, bi_agente'}), validators=[validar_bi,consultar_bi_existe])
-    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     motivo = forms.CharField(max_length=30, widget=forms.Select(choices=MOTIVO_DESPROMOCAO))
     suspensao = forms.CharField(max_length=200, widget=forms.Select(choices=SUSPENSAO))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control', 'length':2000}))
@@ -139,8 +139,8 @@ class DespromocaoForm(ModelForm):
 
     def clean_data(self):
         data = self.cleaned_data.get('data')
-        data1 = data.split('/')
-        if int (data1[2]) < DATA_ANO:
+        data1 = data.split('-')
+        if int (data1[0]) < DATA_ANO:
             raise forms.ValidationError(" A data não é valida, verifica..")
         return data
 
@@ -160,7 +160,7 @@ class FeriaForm(ModelForm):
 class Nomiacao_cargoForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi, consultar_bi_existe])
     cargo = forms.CharField(max_length=200, widget=forms.Select(choices=CARGOS_POLICIAL))
-    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     tipo = forms.CharField(max_length=60, widget=forms.Select(choices=NOMIACAO_TIPO))
     categoria = forms.CharField(max_length=60, widget=forms.Select(choices=NOMIACAO_CATEGORIA))
     dispacho = forms.CharField(max_length=20)
@@ -181,7 +181,7 @@ class Reforma_anticipadaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_REFORMA))
     reforma = forms.CharField(max_length=30, required=False )
-    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'class': 'form-control docs-date', 'name': 'date'}))
+    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     dispacho = forms.CharField(max_length=20)
     descricao = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'form-control', 'length':3500}))
     class Meta:
@@ -206,7 +206,7 @@ class Atualizar_patenteForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi])
     patente = forms.CharField(max_length=100, widget=forms.Select(choices=PATENTE))
     dispacho = forms.CharField(max_length=20)
-    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     class Meta:
         model = Patentiamento
         fields = ['dispacho', 'data']
@@ -216,7 +216,7 @@ class Atualizar_patenteForm(ModelForm):
 class DisciplinaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     numero_processo = forms.CharField(max_length=30, required=False )
-    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'class': 'form-control docs-date', 'name': 'date'}))
+    data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_DISCILINAR))
     pena = forms.CharField(required=True, widget=forms.Select(choices=PENAS_DISCIPLINAR))
     dispacho = forms.CharField(max_length=20)

@@ -39,8 +39,8 @@ class Agente(models.Model):
     numero_agente = models.IntegerField(unique='true')
     nip = models.CharField(max_length=20, blank=True, null=True, default="Não indetificado")
     data_igresso = models.CharField(max_length=20)
-    foto_fardado = models.FileField(upload_to="%Y/", blank=True, null=True, default="user.jpg")
-    foto_civil = models.FileField(upload_to="%Y/", blank=True, null=True, default="user.jpg")
+    foto_fardado = models.FileField(upload_to="foto/", blank=True, null=True, default="user.jpg")
+    foto_civil = models.FileField(upload_to="foto/", blank=True, null=True, default="user.jpg")
 
     def __str__(self):
         return '%d' % (self.numero_agente)

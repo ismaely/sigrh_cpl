@@ -321,13 +321,13 @@ def prepara_foto(request):
     imagem2 = img2[inicio2+1:]
 
     
-    with open("./media/"+ str(DATA_ANO) + "/"  + str(nome[0]) + "_" + str(random.random()) + ".png", "wb") as fh:
+    with open("./media/foto/"+ str(nome[0]) + "_" + str(random.random()) + ".png", "wb") as fh:
         fh.write(base64.b64decode(imagem))
         foto = str(fh).split('=')
         um = foto[1].replace(">", '')
 
     
-    with open("./media/"+ str(DATA_ANO) + "/" + str(nome[0]) + "_" + str(random.random()) + ".png", "wb") as gh:
+    with open("./media/foto/"+ str(nome[0]) + "_" + str(random.random()) + ".png", "wb") as gh:
         gh.write(base64.b64decode(imagem2))
         foto2 = str(gh).split('=')
         dois =  foto2[1].replace(">", '')

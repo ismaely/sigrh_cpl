@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </p> {% endif %}{% if docs.id %}
-                    <form class="" action="{% url 'documentacao:atualizar-documento' docs.id %}" method="POST" enctype="multipart/form-data">
+                    <form class="" action="{% url 'formacao:atualizar-documento' docs.id %}" method="POST" enctype="multipart/form-data">
                         {% else %}
                         <form class="" action="{% url 'formacao:documento' %}" method="POST" enctype="multipart/form-data">
                             {% endif %} {% csrf_token %} {% autoescape on %}
@@ -63,7 +63,7 @@
                                     <div class="col-md-5">
                                     </div>
                                     <div class="col-md-5">
-                                        <button class="btn btn-primary " type="submit">Registar</button>
+                                        <button class="btn btn-primary " type="submit">Salvar</button>
                                     </div>
                                     <div class="col-md-2">
                                     </div>

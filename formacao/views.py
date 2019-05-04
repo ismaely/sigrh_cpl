@@ -205,7 +205,6 @@ def atualizar_selecionado_formacao(request, id):
             desp = form.save(commit=False)
             desp.agente_id = agen
             desp.save()
-            #template = TEMPLATE_UTILIZADOR['perfil_rota']
             sweetify.success(request, 'Daods atualizado com sucesso!....', button='Ok', timer='3300')
             return HttpResponseRedirect(reverse('formacao:area-formacao'))
         else:

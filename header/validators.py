@@ -69,14 +69,14 @@ def validar_data_nascimento_igresso_colocacao(request):
     nascimento = request.POST['data_nascimento']
     igresso = request.POST['data_igresso']
     colocacao = request.POST['data_colocacao']
-    nascimento = nascimento.split("/")
-    igresso = igresso.split("/")
-    colocacao = colocacao.split("/")
-    igress = int (igresso[2]) - int (nascimento[2])
-    if nascimento[2] > igresso[2] or nascimento[2] > colocacao[2]:
+    nascimento = nascimento.split("-")
+    igresso = igresso.split("-")
+    colocacao = colocacao.split("-")
+    igress = int (igresso[0]) - int (nascimento[0])
+    if nascimento[0] > igresso[0] or nascimento[0] > colocacao[0]:
         messages.warning(request, ' O ano de nascimento não poder ser maior que ano de igresso, nem ano de Colocação....')
         return False
-    elif igresso[2] > colocacao[2] or igress < 18:
+    elif igresso[0] > colocacao[0] or igress < 18:
         messages.warning(request, ' a data de igresso não é valida pelo ano de Colocação....')
         return False
     elif igress < 18:
