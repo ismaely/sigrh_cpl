@@ -3,7 +3,7 @@ from header.includes import *
 
 @login_required
 def area_transferencia(request):
-    dados = {'transferencias': MENU_TRANSFERENCIA}
+    dados = {'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_UTILIZADOR['tras']
     return render(request, template, dados)
 
@@ -60,7 +60,7 @@ def adicionar_troca(request):
            except Exception as e:
                print(e)
     
-    context = {'form': form, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['troca']
     return render(request, template, context)
                
@@ -84,7 +84,7 @@ def registar_transferencia(request):
             except Exception as e :
                 messages.warning(request, ' Não existe agente com esse numero no sistema...')
         
-    context = {'form': form, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferencia']
     return render(request, template, context)
 
@@ -110,7 +110,7 @@ def atualizar_pedido_transferencia(request, id):
     pes = Pessoa.objects.get(id=pedido.agente_id)
     #pes = header.views_core.retorna_nip_bi()
     pessoa = PessoaForm(request.POST or None, instance=pes)
-    context = {'form': form, 'form2': pessoa, 'pedido': pedido, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'form': form, 'form2': pessoa, 'pedido': pedido, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferencia']
     return render(request, template, context)
 
@@ -125,7 +125,7 @@ def atualizar_documento(request, id):
             sweetify.success(request, 'Dados atualizado com sucesso!....', button='Ok')
             return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
 
-    dados = {'form': form, 'docs': docs, 'transferencias': MENU_TRANSFERENCIA}
+    dados = {'form': form, 'docs': docs, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['docs']
     return render(request, template, dados)
 
@@ -142,7 +142,8 @@ def consultar_documento(request):
                 return render(request, template, dados)
 
     except Documento.DoesNotExist:
-        print('erro na consulta de documento')
+        messages.warning(request, ' Falha! Não existe Documento...')
+        #sweetify.sweetalert(request, 'Falha! Não existe', type="error", button='Ok', timer='3600')
 
     dados = {'form': form, 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['consultar_doc']
@@ -156,7 +157,7 @@ def listar_documentos(request):
     try:
         lista = []
         lista = documentacao.views.listar_documento()
-        dados = {'listar': lista , 'transferencias': MENU_TRANSFERENCIA }
+        dados = {'listar': lista, 'fotos':request.session['salakiaku'],  'transferencias': MENU_TRANSFERENCIA }
         template = TEMPLATE_TRANSFERENCIA['listar_docs']
         return render(request, template, dados)
 
@@ -170,7 +171,7 @@ def listar_documentos(request):
 @login_required
 def listar_pedido_transferencia(request):
     lista = Transferencia.objects.select_related('agente').all().order_by('-id')
-    context = {'lista': lista, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['listar_pedido']
     return render(request, template, context)
 
@@ -180,7 +181,7 @@ def listar_pedido_transferencia(request):
 @login_required
 def listar_agentes_transferido(request):
     lista = Transferencia.objects.select_related('agente').all()
-    context = {'lista': lista, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferido']
     return render(request, template, context)
 
@@ -190,7 +191,7 @@ def listar_agentes_transferido(request):
 @login_required
 def listar_troca_transferencia(request):
     lista = Troca.objects.all()
-    context = {'lista': lista, 'transferencias': MENU_TRANSFERENCIA}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['listar_troca']
     return render(request, template, context)
 
@@ -206,7 +207,7 @@ def consultar_transferencia(request):
                 agen = Agente.objects.get(nip=value)
                 if agen.nip is not None:
                     tras = Transferencia.objects.filter(agente_id=agen.id)
-                    context = {'lista':tras, 'transferencias': MENU_TRANSFERENCIA}
+                    context = {'lista':tras, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
                     template = TEMPLATE_TRANSFERENCIA['listar_pedido']
                     return render(request, template, context)
             except Exception as e:
@@ -214,7 +215,7 @@ def consultar_transferencia(request):
                     agent = Agente.objects.get(numero_agente=value)
                     if agent.nip is not None:
                         tras = Transferencia.objects.filter(agente_id=agent.id)
-                        context = {'lista':tras, 'transferencias': MENU_TRANSFERENCIA}
+                        context = {'lista':tras, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
                         template = TEMPLATE_TRANSFERENCIA['listar_pedido']
                         return render(request, template, context)
                 except Agente.DoesNotExist:
@@ -237,7 +238,7 @@ def registar_documentos(request):
                 sweetify.success(request, 'Documento Cadastrado com sucesso...', button='Ok')
                 return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
 
-    dados = {'form': form, 'transferencias': MENU_TRANSFERENCIA}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template =TEMPLATE_TRANSFERENCIA['docs']
     return render(request, template, dados)
 

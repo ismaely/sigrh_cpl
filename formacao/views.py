@@ -2,7 +2,7 @@ from header.includes import *
 
 @login_required
 def area_formacao(request):
-    dados = {'formacaoes': MENU_FORMACAO }
+    dados = {'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
     template = TEMPLATE_UTILIZADOR['fm']
     return render(request, template, dados)
 
@@ -12,7 +12,7 @@ def area_formacao(request):
 def visualizar_informacao_conclusao(request, id=None):
     lista = Orgao.objects.select_related('agente').get(agente_id=id)
     formacao = Formacao_conclusao.objects.all().filter(agente_id=id)
-    dados = {'lista': lista, 'formacao': formacao, 'formacaoes': MENU_FORMACAO}
+    dados = {'lista': lista, 'formacao': formacao, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
     template = TEMPLATE_FORMACAO['informacao']
     return render(request, template, dados)
 
@@ -42,7 +42,7 @@ def buscar_selecionado_atualizar(request):
             orgao = Orgao.objects.select_related('agente').get(agente_id=ids)
             #presenca = Presenca.objects.all()
             template = TEMPLATE_FORMACAO['selecionar']
-            return render(request, template,{'lista': lista, 'orgao':orgao})
+            return render(request, template,{'lista': lista, 'orgao':orgao, 'fotos':request.session['salakiaku']})
         except Selecionado_formacao.DoesNotExist:
             sweetify.error(request, 'Não existe formação..', button='Ok', timer='4000')
             return HttpResponseRedirect(reverse('formacao:area-formacao'))
@@ -63,7 +63,7 @@ def listar_agente_selecionado(request):
     
     #limpar = lista.select_related(None)
     template = TEMPLATE_FORMACAO['selecionar']
-    return render(request, template,{'lista': lista, 'presenca': presenca, 'formacaoes': MENU_FORMACAO})
+    return render(request, template,{'lista': lista, 'presenca': presenca, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']})
 
 
 
@@ -72,7 +72,7 @@ def listar_agente_selecionado(request):
 def listar_agente_formacao(request):
     try:
         lista = Presenca.objects.all()
-        dados = {'lista': lista, 'formacaoes': MENU_FORMACAO}
+        dados = {'lista': lista, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
         template = TEMPLATE_FORMACAO['listar_agente']
         return render(request, template, dados)
     except Exception as e:
@@ -84,7 +84,7 @@ def listar_agente_formacao(request):
 def listar_todos_terminaram_formacao(request):
     try:
         lista = Formacao_conclusao.objects.select_related('agente').all()
-        dados = {'lista': lista, 'formacaoes': MENU_FORMACAO}
+        dados = {'lista': lista, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
         template = TEMPLATE_FORMACAO['listar_terminam']
         return render(request, template, dados)
     except Exception as e:
@@ -97,7 +97,7 @@ def listar_documentos(request):
     try:
         lista = []
         lista = documentacao.views.listar_documento()
-        dados = {'listar': lista , 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+        dados = {'listar': lista , 'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos':request.session['salakiaku']}
         template = TEMPLATE_FORMACAO['listar_docs']
         return render(request, template, dados)
 
@@ -212,7 +212,7 @@ def atualizar_selecionado_formacao(request, id):
 
     pes = Pessoa.objects.get(id=selec.agente_id)
     pessoa = PessoaForm(request.POST or None, instance=pes)
-    dados = {'form': form, 'form2': pessoa, 'forma': selec, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'form2': pessoa, 'forma': selec, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
     template = TEMPLATE_FORMACAO['adicionar']
     return render(request, template, dados)
 
@@ -227,7 +227,7 @@ def registar_documentos(request):
                 sweetify.success(request, 'Documento Cadastrado com sucesso...', button='Ok')
                 return HttpResponseRedirect(reverse('formacao:area-formacao'))
 
-    dados = {'form': form, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'formacaoes': MENU_FORMACAO, 'fotos':request.session['salakiaku']}
     template =TEMPLATE_FORMACAO['docs']
     return render(request, template, dados)
 
@@ -252,7 +252,7 @@ def atualizar_conclusao_formacao(request, id):
 
     pes = Pessoa.objects.get(id=conclui.agente_id)
     pessoa = PessoaForm(request.POST or None, instance=pes)
-    dados = {'form': form, 'form2': pessoa, 'forma': conclui, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'form2': pessoa, 'forma': conclui, 'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO}
     template = TEMPLATE_FORMACAO['conclusao']
     return render(request, template, dados)
 
@@ -268,7 +268,7 @@ def atualizar_documento(request, id):
             sweetify.success(request, 'Dados atualizado com sucesso!....', button='Ok')
             return HttpResponseRedirect(reverse('formacao:area-formacao'))
 
-    dados = {'form': form, 'docs': docs, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'docs': docs, 'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO}
     template = TEMPLATE_FORMACAO['docs']
     return render(request, template, dados)
 
@@ -297,7 +297,7 @@ def registar_conclusao_formacao(request):
                 sweetify.success(request, 'Conclusão da formação adicionado com sucesso!....', button='Ok', timer='3300')
                 return HttpResponseRedirect(reverse('formacao:area-formacao'))
 
-    dados = {'form': form, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO}
     template = TEMPLATE_FORMACAO['conclusao']
     return render(request, template, dados)
 
@@ -318,7 +318,7 @@ def adicionar_agente_formacao(request):
                 sweetify.success(request, 'Agente adicionado com sucesso!....', button='Ok', timer='3300')
                 return HttpResponseRedirect(reverse('formacao:area-formacao'))
 
-    dados = {'form': form, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO}
     template = TEMPLATE_FORMACAO['adicionar']
     return render(request, template, dados)
 
@@ -338,7 +338,7 @@ def consultar_documento(request):
     except Documento.DoesNotExist:
         print('erro na consulta de documento')
 
-    dados = {'form': form, 'formacaoes': MENU_FORMACAO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO}
     template = TEMPLATE_FORMACAO['consultar_doc']
     return render(request, template, dados)
 
@@ -361,7 +361,7 @@ def consultar_formacao(request):
                 return HttpResponseRedirect(reverse('formacao:area-formacao'))
    
     template = TEMPLATE_FORMACAO['consultar']
-    return render(request, template, {'formacaoes': MENU_FORMACAO})
+    return render(request, template, {'fotos':request.session['salakiaku'], 'formacaoes': MENU_FORMACAO})
 
 
 

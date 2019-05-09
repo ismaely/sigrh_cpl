@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sessions.backends.signed_cookies',
+    'django.contrib.sessions.backends.cache',
     'sweetify',
     'header',
     'pessoal_quadro',
@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'formacao',
     'documentacao',
     'estatistica',
-    'chartjs',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +98,13 @@ TEMPLATES = [
     },
 ]
 
+#Cache de Memória Local , para usar no desempenho e nas seçoes
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 WSGI_APPLICATION = 'sigrh_cpl.wsgi.application'
 
 
@@ -189,4 +195,18 @@ DATA_ANO = timezone.now().year
 DATA_MES = timezone.now().month
 DATA_HORA_ZONA = timezone.now()
 DATE_INPUT_FORMATAR = ('%d/%m/%Y')
+
+# limite and max uplode file
+"""
+    2.5MB - 2621440
+    5MB - 5242880
+    10MB - 10485760
+    20MB - 20971520
+    50MB - 5242880
+    100MB 104857600
+    250MB - 214958080
+    500MB - 429916160
+"""
+MAX_UPLOAD_SIZE = 5242880
+CONTENT_TYPES = ['application/pdf', 'application/docx', 'application/pptx']
 

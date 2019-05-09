@@ -28,7 +28,7 @@ class SelecionarForm(ModelForm):
 class FormacaoConlusao_Form(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class':'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     aproveitamento = forms.CharField(max_length=40, widget=forms.Select(choices=APROVEITAMENTO,attrs={'class': 'form-control'}))
-    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={ 'class':'form-control'}))
+    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     data_conclusao = forms.CharField(label="Data:", widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     comprovativo = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'type':'file', 'name':'file', 'class':'form-control'}))
     razao_posse = forms.CharField(max_length=40, required=False)

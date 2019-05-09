@@ -68,7 +68,7 @@
 
                            {{ user.username }}
 
-                            <img src="{% static '/asset/img/user.jpg' %}" width="35px" class="img-circle " />
+                            <img src="/media/{{ fotos.foto_fardado }}" width="35px" class="img-circle " />
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
                         <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>

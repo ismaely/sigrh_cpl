@@ -25,6 +25,7 @@ CARGOS_POLICIAL = (
     ('Escrivão', 'Escrivão'),
     ('Perito Criminal', 'Perito Criminal'),
     ('perito Medico-Legista', 'perito Medico-Legista'),
+    ('Delegado', 'Delegado'), 
 )
 
 PENAS_DISCIPLINAR = (
@@ -38,8 +39,8 @@ PENAS_DISCIPLINAR = (
    ('Prisão até 15 dias', 'Prisão até 15 dias'),
    ('Prisão até 30 dias', 'Prisão até 30 dias'),
    ('Prisão até 45 dias', 'Prisão até 45 dias'),
-   ('Despromoção', 'Despromoção'),
-   ('Delegado', 'Delegado'), 
+   ('Despromoção do Cargo', 'Despromoção do Cargo'),
+   
 )
 
 MOTIVO_DISCILINAR = (

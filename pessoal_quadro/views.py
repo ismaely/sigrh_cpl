@@ -4,34 +4,11 @@ from header.includes import *
 
 @login_required
 def area_pessoal_quadro(request):
-    
-    context = {'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    fotos = request.session['salakiaku']
+
+    context = {'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos': fotos}
     template = TEMPLATE_UTILIZADOR['pq']
     return render(request, template, context)
-
-
-#views que vai gerar ou seja listar  o codigo de segurança
-"""@login_required
-def gerar_codigo_seguranca(request):
-    try:
-        codigo = Codigo.objects.first()
-        if codigo is None:
-            header.views_core.inserir_codigo()
-            dados = {'codigo': codigo }
-            template = TEMPLATE_PESSOAQUADRO['codigo']
-            return render(request, template, dados)
-        else:
-            datas = codigo.data.split('-')
-            if  int(DATE_FORMAT.day) > int(datas[2]) or int(DATE_FORMAT.month) != int(datas[1]):
-                if  header.views_core.novo_codigo_seguranca():
-                    codigo = Codigo.objects.first()
-
-    except Codigo.DoesNotExist:
-        return 0
-    context = {'codigo': codigo, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-    template = TEMPLATE_PESSOAQUADRO['codigo']
-    return render(request, template, context)"""
-
 
 
 #view que vai atualizar o codigo de segurança
@@ -59,14 +36,16 @@ def editar_nomiacao(request, id):
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
     pes = Pessoa.objects.get(id=nomiar.agente_id)
     pessoa = PessoaForm(request.POST or None, instance=pes)
-    context = {'form': form, 'nomiar': nomiar, 'form2': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+
+    fotos = request.session['salakiaku']
+    context = {'form': form, 'nomiar': nomiar, 'form2': pessoa, 'fotos':fotos, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['nomiar']
     return render(request, template, context)
 
 
 
 #views que vai editar os dados da ferias
-@login_required
+"""@login_required
 def editar_ferias(request, id):
     ferias = Feria.objects.get(id=id)
     form = FeriaForm(request.POST or None, instance=ferias)
@@ -83,7 +62,7 @@ def editar_ferias(request, id):
     context = {'form': form, 'feria': ferias, 'form2': forms, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['feria']
     return render(request, template, context)
-
+"""
 
 
 
@@ -99,11 +78,10 @@ def editarDados_baixas(request, id):
             baixa.save()
             sweetify.success(request, 'Dados alterado com sucesso!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
-
+    fotos = request.session['salakiaku']
     pes = Pessoa.objects.get(id=baixa.agente_id)
-    print(form.errors)
     pessoa = PessoaForm(request.POST or None, instance=pes)
-    context = {'form': form, 'baixa': baixa, 'form2': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form, 'baixa': baixa, 'form2': pessoa, 'fotos':fotos, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['baixa']
     return render(request, template, context)
 
@@ -133,14 +111,14 @@ def atualizar_despromocao(request, id):
 
 def atualizar_documento(request, id):
     docs = Documento.objects.get(id=id)
-    form = DocumentoForm(request.POST or None, instance=docs) 
+    form = DocumentoForm(request.POST or None, instance=docs)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             sweetify.success(request, 'Dados atualizado com sucesso!....', button='Ok')
             return HttpResponseRedirect(reverse('documentacao:area-documentacao'))
-
-    dados = {'form': form, 'docs': docs, 'documentos': MENU_DOCUMENTO}
+    fotos = request.session['salakiaku']
+    dados = {'form': form, 'docs': docs, 'fotos':fotos, 'documentos': MENU_DOCUMENTO}
     template = TEMPLATE_PESSOAQUADRO['docs']
     return render(request, template, dados)
 
@@ -169,7 +147,7 @@ def editar_cadastro(request, id):
         return render(request, template, dados)
     except ValueError as e:
         print(e)
-    dados = {'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos':request.session['salakiaku']}
     template = TEMPLATE_PESSOAQUADRO['cadastro']
     return render(request, template, dados)
 
@@ -202,7 +180,7 @@ def atualizar_patente(request):
                 template = TEMPLATE_PESSOAQUADRO['atuli_patente']
                 return render(request, template, context)
 
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos':request.session['salakiaku']}
     template = TEMPLATE_PESSOAQUADRO['atuli_patente']
     return render(request, template, context)
 
@@ -231,7 +209,7 @@ def codigo_cadastrar(request):
 
 
 
-#VIEWS QUE VALIDAR O CODIGO DE ATUALIZAR QDO SE PRETENDE ATUALIZAR PATENTE
+# VIEWS QUE VALIDAR O CODIGO DE ATUALIZAR QDO SE PRETENDE ATUALIZAR PATENTE
 @login_required
 def codigo_atualizar_recebe(request):
     if request.method == 'POST':
@@ -272,7 +250,7 @@ def eliminar_processoDiciplinar(request):
             dados = {
                 'validade': False,
             }
-            return JsonResponse(dados)    
+            return JsonResponse(dados)
 
 
 
@@ -344,9 +322,9 @@ def eliminar_baixa(request):
             dados = {
                 'validade': False,
             }
-            return JsonResponse(dados)    
-        
-        
+            return JsonResponse(dados)
+
+
 
 #view para listar todas nomiação solicitada
 @login_required
@@ -355,7 +333,7 @@ def listar_nomiacao(request):
     lista = Nomiacao_Cargo.objects.order_by('id')
     #print(header.views_core.gerar_codigo_cadastro())
     #lista = Orgao.objects.select_related('agente').all().order_by('-id')
-    context = {'lista': lista, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['listar_nomiado']
     return render(request, template, context)
 
@@ -374,24 +352,21 @@ def listar_tempo_efetividade(request):
         anoPol = tempo.data_igresso.split('-')
         if DATA_ANO == int (anoPol[0]):
             tempo_policia[tempo.id] = 'Meses'
-            
+
         else:
             x_anos = DATA_ANO - int (anoPol[0])
             tempo_policia[tempo.id] = str(x_anos)+ ' ' + 'Anos'
-
     for temp in lista:
         ano = temp.data.split('-')
         if DATA_ANO == int (ano[0]):
             tempo_cargo[temp.agente_id] = 'Meses'
-            
         else:
             if temp.agente_id is not None:
                 x_anos = DATA_ANO - int (ano[0])
                 tempo_cargo[temp.agente_id] = str(x_anos )+ ' ' + 'Anos'
-        
 
     template = TEMPLATE_PESSOAQUADRO['listar_tempo']
-    context = {'lista': agente, 'policia':tempo_policia, 'cargo': tempo_cargo, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'lista': agente, 'policia':tempo_policia, 'cargo': tempo_cargo, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     return render (request, template, context)
 
 
@@ -412,7 +387,7 @@ def listarDespromocao(request):
 @login_required
 def listarBaixas(request):
     baixa = Baixa.objects.all().order_by('-id')
-    dados = {'baixa': baixa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'baixa': baixa, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['listar_baixa']
     return render(request, template, dados)
 
@@ -422,7 +397,7 @@ def listarBaixas(request):
 @login_required
 def informacao_pessoal(request, id=None):
     lista = Orgao.objects.select_related('agente').get(agente_id=id)
-    dados = {'lista': lista, 'pessoalQuadro': MENU_PESSOAL_QUADRO }
+    dados = {'lista': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO }
     template = TEMPLATE_PESSOAQUADRO['informacao']
     return render(request, template, dados)
 
@@ -438,7 +413,7 @@ def informacao_processo_disciplinar(request, id=None):
         processo = Disciplina.objects.filter(agente_id = lista.agente_id)
     except Exception as e:
         print(e)
-    dados = {'lista': lista, 'processo': processo, 'pessoalQuadro': MENU_PESSOAL_QUADRO }
+    dados = {'lista': lista, 'processo': processo, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO }
     template = TEMPLATE_PESSOAQUADRO['info_processo']
     return render(request, template, dados)
 
@@ -464,14 +439,14 @@ def listarReforma(request):
                         print(" ")
                 except Reforma.DoesNotExist:
                     inser = Reforma.objects.create(agente_id=k.id)
-        
+
         for k in anticipada:
             #ida = header.views_core.retorna_idade(k.agente_id.pessoa_id.data_nascimento)
             idade[k.agente_id] = 'Anticipada/ '
-        
+
     except Exception as e:
         print(e)
-    context = {'lista': dados, 'idade': idade, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'lista': dados, 'idade': idade, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['listar_ref']
     return render(request, template, context)
 
@@ -488,7 +463,7 @@ def imprimir_informacao(request):
 def listar_todos_agente(request):
     lista =[]
     lista =Orgao.objects.order_by('-agente')
-    context = {'lista': lista, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['listar_todo']
     return render(request, template, context)
 
@@ -498,7 +473,7 @@ def listar_todos_agente(request):
 def listar_processoDisciplinar(request):
     lista =[]
     lista = Disciplina.objects.order_by('-agente')
-    context = {'lista': lista, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'lista': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['lista_discip']
     return render(request, template, context)
 
@@ -510,7 +485,7 @@ def listar_documentos(request):
     try:
         lista = []
         lista = documentacao.views.listar_documento()
-        dados = {'listar': lista , 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+        dados = {'listar': lista , 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
         template = TEMPLATE_PESSOAQUADRO['listar_docs']
         return render(request, template, dados)
 
@@ -528,7 +503,7 @@ def efectuar_Colocacao(request):
         if form.is_valid():
             try:
                 bi_agente = form.cleaned_data.get('bi')
-                if len(bi_agente) == 14 and verficar_bi_numero_agente(request): 
+                if len(bi_agente) == 14 and verficar_bi_numero_agente(request):
                     agen = header.views_core.retorna_numero_agente(bi_agente)
                     novo = Orgao.objects.get(agente_id=agen)
                     novo.orgao_colocacao = form.cleaned_data.get('orgao_colocacao')
@@ -558,7 +533,7 @@ def efectuar_Colocacao(request):
                 return render(request, template, context)
 
 
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form, 'fotos':request.session['salakiaku'],  'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['orgao']
     return render(request, template, context)
 
@@ -574,7 +549,7 @@ def consultar_dados(request):
                 agente = Agente.objects.get(numero_agente=value)
                 if agente.pessoa_id is not None:
                     orgao = Orgao.objects.get(agente_id=agente.id)
-                    context = {'agente': agente, 'orgao': orgao, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+                    context = {'agente': agente, 'orgao': orgao, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
                     template = TEMPLATE_PESSOAQUADRO['consultar']
                     return render(request, template, context)
             except Exception as e:
@@ -582,7 +557,7 @@ def consultar_dados(request):
                     agent = Agente.objects.get(nip=value)
                     if agent.pessoa_id is not None:
                         orgao = Orgao.objects.get(agente_id=agent.id)
-                        context = {'agente': agent, 'orgao': orgao, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+                        context = {'agente': agent, 'orgao': orgao, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
                         template = TEMPLATE_PESSOAQUADRO['consultar']
                         return render(request, template, context)
                 except Agente.DoesNotExist:
@@ -602,14 +577,14 @@ def consultar_documentos(request):
         if request.method == 'POST':
             if form.is_valid():
                 lista = Documento.objects.filter(categoria=form.cleaned_data.get('categoria'))
-                dados = {'form': form, 'listar': lista, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+                dados = {'form': form, 'listar': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
                 template = TEMPLATE_PESSOAQUADRO['consultar_docs']
                 return render(request, template, dados)
 
     except Documento.DoesNotExist:
         print('erro na consulta de documento')
 
-    dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['consultar_docs']
     return render(request, template, dados)
 
@@ -624,11 +599,11 @@ def consultar_processo_disciplinar(request):
         except Disciplina.DoesNotExist:
             #sweetify.warning(request, 'Não existe processo com este numero!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
-   
-    dados = {'lista': process, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+
+    dados = {'lista': process, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['lista_discip']
     return render (request, template, dados)
-    
+
 
 
 
@@ -645,7 +620,7 @@ def registar_despromocao(request):
             sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'), dados)
 
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['despromocao']
     return render(request, template, context)
 
@@ -669,7 +644,7 @@ def registar_baixa(request):
             except Exception as e:
                 messages.warning(request, ' O numero de Agente esta errado')
 
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['baixa']
     return render(request, template, context)
 
@@ -703,8 +678,8 @@ def registar_nomiacao(request):
                     return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
             except Exception as e:
                 messages.warning(request, ' Não existe agente com esse numero no sistema...')
-            
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['nomiar']
     return render(request, template, context)
 
@@ -714,7 +689,7 @@ def registar_nomiacao(request):
 @login_required
 def registar_reforma_anticipada(request):
     form = Reforma_anticipadaForm(request.POST or None)
-  
+
     if request.method == 'POST':
         if form.is_valid():
             reforma = form.save(commit=False)
@@ -723,11 +698,11 @@ def registar_reforma_anticipada(request):
             reforma.save()
             sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='4000')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
-    
-    context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+
+    context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['reforma']
     return render(request, template, context)
-    
+
 
 
 @login_required
@@ -742,13 +717,15 @@ def registar_processoDisciplinar(request):
             sweetify.success(request, 'Dados registado com sucesso...', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 
-    dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['disciplina']
     return render(request, template, dados)
 
 
 
 @login_required
+
+@csrf_protect
 def registar_documentos(request):
     form = DocumentoForm(request.POST or None)
     if request.method == 'POST':
@@ -757,13 +734,13 @@ def registar_documentos(request):
                 sweetify.success(request, 'Documento Cadastrado com sucesso...', button='Ok')
                 return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 
-    dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form,'fotos':request.session['salakiaku'],  'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['docs']
     return render(request, template, dados)
 
 
 
-#VIEWS QUE VAI CADASTRAR OS DADOS DO UTILIZADOR
+# VIEWS QUE VAI CADASTRAR OS DADOS DO UTILIZADOR
 @login_required
 def cadastrar(request):
     form = PessoaForm(request.POST or None)
@@ -780,8 +757,7 @@ def cadastrar(request):
             orgao = form3.save(commit=False)
             orgao.agente_id = agente.id
             orgao.save()
-            print(request.POST['foto_civil'])
-            print(len(request.POST['foto_fardado']))
+
             if len(request.POST['foto_civil']) > 0 and len(request.POST['foto_fardado']) > 0:
                 um, dois = header.views_core.prepara_foto(request)
                 agent = Agente.objects.get(pessoa_id=agente.id)
@@ -794,15 +770,10 @@ def cadastrar(request):
                 agent.foto_fardado = "foto/user.jpg"
                 agent.save()
 
-
             sweetify.success(request, 'Dados Registado com sucesso do agente!....', button='Ok', timer='3100')
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 
-    #print(form.cleaned_data)
-    #print(form.errors)
-    #print(form2.errors)
-    #print(form3.errors)
-    dados = {'form': form, 'form2': form2, 'form3': form3, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form, 'form2': form2, 'form3': form3, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['cadastro']
     return render(request, template, dados)
 
@@ -815,15 +786,14 @@ def cabecario_ficha(id):
     p = canvas.Canvas(buffer, pagesize=A4)
 
     p.setFont('Times-Roman', 12)
-
     logo = os.path.join(settings.MEDIA_ROOT, str('logo.jpeg'))
 
     if lista.agente.foto_fardado != '':
-        
+
         fotofardado = os.path.join(settings.MEDIA_ROOT, str(lista.agente.foto_fardado))
     else:
         fotofardado = os.path.join(settings.MEDIA_ROOT, str('user.jpg'))
-        
+
 
     logo_tabela = os.path.join(settings.MEDIA_ROOT, str('claro.png'))
 
@@ -843,18 +813,18 @@ def cabecario_ficha(id):
     provincia = Paragraph(''' Provincia ''',estilosB)
     estado = Paragraph(''' Estado Civil ''',estilosB)
     bi = Paragraph(''' Bi Nº ''',estilosB)
-    #terceira linha 
+    #terceira linha
     residencia = Paragraph(''' Residencia ''',estilosB)
     casa = Paragraph(''' Casa Nª ''',estilosB)
     telefone = Paragraph(''' Telefone ''',estilosB)
     email = Paragraph(''' E-mail ''',estilosB)
-    
+
     #quarta linha
     patente = Paragraph(''' Patente ''',estilosB)
     categoria = Paragraph(''' Categoria ''',estilosB)
     nip = Paragraph(''' Nip ''',estilosB)
     ingresso = Paragraph(''' Data de Ingresso ''',estilosB)
-    #quinta linha 
+    #quinta linha
     academico = Paragraph(''' Nivel Academico ''',estilosB)
     curso = Paragraph(''' Curso ''',estilosB)
     funcao = Paragraph(''' Função ''',estilosB)
@@ -863,7 +833,7 @@ def cabecario_ficha(id):
     contribuite = Paragraph(''' Contrbuite Nº ''',estilosB)
     social= Paragraph(''' Caixa social Nº ''',estilosB)
     orgao= Paragraph(''' Orgão de Colocação ''',estilosB)
-    
+
 
     data1 = []
     data2 = []
@@ -885,27 +855,27 @@ def cabecario_ficha(id):
     dados5 = []
     dados6 = []
 
-    dados1 = [str (lista.agente.pessoa.nome), str (lista.agente.pessoa.nome_pai), 
+    dados1 = [str (lista.agente.pessoa.nome), str (lista.agente.pessoa.nome_pai),
     str (lista.agente.pessoa.nome_mae), str (lista.agente.pessoa.genero)]
 
-    dados2 = [str (lista.agente.pessoa.data_nascimento), str (lista.agente.pessoa.provincia), 
+    dados2 = [str (lista.agente.pessoa.data_nascimento), str (lista.agente.pessoa.provincia),
     str (lista.agente.pessoa.estado_civil), str (lista.agente.pessoa.bi)]
 
-    dados3 = [str (lista.agente.pessoa.residencia), str (lista.agente.pessoa.casa_numero), 
+    dados3 = [str (lista.agente.pessoa.residencia), str (lista.agente.pessoa.casa_numero),
     str (lista.agente.pessoa.telefone), str (lista.agente.pessoa.email)]
 
-    dados4 = [str (lista.agente.patente), str (lista.agente.categoria), 
+    dados4 = [str (lista.agente.patente), str (lista.agente.categoria),
     str (lista.agente.nip), str (lista.agente.data_igresso)]
 
-    dados5 = [str (lista.agente.nivel_academico), str (lista.agente.curso), 
+    dados5 = [str (lista.agente.nivel_academico), str (lista.agente.curso),
     str (lista.agente.funcao), str (lista.data_colocacao)]
 
-    dados6 = [str (lista.agente.numero_contribuite), str (lista.agente.numero_caixa_social), 
+    dados6 = [str (lista.agente.numero_contribuite), str (lista.agente.numero_caixa_social),
     str ( lista.orgao_colocacao)]
 
     data1.append(dados1)
 
-    #tabela 1 dos dao pessoais
+    # tabela 1 dos dao pessoais
     table1 = Table(data1, colWidths=[6 * cm, 5.3 * cm, 5.3 * cm, 2.6 * cm])
     table1.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
@@ -913,7 +883,7 @@ def cabecario_ficha(id):
     ('BACKGROUND', (0, 0), (-1, 0), colors.white)
     ]))
 
-    #tabela 2 
+    #tabela 2
     data2.append(dados2)
     table2 = Table(data2, colWidths=[4.5 * cm, 4.3 * cm, 4.3 * cm, 6.1 * cm])
     table2.setStyle(TableStyle([
@@ -957,7 +927,7 @@ def cabecario_ficha(id):
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
     ('BACKGROUND', (0, 0), (-1, 0), colors.white)
     ]))
-    
+
     return (buffer, p, logo, fotofardado, logo_tabela, table1, table2, table3, table4, table5, table6, estilosB, style)
 
 
@@ -969,14 +939,12 @@ def ficha_pessoal(request, id=None):
 
     try:
         if id > 0 :
-
-            
             response = HttpResponse(content_type='application/pdf')
             response['Content-Disposition'] = 'inline; filename="ficha_pessoal.pdf"'
 
             buffer, p, logo, fotofardado, logo_tabela, table1, table2, table3, table4, table5, table6, estilosB, style = cabecario_ficha(id)
 
-            #tamanho da linha          
+            #tamanho da linha
             p.setLineWidth(2)
 
             #logo do centro da angola
@@ -996,12 +964,12 @@ def ficha_pessoal(request, id=None):
 
             # zona do comunicado o informação que deve ser descrita
             p.drawString(248,660,'Ficha de Agente')
-            
-            #imagem para os dados pessoal 
+
+            #imagem para os dados pessoal
             p.drawImage(logo_tabela, 24.5, 600.3, width=544.6, height=40, mask=None)
             p.drawString(30,626,'Dados Pessoal')
 
-            #imagem para os dados de agente 
+            #imagem para os dados de agente
             p.drawImage(logo_tabela, 24.5, 472.5, width=544.6, height=35, mask=None)
             p.drawString(30,490,'Dados de Agente')
 
@@ -1019,7 +987,7 @@ def ficha_pessoal(request, id=None):
             #terecira linha
             table3.wrapOn(p, width, height)
             table3.drawOn(p, 25, 509.2)
-            
+
             #onde começa se construida a tabela de dados de agente
             #quarta linha
             table4.wrapOn(p, width, height)
@@ -1028,12 +996,10 @@ def ficha_pessoal(request, id=None):
             #quinta
             table5.wrapOn(p, width, height)
             table5.drawOn(p, 25, 410.3)
-            
+
             #sexta
             table6.wrapOn(p, width, height)
             table6.drawOn(p, 25, 374)
-
-
 
             p.showPage()
             p.save()
@@ -1055,7 +1021,6 @@ def ficha_pessoal(request, id=None):
 
 
 
-
 #Ficha para o processo disciplinar
 @login_required
 def ficha_processo_disciplinar(request, id=None):
@@ -1069,7 +1034,7 @@ def ficha_processo_disciplinar(request, id=None):
 
             buffer, p, logo, fotofardado, logo_tabela, table1, table2, table3, table4, table5, table6, estilosB, style = cabecario_ficha(id)
 
-            #tamanho da linha          
+            #tamanho da linha
             p.setLineWidth(2)
 
             #logo do centro da angola
@@ -1087,11 +1052,11 @@ def ficha_processo_disciplinar(request, id=None):
             p.drawImage(fotofardado, 495, 750, width=60, height=60, mask=None)
             # zona do comunicado o informação que deve ser descrita
             p.drawString(248,658,'Ficha de Processo Disciplinar')
-            #imagem para os dados pessoal 
+            #imagem para os dados pessoal
             p.drawImage(logo_tabela, 24.5, 600.3, width=544.6, height=40, mask=None)
             p.drawString(30,626,'Dados Pessoal')
 
-            #imagem para os dados de agente 
+            #imagem para os dados de agente
             p.drawImage(logo_tabela, 24.5, 472.5, width=544.6, height=35, mask=None)
             p.drawString(30,490,'Dados de Agente')
 
@@ -1099,7 +1064,6 @@ def ficha_processo_disciplinar(request, id=None):
             p.drawImage(logo_tabela, 24.5, 319.3, width=544.6, height=35, mask=None)
             p.drawString(30,335.5,'Processo Disciplinar')
 
-            
             #criando dados para o processo disciplinar
              #0nde começa a ser construida a tabela
             processo = Paragraph(''' Processo Nº''',estilosB)
@@ -1108,14 +1072,14 @@ def ficha_processo_disciplinar(request, id=None):
             dispacho = Paragraph(''' Despacho ''',estilosB)
             pena = Paragraph(''' Resultado ( Pena ) ''',estilosB)
             descricao = Paragraph(''' Descrição ''',estilosB)
-            
+
             discip1 = []
             discip2 = []
             discip1.append([processo, data_disc, dispacho])
             discip2.append([motivo, pena])
 
             dados_disciplinar = []
-            dados_disciplinar = [str (disciplina.numero_processo), str (disciplina.data), 
+            dados_disciplinar = [str (disciplina.numero_processo), str (disciplina.data),
             str (disciplina.dispacho)]
 
             dados_disciplinar2 = []
@@ -1134,7 +1098,7 @@ def ficha_processo_disciplinar(request, id=None):
             #terecira linha
             table3.wrapOn(p, width, height)
             table3.drawOn(p, 25, 509.2)
-            
+
             #onde começa se construida a tabela de dados de agente
             #quarta linha
             table4.wrapOn(p, width, height)
@@ -1143,11 +1107,10 @@ def ficha_processo_disciplinar(request, id=None):
             #quinta
             table5.wrapOn(p, width, height)
             table5.drawOn(p, 25, 410.3)
-            
+
             #sexta
             table6.wrapOn(p, width, height)
             table6.drawOn(p, 25, 374)
-
 
             # tabela de dados da disciplina
             discip1.append(dados_disciplinar)
@@ -1180,7 +1143,6 @@ def ficha_processo_disciplinar(request, id=None):
             w, h = corpo.wrap(518, height)
             corpo.drawOn(p, aw, ah)
 
-
             p.showPage()
             p.save()
             pdf = buffer.getvalue()
@@ -1197,6 +1159,3 @@ def ficha_processo_disciplinar(request, id=None):
     context = {'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_UTILIZADOR['pq']
     return render(request, template, context)
-
-
-

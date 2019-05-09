@@ -72,7 +72,7 @@
                                 <li><a href="{% url 'pessoal_quadro:documento' %}">Registar Referencia Documental</a></li>
                                 <li><a href="{% url 'pessoal_quadro:listar-docs' %}">Listar documentos</a></li>
                                 <li><a href="{% url 'pessoal_quadro:consultar-docs' %}">Consultar documento</a></li>
-                                <li><a href="{% url 'documentacao:testar' %}">Tira foto</a></li>
+
 
                             </ul>
                         </li>
@@ -105,7 +105,7 @@
 
                            {{ user.username }}
 
-                            <img src="{% static '/asset/img/user.jpg' %}" width="35px" class="img-circle " />
+                            <img src="/media/{{ fotos.foto_fardado }}" width="35px" class="img-circle " />
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
                         <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
@@ -122,6 +122,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="block block-drop-shadow">
+                <p> {{ valor.foto }}</p>
                 {% block corpo %} {% endblock %}
             </div>
         </div>

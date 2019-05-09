@@ -11,7 +11,7 @@ class TransferenciaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
     orgao_destino = forms.CharField(max_length=100, widget=forms.Select(choices=ORGAO_COMANDOS))
     data_entrada = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
-    dispacho = forms.CharField(max_length=30, required=False)
+    dispacho = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     motivo = forms.CharField(max_length=900, required=False, widget=forms.Textarea(attrs={'length':900}))
     arquivo = forms.FileField(required=False)
     numero_guia = forms.CharField(max_length=10)

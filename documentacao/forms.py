@@ -1,8 +1,11 @@
-
 from django import forms
 from django.forms import ModelForm
-from documentacao.models import Documento, Imagam
+from documentacao.models import Documento
 from header.opcoesModel import DOCUMENTO_CATEGORIA
+from django.utils.translation import ugettext_lazy as _
+from sigrh_cpl.settings import MAX_UPLOAD_SIZE, CONTENT_TYPES
+from django.template.defaultfilters import filesizeformat
+from django.contrib.contenttypes.models import ContentType
 
 class DocumentoForm(ModelForm):
     class Meta:
@@ -24,9 +27,10 @@ class DocumentoForm(ModelForm):
 
         }
         widgets = {
-            'data_entrada': forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}),
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'length': 1900})
+            'data_entrada': forms.DateInput(attrs={'class': 'datepicker form-control', 'data-inputmask': "'mask' : '99/99/9999'"}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'length': 900})
         }
+   
 
 
 class ConsultarDocumentoForms(forms.Form):
@@ -34,10 +38,3 @@ class ConsultarDocumentoForms(forms.Form):
 
 
 
-
-class ImageForm(ModelForm):
-    um = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'text', 'class': 'form-control', 'id': 'salva1'}))
-    dois = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'text',  'class': 'form-control', 'id': 'salva2'}))
-    class Meta:
-        model = Imagam
-        fields = ['um', 'dois']

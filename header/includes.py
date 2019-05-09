@@ -6,6 +6,7 @@ from django.core import serializers
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from passlib.hash import pbkdf2_sha256
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -20,7 +21,8 @@ import random
 from django.template import Context, loader
 from django.db.models import Count
 
-from sigrh_cpl.settings import DATA_ANO, DATA_MES, DATE_FORMAT, DATA_HORA_ZONA, MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, STATIC_URL, DATE_INPUT_FORMATAR
+from sigrh_cpl.settings import (DATA_ANO, DATA_MES, DATE_FORMAT, DATA_HORA_ZONA, MEDIA_ROOT, MEDIA_URL,
+ STATICFILES_DIRS, STATIC_URL, DATE_INPUT_FORMATAR, MAX_UPLOAD_SIZE, CONTENT_TYPES)
 import sweetify
 #biblioteca para cria PDF
 import os
@@ -41,8 +43,8 @@ from django.conf import settings
 from django.urls import path
 
 #DOCUMENTAÇÃO
-from documentacao.models import Documento, Imagam
-from documentacao.forms import DocumentoForm, ConsultarDocumentoForms, ImageForm
+from documentacao.models import Documento
+from documentacao.forms import DocumentoForm, ConsultarDocumentoForms
 import documentacao
 
 #UTILIZADOR

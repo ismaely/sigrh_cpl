@@ -10,10 +10,6 @@ def area_documentacao(request):
 
 
 
-@login_required
-def foto_js(request):
-    dados = {'documentos': MENU_DOCUMENTO}
-    return render(request, 'documentacao/testar.html', dados)
 
 
 

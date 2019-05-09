@@ -9,6 +9,6 @@ urlpatterns = [
     path('listar_documento/', views.listar_documento, name='listar-documento'),
     path('eliminar_documento/', views.eliminar_documento, name='eliminar-documento'),
     path('atualizar_documento/<int:id>/', views.atualizar_documento, name='atualizar-documento'),
-    path('testar/', views.foto_js, name='testar'),
+    
 
 ]

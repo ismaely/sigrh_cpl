@@ -17,7 +17,8 @@ def area_estatistica(request):
         'total_transferencia': total_transferencia, 
         'total_formacao': total_formacao, 
         'total_reforma': total_reforma,
-        'estatistcas': MENU_ESTATISTICA}
+        'estatistcas': MENU_ESTATISTICA,
+        'fotos':request.session['salakiaku']}
     template = TEMPLATE_UTILIZADOR['estat']
     return render(request, template, context)
 
@@ -33,7 +34,8 @@ def estatistica_transferencia(request):
     context = {
         'total_transfe':json.dumps(total_transfe),
         'total_troca': json.dumps(total_troca),
-        'estatistcas': MENU_ESTATISTICA}
+        'estatistcas': MENU_ESTATISTICA,
+        'fotos':request.session['salakiaku']}
     template = TEMPLATE_ESTATISTICA["estat_transf"]
     return render(request, template, context)
 
@@ -67,11 +69,13 @@ def estatistica_baixas(request):
             total_Outro = + 1
 
     context = {
+        'fotos':request.session['salakiaku'],
         'total_Reforma':json.dumps(total_Reforma),'total_Demissao':json.dumps(total_Demissao),
         'total_Transferencia':json.dumps(total_Transferencia),'total_Falecimento':json.dumps(total_Falecimento),
         'total_Dificiencia':json.dumps(total_Dificiencia),'total_Invalidez':json.dumps(total_Invalidez),
         'total_Outro':json.dumps(total_Outro),'total_baixas':json.dumps(total_baixa),
-        'estatistcas': MENU_ESTATISTICA
+        'estatistcas': MENU_ESTATISTICA,
+        
         }
 
     template = TEMPLATE_ESTATISTICA["estat_baixa"]
@@ -96,7 +100,8 @@ def estatistica_reforma(request):
         'total_anticipada': json.dumps(total_anticipada),
         'total_normal': json.dumps(total_normal),
         'total_reforma': json.dumps(total_reforma),
-        'estatistcas': MENU_ESTATISTICA}
+        'estatistcas': MENU_ESTATISTICA,
+        'fotos':request.session['salakiaku']}
     template = TEMPLATE_ESTATISTICA["estat_reforma"]
     return render(request, template, context) 
 
@@ -129,7 +134,8 @@ def estatistica_selecionadoFormacao(request):
         'total_masculino': json.dumps(total_masculino),
         'total_femenino': json.dumps(total_femenino),
         'total_selecionado': json.dumps(total_selecionado),
-        'estatistcas': MENU_ESTATISTICA}
+        'estatistcas': MENU_ESTATISTICA,
+        'fotos':request.session['salakiaku']}
     template = TEMPLATE_ESTATISTICA["selecionado"]
     return render(request, template, context)
 
@@ -173,7 +179,8 @@ def estatistica_formacaoConcluida(request):
         'total_aprovados': json.dumps(total_aprovados),
         'total_reprovado': json.dumps(total_reprovado),
         'total_conclusao': json.dumps(total_conclusao),
-        'estatistcas': MENU_ESTATISTICA}
+        'estatistcas': MENU_ESTATISTICA,
+        'fotos':request.session['salakiaku']}
     template = TEMPLATE_ESTATISTICA["conclusao"]
     return render(request, template, context)
             
@@ -182,8 +189,8 @@ def estatistica_formacaoConcluida(request):
 
 def retorna_idade(value):
     aux = []
-    aux = value.split('/')
-    return DATA_ANO - int (aux[2])
+    aux = value.split('-')
+    return DATA_ANO - int (aux[0])
 
 
 #CABEÇARIO DE TODAS AS LISTA NOMINAL
@@ -302,7 +309,7 @@ def lista_normal(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'normal': form, 'estatistcas': MENU_ESTATISTICA}
+    context = {'normal': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA}
     template = TEMPLATE_ESTATISTICA["normal"]
     return render(request, template, context)        
         
@@ -344,7 +351,7 @@ def listar_nivel_academico(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'academico': form, 'estatistcas': MENU_ESTATISTICA }
+    context = {'academico': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
     template = TEMPLATE_ESTATISTICA["academico"]
     return render(request, template, context)  
 
@@ -388,7 +395,7 @@ def listar_reforma(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'reforma': form, 'estatistcas': MENU_ESTATISTICA }
+    context = {'reforma': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
     template = TEMPLATE_ESTATISTICA["reforma"]
     return render(request, template, context) 
 
@@ -433,7 +440,7 @@ def listar_baixa(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'baixa': form, 'estatistcas': MENU_ESTATISTICA }
+    context = {'baixa': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
     template = TEMPLATE_ESTATISTICA["baixa"]
     return render(request, template, context) 
 
@@ -479,7 +486,7 @@ def listar_disciplinar(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'disciplia': form, 'estatistcas': MENU_ESTATISTICA }
+    context = {'disciplia': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
     template = TEMPLATE_ESTATISTICA["disciplina"]
     return render(request, template, context) 
 
@@ -537,6 +544,6 @@ def listar_formacao(request):
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
             return response
 
-    context = {'formacao': form, 'estatistcas': MENU_ESTATISTICA }
+    context = {'formacao': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
     template = TEMPLATE_ESTATISTICA["formacao"]
     return render(request, template, context) 

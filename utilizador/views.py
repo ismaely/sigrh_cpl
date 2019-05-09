@@ -20,7 +20,7 @@ def perfil_utilizador(request):
         lista = []
         id =0
         #lista = Agente.objects.get(id=int(id))
-        dados = {'lista': lista, 'perfil': MENU_PERFIL}
+        dados = {'lista': lista, 'fotos':request.session['salakiaku'],  'perfil': MENU_PERFIL}
     except Exception as e:
         raise e
     template =  header.rotas.TEMPLATE_UTILIZADOR['utilizador_perfil']
@@ -42,12 +42,13 @@ def listar_utilizador(request):
         agente = {}
         lista = User.objects.all()
         for n in lista:
-            agente[n.first_name] = Agente.objects.get(id=int(n.first_name))
-        context = {'lista': lista, 'agente':agente, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-        template = header.rotas.TEMPLATE_UTILIZADOR['listar']
-        
+            idx = int(n.first_name)
+            agente[idx] = Agente.objects.get(id=idx)
     except Exception as e:
-        print("erro na listagem do " + e)
+        print(e)
+
+    context = {'lista': lista, 'agente':agente, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    template = header.rotas.TEMPLATE_UTILIZADOR['listar']
     return render(request, template, context)
 
 
@@ -65,6 +66,7 @@ def ativar_conta(request, id):
         return HttpResponseRedirect(reverse('utilizador:listar'))
 
 
+
 @login_required
 def desativar_conta(request, id):
     if id > 0:
@@ -78,6 +80,7 @@ def desativar_conta(request, id):
         return HttpResponseRedirect(reverse('utilizador:listar'))
     
 
+
 @login_required
 def eliminar_conta(request, id):
     if id > 0:
@@ -87,6 +90,7 @@ def eliminar_conta(request, id):
     else:
         sweetify.sweetalert(request, 'Falha não foi possivel ...', type="error", button='Ok', timer='3600')
         return HttpResponseRedirect(reverse('utilizador:listar'))
+
 
 
 @login_required
@@ -123,7 +127,7 @@ def alterar_senha_padrao(request, id):
 
     
     template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
-    return render(request, template, {'form': form, 'id': id})
+    return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
             
 
 
@@ -188,7 +192,7 @@ def adicionar_Utilizador(request):
                     agente = Agente.objects.get(nip=bi_nip)
                 except Exception as e:
                     messages.warning(request, 'O Numero não é valido..')
-                    dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+                    dados = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
                     template = header.rotas.TEMPLATE_UTILIZADOR['utilizador']
                     return render(request, template, dados)
                 pessoa = agente.pessoa.nome      
@@ -226,7 +230,7 @@ def adicionar_Utilizador(request):
                             user = User.objects.create_user(username=nome,first_name=agente.id,last_name=troca_senha, email=categoria,password=senha)
                             break
                 
-            context={'agente':agente, 'nome':nome, 'senha':senha, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+            context={'agente':agente, 'nome':nome, 'senha':senha, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
             template = header.rotas.TEMPLATE_UTILIZADOR['sucesso']
             sweetify.sweetalert(request, 'Conta criado com sucesso..', type="success", button='Ok', timer='3600')
             #messages.success(request, 'Conta do Utilizador criado com sucesso...')
@@ -269,10 +273,13 @@ def login_utilizador(request):
                 if user is not None:
                     if user.is_active and int(utilizador.last_name) == 1:
                         login(request, user)
-                        #sta = Agente.objects.filter(id=int(utilizador.first_name))
-                        lista = serializers.serialize("json", Agente.objects.filter(id=int(utilizador.first_name)))
-                        sofia = json.loads(lista)
-                        request.session['salakiaku'] = sofia
+                        sofia = Agente.objects.get(id=int(utilizador.first_name))
+
+                        request.session['salakiaku'] = {
+                            'nip':sofia.nip,
+                            'foto_civil': str(sofia.foto_civil),
+                            'foto_fardado': str(sofia.foto_fardado)
+                        }
                         template = header.rotas.TEMPLATE_UTILIZADOR['areas']
                         return HttpResponseRedirect(reverse(template))
                     else:
@@ -299,7 +306,9 @@ def login_utilizador(request):
 @login_required
 def sair(request):
     try:
+        del request.session['salakiaku']
         logout(request)
+        
         return HttpResponseRedirect(reverse('utilizador:sair'))
     except Exception as e:
         raise Http404("erro a terminar a sessão %s " % (e))

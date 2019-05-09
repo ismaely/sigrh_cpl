@@ -90,7 +90,7 @@ class OrgaoForm(ModelForm):
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
     #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
     data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
-    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999/99'"}),)
+    dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999/99'"}))
     #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:
         model = Orgao
@@ -104,7 +104,7 @@ class BaixaForm(ModelForm):
     data_oucorrencia = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     motivo_baixa = forms.CharField(max_length=60, widget=forms.Select(choices=MOTIVO_BAIXA))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'length':1000}))
-    dispacho = forms.CharField(max_length=10)
+    dispacho = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     tipo_invalidez = forms.CharField(max_length=30, required=False,  widget=forms.Select(choices=INVALIDEZ))
     class Meta:
         model = Baixa
@@ -120,7 +120,7 @@ class DespromocaoForm(ModelForm):
     motivo = forms.CharField(max_length=30, widget=forms.Select(choices=MOTIVO_DESPROMOCAO))
     suspensao = forms.CharField(max_length=200, widget=forms.Select(choices=SUSPENSAO))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control', 'length':2000}))
-    dispacho = forms.CharField(max_length=20)
+    dispacho = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     class Meta:
         model = Despromocao
         fields = ['data', 'motivo', 'suspensao', 'descricao', 'dispacho']
@@ -151,7 +151,7 @@ class Nomiacao_cargoForm(ModelForm):
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     tipo = forms.CharField(max_length=60, widget=forms.Select(choices=NOMIACAO_TIPO))
     categoria = forms.CharField(max_length=60, widget=forms.Select(choices=NOMIACAO_CATEGORIA))
-    dispacho = forms.CharField(max_length=20)
+    dispacho = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control', 'length':3500}))
     class Meta:
         model = Nomiacao_Cargo
@@ -170,7 +170,7 @@ class Reforma_anticipadaForm(ModelForm):
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_REFORMA))
     reforma = forms.CharField(max_length=30, required=False )
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
-    dispacho = forms.CharField(max_length=20)
+    dispacho = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     descricao = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'form-control', 'length':3500}))
     class Meta:
         model = Reforma
@@ -193,7 +193,7 @@ class Busca_IdadeForm(forms.Form):
 class Atualizar_patenteForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi])
     patente = forms.CharField(max_length=100, widget=forms.Select(choices=PATENTE))
-    dispacho = forms.CharField(max_length=20)
+    dispacho = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     class Meta:
         model = Patentiamento
@@ -207,7 +207,7 @@ class DisciplinaForm(ModelForm):
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_DISCILINAR))
     pena = forms.CharField(required=True, widget=forms.Select(choices=PENAS_DISCIPLINAR))
-    dispacho = forms.CharField(max_length=20)
+    dispacho = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'data-inputmask': "'mask' : '9999/99'"}))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control', 'length':3500}))
     arquivo = forms.ImageField(required=False)
     class Meta:
