@@ -223,19 +223,36 @@ PROVINCIA = (
     ('Cunene', 'Cunene'),
     ('Huambo', 'Huambo'),
     ('Huila', 'Huila'),
-    ('Cuando kubango', 'Cuando kubango'),
-    ('Cuanza norte', 'Cuanza norte'),
-    ('Cuanza sul', 'Cuanza sul'),
+    ('Cuando Cubango', 'Cuando Cubango'),
+    ('Cuanza Norte', 'Cuanza Norte'),
+    ('Cuanza Sul', 'Cuanza Sul'),
     ('Lunda Norte', 'Lunda Norte'),
-    ('Lunda sul', 'Lunda sul'),
-    ('Malange', 'Malange'),
+    ('Lunda Sul', 'Lunda Sul'),
+    ('Malanje', 'Malanje'),
     ('Moxico', 'Moxico'),
     ('Namibe', 'Namibe'),
     ('Uige', 'Uige'),
     ('Zaire', 'Zaire'),
 )
 
-
+BENGO = ['Ambriz', 'Bula Atumba', 'Dande', 'Dembos', 'Nambuangongo', 'Pango Aluquém']
+BENGUELA = ['Balombo', 'Baía Farta', 'Benguela', 'Bocoio', 'Caimbambo', 'Catumbela', 'Chongorói', 'Cubal', 'Ganda', 'Lobito']
+BIE = ['Andulo', 'Camacupa, ''Catabola', 'Chinguar', 'Chitembo', 'Cuemba', 'Cunhinga', 'Kuito', 'Nharea']
+CABINDA  =['Belize', 'Buco-Zau', 'Cabinda', 'Cacongo']
+CUANDO_CUBANGO = ['Calai', 'Cuangar', 'Cuchi', 'Cuito Cuanavale', 'Dirico', 'Longa', 'Mavinga', 'Menongue', 'Nancova', 'Rivungo']
+CUNENE = ['Cahama', 'Cuanhama', 'Curoca', 'Cuvelai', 'Namacunde', 'Ombadja']
+HUAMBO = ['Bailundo', 'Catchiungo', 'Caála', 'Ekunha', 'Huambo', 'Londuimbale', 'Longonjo', 'Mungo', 'Tchicala-Tcholoanga', 'Tchindjenje', 'Ucuma']
+HUILA = ['Caconda', 'Cacula', 'Caluquembe', 'Chiange', 'Chibia', 'Chicomba', 'Chipindo', 'Cuvango', 'Humpata', 'Jamba', 'Lubango', 'Matala', 'Quilengues', 'Quipungo']
+CUANZA_NORTE = ['Ambaca', 'Banga', 'Bolongongo', 'Cambambe', 'Cazengo', 'Golungo Alto', 'Gonguembo', 'Lucala', 'Quiculungo', 'Samba Caju']
+CUANZA_SUL = ['Amboim', 'Cassongue', 'Cela', 'Conda', 'Ebo', 'Libolo', 'Mussende', 'Porto Amboim', 'Quibala', 'Quilenda', 'Seles', 'Sumbe']
+LUANDA = ['Belas', 'Cacuaco', 'Cazenga', 'Ícolo e Bengo', 'Luanda', 'Quiçama', 'Viana']
+LUNDA_NORTE = ['Cambulo', 'Capenda-Camulemba', 'Caungula', 'Chitato', 'Cuango', 'Cuílo', 'Lubalo', 'Lucapa', 'Xá-Muteba']
+LUNDA_SUL = ['Cacolo', 'Dala', 'Muconda', 'Saurimo']
+MALANJE = ['Cacuso', 'Calandula', 'Cambundi-Catembo', 'Cangandala', 'Caombo', 'Cuaba Nzogo', 'Cunda-Dia-Baze', 'Luquembo', 'Malanje', 'Marimba', 'Massango', 'Mucari', 'Quela', 'Quirima']
+MOXICO = ['Alto Zambeze', 'Bundas', 'Camanongue', 'Léua', 'Luau', 'Luacano', 'Luchazes', 'Luena', 'Lumeje', 'Moxico']
+NAMIBE = ['Bibala', 'Camucuio', 'Moçâmedes', 'Tômbua', 'Virei']
+UIGE = ['Alto Cauale', 'Ambuíla', 'Bembe', 'Buengas', 'Bungo', 'Damba', 'Macocola', 'Milunga', 'Mucaba', 'Negage', 'Puri', 'Quimbele', 'Quitexe', 'Sanza Pombo', 'Songo', 'Uíge', 'Zombo']
+ZAIRE = ['Cuimba', 'MBanza Kongo', 'Noqui', 'NZeto', 'Soyo', 'Tomboco']
 
 MOTIVO_BAIXA = (
     ('Reforma', 'Reforma'),
@@ -312,12 +329,44 @@ NIVEL_ACADEMICO = (
     ('9ªClasse', '9ª Classe'),
     ('12ªClasse', '12ª Classe'),
     ('13ªClasse', '13ª Classe'),
-    ('Têcnico Medio', 'Têcnico Médio'),
     ('Licenciado', 'Licenciado'),
     ('Mestre', 'Mestre'),
     ('Doutor', 'Doutor'),
 )
 
+AREAS_FORMACAO = (
+    ('Área de Mecânica', 'Área de Mecânica'),
+    ('Área de Electricidade', 'Área de Electricidade'),
+    ('Área de Construção Civil', 'Área de Construção Civil'),
+    ('Área de Informática', 'Área de Informática'),
+    ('Área de Administração', 'Área de Administração'),
+    ('Área de Saude', 'Área de Saude'),
+    ('Ciência Sociais', 'Ciência Sociais'),
+    ('Saude', 'Saude'),
+    ('Direito', 'Direito'),
+    ('Economia', 'Economia'),
+    ('Letras', 'Letras'),
+    ('Engenharia', 'Engenharia'),
+    ('Ciência', 'Ciência'),
+    
+)
+Mecanica =['TÉCNICO DE METALOMECÂNICA', 'TÉCNICO DE MÁQUINAS E MOTORES', 'TÉCNICO DE FRIO E CLIMATIZAÇÃO']
+Electricidade = ['TÉCNICO ELECTRÓNNICA E TELECOMUNICAÇÕES', 'TÉCNICO DE ENERGIA E INSTALAÇÕES ELÉCTRICAS']
+Construcao_Civil =['DESENHADOR DE PROJECTISTA', 'TÉCNICO DE OBRAS DE CONSTRUÇÃO CIVIL', 'QUÍMICA']
+Informatica = ['TÉCNICO DE INFORMÁTICA', 'TÉCNICO DE GESTÃO DE SISTEMAS INFORMÁTICOS']
+Administracao = ['CONTABILIDADE E GESTÃO', 'FINANÇAS', 'GESTÃO EMPRESARIAL', 'ECONOMIA']
+Saude = ['ENFERMAGEM', 'TÉNICO DE LABORATORIO']
+
+CIENCIAS_SOCIAIS = ['Antropologia', 'Ciência Política', 'Comunicação Social', '	Geodemografia', 'Gestão e Administração Pública', 'História',
+'Sociologia', 'Gestão de Recursos Humanos', 'Psicologia Social']
+SAUDE = ['Análises Clínicas', 'Ciências de Enfermagem' , 'Psicologia Clínica', 'Medicina',]
+DIREITO =['Direito', 'Administração e Gestão Pública', 'Direito das Sociedades', 'Providências Sociais']
+ECONOMIA = ['Contabilidade e Administração', 'Contabilidade e Auditoria', 'Economia', 'Gestão de Empresas', 'Gestão']
+LETRAS = ['Filosofia', 'Línguas e Literaturas Africanas', 'Língua e Literaturas em Língua Francesa', 'Língua e Literaturas em Língua Inglesa',
+'Língua e Literaturas em Língua Portuguesa']
+ENGENHARIA = ['Arquitectura', 'Engenharia Civil','Engenharia Electrónica e Telecomunicações', '	Engenharia Electrotecnia', 'Engenharia Informática',
+'Engenharia Mecânica', 'Engenharia Química', 'Engenharia de Minas']
+CIENCIA = ['Biologia', 'Ciências da Computação', 'Engenharia Geográfica', 'Física', 'Geofísica', 'Geologia', 'Matemática', 'Meteorologia']
 
 SITUACAO_TRANSFERENCIA = (
     ('Espera', 'Espera'),

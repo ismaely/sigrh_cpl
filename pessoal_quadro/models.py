@@ -1,7 +1,7 @@
 from django.db import models
 from header.opcoesModel import ( GENERO, PATENTE, ESTADO_CIVIL, MOTIVO_BAIXA, MOTIVO_DESPROMOCAO, 
 NIVEL_ACADEMICO, NOMIACAO_TIPO, NOMIACAO_CATEGORIA, MOTIVO_REFORMA, PROVINCIA, ORGAO_COMANDOS, SUSPENSAO, 
-CARGOS_POLICIAL, PENAS_DISCIPLINAR, MOTIVO_DISCILINAR, INVALIDEZ)
+CARGOS_POLICIAL, PENAS_DISCIPLINAR, MOTIVO_DISCILINAR, INVALIDEZ, AREAS_FORMACAO)
 from sigrh_cpl.settings import DATE_FORMAT
 
 
@@ -10,17 +10,17 @@ from sigrh_cpl.settings import DATE_FORMAT
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=100,)
-    nome_pai = models.CharField(max_length=100)
-    nome_mae = models.CharField(max_length=100)
+    nome_pai = models.CharField(max_length=100, blank=True, null=True, default="--")
+    nome_mae = models.CharField(max_length=100, blank=True, null=True, default="--")
     data_nascimento = models.CharField(max_length=20)
     bi = models.CharField(max_length=20, unique=True)
     estado_civil = models.CharField(max_length=20, choices=ESTADO_CIVIL)
     genero = models.CharField(max_length=12, choices=GENERO)
     provincia = models.CharField(max_length=25, choices=PROVINCIA)
-    residencia = models.CharField(max_length=50)
-    casa_numero = models.CharField(max_length=30, null=True, default="sem endereço")
+    residencia = models.CharField(max_length=50, null=True, default="--")
     telefone = models.CharField(max_length=30)
     email = models.EmailField(max_length=60, blank=True, null=True, default="cpl@gmail.com")
+    municipio = models.CharField(max_length=30, null=True, default="--")
 
     def __str__(self):
         return '%s' % (self.bi)
@@ -32,15 +32,16 @@ class Agente(models.Model):
     numero_contribuite = models.CharField(max_length=20)
     numero_caixa_social = models.CharField(max_length=20)
     nivel_academico = models.CharField(max_length=20, choices=NIVEL_ACADEMICO)
-    curso = models.CharField(max_length=50)
-    funcao = models.CharField(max_length=50, blank=True, null=True)
+    curso = models.CharField(max_length=80, null=True, default="--")
+    #funcao = models.CharField(max_length=50, blank=True, null=True)
     patente = models.CharField(max_length=60, choices=PATENTE)
     categoria = models.CharField(max_length=100)
     numero_agente = models.IntegerField(unique='true')
-    nip = models.CharField(max_length=20, blank=True, null=True, default="Não indetificado")
+    nip = models.CharField(max_length=20, blank=True, null=True, default="--")
     data_igresso = models.CharField(max_length=20)
     foto_fardado = models.FileField(upload_to="foto/", blank=True, null=True, default="user.jpg")
     foto_civil = models.FileField(upload_to="foto/", blank=True, null=True, default="user.jpg")
+    area_formacao = models.CharField(max_length=30,  null=True, default="--")
 
     def __str__(self):
         return '%d' % (self.numero_agente)

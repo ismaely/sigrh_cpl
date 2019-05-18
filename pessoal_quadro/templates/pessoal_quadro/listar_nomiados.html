@@ -37,16 +37,16 @@
                                 </a>
                             </td>
                             <td>
-                                {{ des.agente.pessoa.nome|capfirst|safe }}
+                                {{ des.agente.pessoa.nome|capfirst|safe|upper }}
                             </td>
-                            <td>{{ des.agente.pessoa.genero }}</td>
+                            <td>{{ des.agente.pessoa.genero|safe|upper }}</td>
                             <td>{{ des.data }}</td>
-                            <td>{{ des.tipo }}</td>
-                            <td>{{ des.cargo|striptags|capfirst}}</td>
-                            <td>{{ des.agente.patente }}</td>
+                            <td>{{ des.tipo|safe|upper }}</td>
+                            <td>{{ des.cargo|striptags|capfirst|safe|upper}}</td>
+                            <td>{{ des.agente.patente|safe|upper }}</td>
                             {% endautoescape %}
                             <td>
-                                
+
                                 <a href="{% url 'pessoal_quadro:editar-dados-nomiacao' des.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                     <span class="icon-edit"></span> </a>
 

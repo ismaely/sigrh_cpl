@@ -38,12 +38,11 @@ def utilizador_home(request):
 @login_required
 def listar_utilizador(request):
     try:
-        lista = []
         agente = {}
-        lista = User.objects.all()
+        lista = [ User.objects.all()]
         for n in lista:
-            idx = int(n.first_name)
-            agente[idx] = Agente.objects.get(id=idx)
+            agente[n.first_name] = Agente.objects.get(id=int(n.first_name) )
+
     except Exception as e:
         print(e)
 

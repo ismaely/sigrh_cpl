@@ -187,6 +187,200 @@ def atualizar_patente(request):
 
 
 
+
+# função que retorna o curso por medio da requisição ajax
+@login_required
+def retorna_cursos(request):
+    if request.method == 'POST':
+        dados = dict()
+        cod = []
+        cod = request.body.decode('utf-8')
+        lista = json.loads(cod)
+        if lista['area'] == 'Área de Mecânica':
+            dados = {
+                'dados': Mecanica,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Electricidade':
+            dados = {
+                'dados': Electricidade,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Construção Civil':
+            dados = {
+                'dados': Construcao_Civil,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Informática':
+            dados = {
+                'dados': Informatica,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Administração':
+            dados = {
+                'dados': Administracao,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Administração':
+            dados = {
+                'dados': Administracao,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Área de Saude':
+            dados = {
+                'dados': Saude,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Ciência Sociais':
+            dados = {
+                'dados': CIENCIAS_SOCIAIS,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Saude':
+            dados = {
+                'dados': SAUDE,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Direito':
+            dados = {
+                'dados': DIREITO,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Economia':
+            dados = {
+                'dados': ECONOMIA,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Letras':
+            dados = {
+                'dados': LETRAS,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Engenharia':
+            dados = {
+                'dados': ENGENHARIA,
+            }
+            return JsonResponse(dados)
+        elif lista['area'] == 'Ciência':
+            dados = {
+                'dados': CIENCIA,
+            }
+            return JsonResponse(dados)
+        else:
+            dados = {
+                'dados': ['--'],
+            }
+            return JsonResponse(dados)
+        
+
+
+
+# retorna o municipos das provincia
+@login_required
+def retorna_municipio(request):
+    if request.method == 'POST':
+        dados = dict()
+        cod = []
+        cod = request.body.decode('utf-8')
+        lista = json.loads(cod)
+        if lista['provincia'] == 'Luanda':
+            dados = {
+                'dados': LUANDA,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Bengo':
+            dados = {
+                'dados': BENGO,
+            }
+            return JsonResponse(dados)      
+        elif lista['provincia'] == 'Benguela':
+            dados = {
+                'dados': BENGUELA,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Bié':
+            dados = {
+                'dados': BIE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cabinda':
+            dados = {
+                'dados': CABINDA,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cabinda':
+            dados = {
+                'dados': CABINDA,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cunene':
+            dados = {
+                'dados': CUNENE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Huambo':
+            dados = {
+                'dados': HUAMBO,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Huila':
+            dados = {
+                'dados': HUILA,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cuando Cubango':
+            dados = {
+                'dados': CUANDO_CUBANGO,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cuanza Norte':
+            dados = {
+                'dados': CUANZA_NORTE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Cuanza Sul':
+            dados = {
+                'dados': CUANZA_SUL,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Lunda Norte':
+            dados = {
+                'dados': LUNDA_NORTE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Lunda Sul':
+            dados = {
+                'dados': LUNDA_SUL,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Malanje':
+            dados = {
+                'dados': MALANJE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Moxico':
+            dados = {
+                'dados': MOXICO,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Namibe':
+            dados = {
+                'dados': NAMIBE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Uige':
+            dados = {
+                'dados': UIGE,
+            }
+            return JsonResponse(dados)
+        elif lista['provincia'] == 'Zaire':
+            dados = {
+                'dados': ZAIRE,
+            }
+            return JsonResponse(dados)
+
+
+
 #VIEWS QUE VALIDAR O CODIGO DE CADASTRO PARA USARIO SEM PERMISÃO
 @login_required
 def codigo_cadastrar(request):
@@ -564,7 +758,7 @@ def consultar_dados(request):
                     messages.warning(request, ' Não existe agente cadastrado com esse numero no sistema...')
                     template = TEMPLATE_PESSOAQUADRO['consultar_rota']
                     return HttpResponseRedirect(reverse(template))
-    context = {'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['consultar']
     return render(request, template, context)
 
@@ -815,7 +1009,7 @@ def cabecario_ficha(id):
     bi = Paragraph(''' Bi Nº ''',estilosB)
     #terceira linha
     residencia = Paragraph(''' Residencia ''',estilosB)
-    casa = Paragraph(''' Casa Nª ''',estilosB)
+    municipio = Paragraph(''' Municipio ''',estilosB)
     telefone = Paragraph(''' Telefone ''',estilosB)
     email = Paragraph(''' E-mail ''',estilosB)
 
@@ -827,7 +1021,7 @@ def cabecario_ficha(id):
     #quinta linha
     academico = Paragraph(''' Nivel Academico ''',estilosB)
     curso = Paragraph(''' Curso ''',estilosB)
-    funcao = Paragraph(''' Função ''',estilosB)
+    area_formacao = Paragraph(''' Área de Formação ''',estilosB)
     data_colocacao = Paragraph(''' Data de Colocação ''',estilosB)
     #sexto linha
     contribuite = Paragraph(''' Contrbuite Nº ''',estilosB)
@@ -843,9 +1037,9 @@ def cabecario_ficha(id):
     data6 = []
     data1.append([nome, pai, mae, genero])
     data2.append([nascimento, provincia, estado, bi])
-    data3.append([residencia, casa, telefone, email])
+    data3.append([municipio, residencia, telefone, email])
     data4.append([patente, categoria, nip, ingresso])
-    data5.append([academico, curso, funcao, data_colocacao])
+    data5.append([academico, curso, area_formacao, data_colocacao])
     data6.append([contribuite, social, orgao])
 
     dados1 = []
@@ -861,14 +1055,14 @@ def cabecario_ficha(id):
     dados2 = [str (lista.agente.pessoa.data_nascimento), str (lista.agente.pessoa.provincia),
     str (lista.agente.pessoa.estado_civil), str (lista.agente.pessoa.bi)]
 
-    dados3 = [str (lista.agente.pessoa.residencia), str (lista.agente.pessoa.casa_numero),
+    dados3 = [str (lista.agente.pessoa.municipio), str (lista.agente.pessoa.residencia),
     str (lista.agente.pessoa.telefone), str (lista.agente.pessoa.email)]
 
     dados4 = [str (lista.agente.patente), str (lista.agente.categoria),
     str (lista.agente.nip), str (lista.agente.data_igresso)]
 
     dados5 = [str (lista.agente.nivel_academico), str (lista.agente.curso),
-    str (lista.agente.funcao), str (lista.data_colocacao)]
+    str (lista.agente.area_formacao), str (lista.data_colocacao)]
 
     dados6 = [str (lista.agente.numero_contribuite), str (lista.agente.numero_caixa_social),
     str ( lista.orgao_colocacao)]

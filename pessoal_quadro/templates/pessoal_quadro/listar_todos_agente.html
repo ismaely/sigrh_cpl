@@ -19,7 +19,7 @@
                             <th>Foto</th>
                             <th>Nome</th>
                             <th>Genero</th>
-                            <th>Data de ingresso</th>
+                            <!--<th>Data de ingresso</th>-->
                             <th>Orgão de Colocação</th>
                             <th>Nip</th>
                             <th> Patente</th>
@@ -36,12 +36,12 @@
 
                                 </a>
                             </td>
-                            <td>{{ list.agente.pessoa.nome|capfirst|safe }}</td>
-                            <td>{{ list.agente.pessoa.genero }}</td>
-                            <td>{{ list.agente.data_igresso }}</td>
-                            <td>{{ list.orgao_colocacao|striptags|capfirst }} </td>
+                            <td>{{ list.agente.pessoa.nome|capfirst|safe|upper }}</td>
+                            <td>{{ list.agente.pessoa.genero|upper }}</td>
+                            <!--<td>{{ list.agente.data_igresso }}</td>-->
+                            <td>{{ list.orgao_colocacao|striptags|capfirst|upper }} </td>
                             <td> {{ list.agente.nip }} </td>
-                            <td>{{ list.agente.patente }}</td>
+                            <td>{{ list.agente.patente|upper }}</td>
                             {% endautoescape %}
                             <td>
                                 <a href="{% url 'pessoal_quadro:informacao-pessoal' list.agente.pessoa.id %}" class="btn btn-success tip" title="Visualizar informação">

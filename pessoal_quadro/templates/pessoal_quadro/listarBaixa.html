@@ -36,14 +36,14 @@
                                 </a>
                             </td>
                             <td>
-                                {{ bax.agente.pessoa.nome|capfirst|safe }}
+                                {{ bax.agente.pessoa.nome|capfirst|safe|safe|upper }}
                             </td>
-                            <td>{{ bax.motivo_baixa|striptags|capfirst }}</td>
-                            <td>{{ bax.tipo_invalidez|striptags|capfirst }}</td>
+                            <td>{{ bax.motivo_baixa|striptags|capfirst|safe|upper }}</td>
+                            <td>{{ bax.tipo_invalidez|striptags|capfirst|safe|upper }}</td>
                             <td>{{ bax.descricao|striptags|capfirst|truncatechars:20 }}</td>
                             <td>{{ bax.data_oucorrencia }}</td>
                             <td>{{ bax.data_entrada}}</td>
-                            <td>{{ bax.agente.patente }}</td>
+                            <td>{{ bax.agente.patente|safe|upper }}</td>
                             <td>
                                 <a href="{% url 'pessoal_quadro:editar-baixas' bax.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                     <span class="icon-edit"></span> </a>

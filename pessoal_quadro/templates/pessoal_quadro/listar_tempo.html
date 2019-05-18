@@ -35,7 +35,7 @@
                                 </a>
                             </td>
                             <td>
-                                {{ des.pessoa.nome|capfirst|safe }}
+                                {{ des.pessoa.nome|capfirst|safe|upper }}
                             </td>
 
                             {% for keys, values in cargo.items %} {% if keys == des.id %}
@@ -45,8 +45,8 @@
                             <td> Sem Cargo</td>
                             {% endif %} {% endfor %}
                             <td>#####</td>
-                            <td>{{ value }}</td>
-                            <td>{{ des.patente }}</td>
+                            <td>{{ value|safe|upper }}</td>
+                            <td>{{ des.patente|safe|upper }}</td>
                             {% endautoescape %}
                             <td>
                                 <a href="" class="btn btn-success tip" title="Visualizar informação">

@@ -37,14 +37,14 @@
                                 </a>
                             </td>
                             <td>
-                                {{ des.agente.pessoa.nome|capfirst|safe }}
+                                {{ des.agente.pessoa.nome|capfirst|safe|upper }}
                             </td>
-                            <td>{{ des.agente.pessoa.genero }}</td>
-                            <td>{{ des.motivo }}</td>
+                            <td>{{ des.agente.pessoa.genero|safe|upper }}</td>
+                            <td>{{ des.motivo|safe|upper }}</td>
                             <td>{{ des.data}}</td>
                             <td>{{ des.suspensao|striptags|capfirst|truncatewords:3 }}</td>
-                            <td>{{ des.agente.funcao|striptags|capfirst }}</td>
-                            <td>{{ des.agente.patente }}</td>
+                            <td>{{ des.agente.funcao|striptags|capfirst|safe|upper }}</td>
+                            <td>{{ des.agente.patente|safe|upper }}</td>
                             {% endautoescape %}
                             <td>
                                 <a href="{% url 'pessoal_quadro:informacao-pessoal' des.agente.pessoa.id %}" class="btn btn-warning tip" title="Visualizar informação">

@@ -41,7 +41,7 @@
                             <td>{{ list.data }}</td>
                             <td class="">{{ list.motivo }}</td>
                             <td> {{ list.pena }}</td>
-                            <td>{{ list.agente.patente }}</td>
+                            <td>{{ list.agente.patente|safe|upper }}</td>
                             <td>
                                 <a href="{% url 'pessoal_quadro:pessoal-informacao' list.id %}" class="btn btn-success tip" title="Visualizar o Processo">
                                     <span class="icon-user"></span>

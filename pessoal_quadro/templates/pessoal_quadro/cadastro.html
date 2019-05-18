@@ -1,5 +1,17 @@
 {% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %} {% load static %}
-<div class="user bg-default bg-light-rtl">
+<div class="user bg-default ">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <p>
+                &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            </p>
+
+            <p>
+                &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-2">
         </div>
@@ -33,7 +45,7 @@
                                 <legend></legend>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Nome completo:</b> {{ form.nome }} {{ form.nome.errors }}
+                                        <b>Nome completo *:</b> {{ form.nome }} {{ form.nome.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -46,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-4"><b>Data de Nascimento:</b>
+                                    <div class="col-md-4"><b>Data de Nascimento *:</b>
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-calendar"></span></div>
                                             {{ form.data_nascimento }} {{ form.data_nascimento.errors }}
@@ -56,7 +68,7 @@
 
 
                                     <div class="col-md-4">
-                                        <b>Género:</b> {{ form.genero }} {{ form.genero.errors }}
+                                        <b>Género *:</b> {{ form.genero }} {{ form.genero.errors }}
                                     </div>
                                     <div class="col-md-4">
                                         <b>Estado Civil:</b> {{ form.estado_civil }} {{ form.estado_civil.errors }}
@@ -64,24 +76,24 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Província:</b> {{ form.provincia }} {{ form.provincia.errors }}
+                                        <b>Província *:</b> {{ form.provincia }} {{ form.provincia.errors }}
                                     </div>
                                     <div class="col-md-4">
-                                        <b>BI Nº:</b> {{ form.bi }} {{ form.bi.errors }}
+                                        <b>BI Nº *:</b> {{ form.bi }} {{ form.bi.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Residência:</b> {{ form.residencia }} {{ form.residencia.errors }}
+                                        <b>Municipio:</b> {{ form.municipio }} {{ form.municipio.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Número da Casa:</b> {{ form.casa_numero }} {{ form.casa_numero.errors }}
+                                        <b>Residência:</b> {{ form.residencia }} {{ form.residencia.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Telefone:</b> {{ form.telefone }} {{ form.telefone.errors }}
+                                        <b>Telefone *:</b> {{ form.telefone }} {{ form.telefone.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -97,7 +109,7 @@
 
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Número de Contribuite (NIF):</b> {{ form2.numero_contribuite}} {{ form2.numero_contribuite.errors }}
+                                        <b>Número de Contribuite (NIF) *:</b> {{ form2.numero_contribuite}} {{ form2.numero_contribuite.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -105,33 +117,39 @@
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Nível Acádemico:</b> {{ form2.nivel_academico }} {{ form2.nivel_academico.errors }}
+                                        <b>Nível Acádemico *:</b> {{ form2.nivel_academico }} {{ form2.nivel_academico.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
 
                                 </div>
                                 <div class="form-row">
+                                    <div class="col-md-4">
+                                        <b>Área de Formação:</b> {{ form2.area_formacao }} {{ form2.area_formacao.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
 
                                     <div class="col-md-4">
                                         <b>Curso:</b> {{ form2.curso }} {{ form2.curso.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Patente:</b> {{ form2.patente }} {{ form2.patente.errors }}
+                                        <b>Patente *:</b> {{ form2.patente }} {{ form2.patente.errors }}
                                     </div>
-                                    <div class="col-md-4">
-                                        <b>Número de Agente:</b> {{ form2.numero_agente }} {{ form2.numero_agente.errors }}
-                                        <span class="error" style="display:none"> </span>
-                                    </div>
+
 
                                 </div>
                                 <div class="form-row">
+
                                     <div class="col-md-4">
-                                        <b>Nip:</b> {{ form2.nip }} {{ form2.nip.errors }}
+                                        <b>Número de Agente *:</b> {{ form2.numero_agente }} {{ form2.numero_agente.errors }}
+                                        <span class="error" style="display:none"> </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Nip *:</b> {{ form2.nip }} {{ form2.nip.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
 
-                                    <div class="col-md-4"><b>Data de Ingresso:</b>
+                                    <div class="col-md-4"><b>Data de Ingresso *:</b>
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-calendar"></span></div>
                                             {{ form2.data_igresso }} {{ form2.data_igresso.errors }}
@@ -139,15 +157,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <b>Orgão de Colocação:</b> {{ form3.orgao_colocacao }} {{ form3.orgao_colocacao.errors }}
-                                    </div>
+
+
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Função:</b> {{ form2.funcao }} {{ form2.funcao.errors }}
-                                        <span class="error" style="display:none"> </span>
+                                        <b>Orgão de Colocação:</b> {{ form3.orgao_colocacao }} {{ form3.orgao_colocacao.errors }}
                                     </div>
+
 
                                 </div>
 
@@ -224,6 +241,21 @@
         </div>
         <div class="col-md-2">
 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <p>
+                &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            </p>
+            <p>
+                &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            </p>
+            <p>
+                &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            </p>
         </div>
     </div>
 </div>

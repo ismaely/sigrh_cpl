@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nª Agente</th>
+                            <th>Nº Agente</th>
                             <th>Nome</th>
                             <th>Data Nasc..</th>
                             <th>Genero</th>
@@ -35,12 +35,12 @@
                             <td>{{ list.numero_agente }}</td>
 
                             <td>
-                                {{ list.pessoa.nome|capfirst|safe }}
+                                {{ list.pessoa.nome|capfirst|safe|upper }}
                             </td>
-                            <td>{{ list.pessoa.data_nascimento }}</td>
-                            <td>{{ list.pessoa.genero }}</td>
+                            <td>{{ list.pessoa.data_nascimento|safe|upper }}</td>
+                            <td>{{ list.pessoa.genero|safe|upper }}</td>
                             <td class="">{{ value }}</td>
-                            <td>{{ list.patente }}</td>
+                            <td>{{ list.patente|safe|upper }}</td>
 
                         </tr>
                         {% endif %} {% endfor %} {% endfor %}

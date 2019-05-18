@@ -48,17 +48,17 @@
                             <td>{{ agen.patente }}</td>
                             {% endautoescape %}
                             <td>
-                                <a href="{% url 'utilizador:redifinir-senha' list.id %} " class="btn btn-primary tip" title="Redifinir a senha">
+                                <a href="{% url 'utilizador:redifinir-senha' list %} " class="btn btn-primary tip" title="Redifinir a senha">
                                     <span class="icon-key"></span>
                                 </a>
-                                <a href="{% url 'utilizador:desativar' list.id %} " class="btn btn-warning tip" title="Desativar a conta">
+                                <a href="{% url 'utilizador:desativar' list %} " class="btn btn-warning tip" title="Desativar a conta">
                                     <span class="icon-unlock-alt"></span> </a>
 
-                                <a href="{% url 'utilizador:ativar' list.id %} " class="btn btn-success tip" title="Ativar a conta">
+                                <a href="{% url 'utilizador:ativar' list %} " class="btn btn-success tip" title="Ativar a conta">
                                     <span class="icon-unlock"></span> </a>
 
 
-                                <a href="{% url 'utilizador:eliminar' list.id %} " class="btn btn-danger tip" title="Remover da lista">
+                                <a href="{% url 'utilizador:eliminar' list %} " class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
                             </td>
