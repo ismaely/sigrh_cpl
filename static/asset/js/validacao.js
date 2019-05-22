@@ -18,7 +18,6 @@ var patente = $('#id_patente');
 var numero_agente = $('#id_numero_agente');
 var nip = $('#id_nip');
 var data_igresso = $('#id_data_igresso');
-var funcao = $('#id_funcao');
 var bi_agente = $('.bi_agente');
 var datas = $('#id_data'); // vai validar todas data para não ter ano maior
 var formacao_bi_idade = $('.formacao_bi_idade');
@@ -58,18 +57,13 @@ nome_pessoal.blur(validar_nome);
 email.change(validar_email);
 casa_numero.blur(validar_numeroCasa);
 data_nascimento.blur(validar_dataNascimento);
-
-
 numero_caixa_social.blur(validar_numero_caixa_social);
-funcao.blur(validar_funcao);
 datas.blur(validar_datas_gerais);
 //formacao_bi_idade.blur(validar_bi_consultarIdade);
 
 data_igresso.blur(validar_data_igresso);
 bi_agente.keyup(validar_bi_numeroAgente);
 telefone.keyup(validar_telefone);
-
-
 
 // função que chamar para alterar a mascar do BI quando escolher provincia
 $('#id_provincia').click(validar_provinciaBi);
@@ -407,8 +401,6 @@ function validar_nivelAcademico(){
     
     var id_nivel = document.getElementById("id_nivel_academico");
     var area_formacaos = document.getElementById("id_area_formacao");
-
-
     while (area_formacaos.options.length) {
         area_formacaos.remove(0);
       }
@@ -431,7 +423,6 @@ if ($('#id_nivel_academico').val() == 'Licenciado' || $('#id_nivel_academico').v
     for (let k = 0; k < area_ensinoSuperior.length; k++) {
         var lista_novaArea = new Option(area_ensinoSuperior[k], area_ensinoSuperior[k]);
         area_formacaos.options.add(lista_novaArea);
-        
     }
     
     return true;
@@ -470,28 +461,6 @@ function validar_area_formacao(){
 
         }
     });
-
-}
-
-
-
-// validar a função para não entra simbolos
-function validar_funcao(){
-    var valor = funcao.val();
-    if ($('#id_funcao').val() != '') {
-        if(valor.match(nao_aceite) || funcao.val().length < 5 ){
-            $('#id_funcao').parent().children("span").text("A Função do agente não é valida").show();
-            return false;
-        }
-        else{
-            $("#id_funcao").parent().children("span").text("").hide();
-            return true;
-        }
-    }
-    else{
-        $("#id_funcao").parent().children("span").text("").hide();
-        return true;
-    }
 
 }
 

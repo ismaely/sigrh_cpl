@@ -99,10 +99,8 @@ class AgenteForm(ModelForm):
 class OrgaoForm(ModelForm):
     bi = forms.CharField(max_length=14, required=False, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi])
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
-    #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
     data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999/99'"}))
-    #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:
         model = Orgao
         fields = ['orgao_colocacao', 'data_colocacao', 'dispacho']
@@ -214,7 +212,7 @@ class Atualizar_patenteForm(ModelForm):
 
 class DisciplinaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
-    numero_processo = forms.CharField(max_length=30, required=False )
+    numero_processo = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999'"}))
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_DISCILINAR))
     pena = forms.CharField(required=True, widget=forms.Select(choices=PENAS_DISCIPLINAR))

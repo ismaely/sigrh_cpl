@@ -4,7 +4,7 @@
     <div class="col-md-3">
 
         <div class="block block-drop-shadow">
-            <div class="user bg-default bg-light-rtl">
+            <div class="user bg-default ">
                 <div class="info">
 
                     <img src="/media/{{ lista.agente.foto_fardado }}" width=90px class="img-circle img-thumbnail" />
@@ -16,18 +16,20 @@
     <div class="col-md-6">
 
         <div class="block block-drop-shadow">
-            <div class="user bg-default bg-light-rtl">
+            <div class="user bg-default ">
                 <span class=" text-center">
-                 <h5>República de Angola <br>Ministério do Interior <br>Comando Provincial de Luanda D.P.R.H</h5>
+                 <h5>REPÚBLICA DE ANGOLA<br>MINISTÉRIO DO INTERIOR<br>COMANDO PROVÍNCIAL DE LUANDA <br>DIRECÇÃO PROVÍNCIAL DE RECURSOS HUMANOS</h5>
                 </span> &nbsp;
             </div>
+
         </div>
+
     </div>
 
     <div class="col-md-3">
 
         <div class="block block-drop-shadow">
-            <div class="user bg-default bg-light-rtl">
+            <div class="user bg-default ">
                 <div class="info">
 
                     <img src="/media/{{ lista.agente.foto_civil }}" width=90px class="img-circle img-thumbnail" />
@@ -69,7 +71,7 @@
                         <tr>
                             <th>Data de Nascimento</th>
                             <th>Provincia</th>
-                            <th>Estado Civil</th>
+                            <th>Municipio</th>
                             <th>Bi Nº</th>
                             <th>Numero de Agente</th>
 
@@ -79,7 +81,7 @@
                         <tr>
                             <td> {{ lista.agente.pessoa.data_nascimento }}</td>
                             <td> {{ lista.agente.pessoa.provincia }}</td>
-                            <td> {{ lista.agente.pessoa.estado_civil }} </td>
+                            <td> {{ lista.agente.pessoa.municipio }} </td>
                             <td> {{ lista.agente.pessoa.bi }}</td>
                             <td> {{ lista.agente.numero_agente }}</td>
 
@@ -101,7 +103,7 @@
 
                                 <td> {{ lista.agente.pessoa.residencia }}</td>
                                 <td> {{ lista.agente.pessoa.telefone }}</td>
-                                <td> {{ lista.agente.pessoa.telefone_parente }}</td>
+                                <td> {{ lista.agente.pessoa.estado_civil }}</td>
                                 <td> {{ lista.agente.pessoa.email }}</td>
                                 <td>{{ lista.agente.nip }}</td>
                             </tr>

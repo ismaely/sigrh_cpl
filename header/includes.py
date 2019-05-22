@@ -69,7 +69,7 @@ Nomiacao_Cargo, Patentiamento, Disciplina)
 from pessoal_quadro.forms import (PessoaForm, AgenteForm, BaixaForm, DespromocaoForm, FeriaForm,
 OrgaoForm, Nomiacao_cargoForm, Atualizar_patenteForm, Reforma_anticipadaForm, DisciplinaForm)
 from pessoal_quadro.forms_atualizar import PessoaForm_atualizar, AgenteForm_atualizar, OrgaoForm_atualizar
-from pessoal_quadro.views import  cabecario_ficha
+from pessoal_quadro.views import  cabecarioFicha
 
 
 

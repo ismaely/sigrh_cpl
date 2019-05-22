@@ -1,5 +1,5 @@
  {% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %}
-<div class="user bg-default bg-light-rtl">
+<div class="user bg-default ">
     <div class="row">
 
         <div class="col-md-3">
@@ -42,7 +42,7 @@
 
                         <div class="form-row">
                             <div class="col-md-6"><b>Motivo:</b> {{ form.motivo }} {{ form.motivo.errors }} </div>
-                            <div class="col-md-6"><b>Data:</b>
+                            <div class="col-md-6"><b>Data da oucorrência:</b>
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="icon-calendar"></span></div>
                                     {{ form.data }} {{ form.data.errors }}
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="col-md-12"><b>Descrição da baixa:</b> {{ form.descricao }} {{ form.descricao.errors }} </div>
+                            <div class="col-md-12"><b>Descrição:</b> {{ form.descricao }} {{ form.descricao.errors }} </div>
                         </div>
 
                         <div class="form-row">

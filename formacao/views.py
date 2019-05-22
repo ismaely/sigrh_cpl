@@ -377,7 +377,7 @@ def ficha_formacao(request, id=None):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'inline; filename="ficha_pessoal.pdf"'
 
-        buffer, p, logo, fotofardado, logo_tabela, table1, table2, table3, table4, table5, table6, estilosB, style = cabecario_ficha(id)
+        buffer, p, logo, fotofardado, logo_tabela, table1, table2, table3, table4, table5, table6, estilosB, style = cabecarioFicha(id)
 
         #tamanho da linha          
         p.setLineWidth(2)

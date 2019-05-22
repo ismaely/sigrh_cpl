@@ -19,7 +19,6 @@
                             <th>Nome</th>
                             <th>Motivo</th>
                             <th>Invalidez</th>
-                            <th>Descrição</th>
                             <th>Data de Oucorrência</th>
                             <th>Data de Entrada</th>
                             <th> Patente</th>
@@ -40,7 +39,7 @@
                             </td>
                             <td>{{ bax.motivo_baixa|striptags|capfirst|safe|upper }}</td>
                             <td>{{ bax.tipo_invalidez|striptags|capfirst|safe|upper }}</td>
-                            <td>{{ bax.descricao|striptags|capfirst|truncatechars:20 }}</td>
+                            <!--<td>{{ bax.descricao|striptags|capfirst|truncatechars:20 }}</td>-->
                             <td>{{ bax.data_oucorrencia }}</td>
                             <td>{{ bax.data_entrada}}</td>
                             <td>{{ bax.agente.patente|safe|upper }}</td>

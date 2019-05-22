@@ -22,6 +22,7 @@
                             <th>Genero</th>
                             <th>Reforma / Idade</th>
                             <th> Patente</th>
+                            <th> Opções</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +42,14 @@
                             <td>{{ list.pessoa.genero|safe|upper }}</td>
                             <td class="">{{ value }}</td>
                             <td>{{ list.patente|safe|upper }}</td>
+                            <td>
+
+
+
+                                <a href="" class="btn btn-danger tip" title="Cancelar a reforma">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </td>
 
                         </tr>
                         {% endif %} {% endfor %} {% endfor %}

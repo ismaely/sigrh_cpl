@@ -43,9 +43,9 @@ class DisciplinarLista_Form(forms.Form):
     ANO = []
     ANO.append(('', ''))
     for p in Disciplina.objects.select_related('agente').all():
-        desp = p.data.split('/')
-        if ANO.count((desp[2],desp[2])) == 0:
-            ANO.append((str(desp[2]),str(desp[2])))
+        desp = p.data.split('-')
+        if ANO.count((desp[0],desp[0])) == 0:
+            ANO.append((str(desp[0]),str(desp[0])))
     motivo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=MOTIVO_DISCILINAR ))
     titulo = forms.CharField(max_length=90, required=True)
     ano=forms.CharField(max_length=90,required=False,  widget=forms.Select(choices=ANO))
@@ -58,12 +58,12 @@ class FormacaoLista_Form(forms.Form):
     ANO.append(('', ''))
     for p in Selecionado_formacao.objects.select_related('agente').all():
         desp = p.data.split('-')
-        if ANO.count((desp[2],desp[2])) == 0:
+        if ANO.count((desp[0],desp[0])) == 0:
             ANO.append((str(desp[0]),str(desp[0])))
     for p in Formacao_conclusao.objects.select_related('agente').all():
         desp = p.data_conclusao.split('-')
-        if ANO.count((desp[2],desp[2])) == 0:
-            ANO.append((str(desp[2]),str(desp[2])))
+        if ANO.count((desp[0],desp[0])) == 0:
+            ANO.append((str(desp[0]),str(desp[0])))
     tipo = forms.CharField(max_length=100, widget=forms.Select(choices=TIPO_LISTA_FORMACAO))
     titulo = forms.CharField(max_length=90, required=True)
     ano=forms.CharField(max_length=90,required=False,  widget=forms.Select(choices=ANO))

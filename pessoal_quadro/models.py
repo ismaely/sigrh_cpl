@@ -33,7 +33,6 @@ class Agente(models.Model):
     numero_caixa_social = models.CharField(max_length=20)
     nivel_academico = models.CharField(max_length=20, choices=NIVEL_ACADEMICO)
     curso = models.CharField(max_length=80, null=True, default="--")
-    #funcao = models.CharField(max_length=50, blank=True, null=True)
     patente = models.CharField(max_length=60, choices=PATENTE)
     categoria = models.CharField(max_length=100)
     numero_agente = models.IntegerField(unique='true')
