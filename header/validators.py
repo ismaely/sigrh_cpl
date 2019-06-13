@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 import validators
-from pessoal_quadro.models import Agente, Pessoa, Nomiacao_Cargo, Baixa
+from pessoal_quadro.models import Agente, Pessoa, Nomiacao_Cargo, Baixa, Reforma
 from formacao.models import Selecionado_formacao, Formacao_conclusao
 from transferencia.models import Transferencia, Troca
 from django.contrib import messages
@@ -9,6 +9,35 @@ import re
 from django.contrib.auth.decorators import login_required
 import header
 
+
+
+
+
+def validar_baixa(request):
+    try:
+        bix = header.views_core.retorna_numero_agente(request.POST['bi'])
+        bx = Baixa.objects.get(agente_id=bix)
+        if bx.motivo_baixa == 'Reforma' or bx.motivo_baixa == 'Falecimento':
+            messages.warning(request," Não pode! ja exite uma baixa com as mesma carateristica..")
+            return False
+        else:
+            return True
+    except Exception as e:
+        return True
+
+
+
+def validar_reforma_anticipada(request):
+    try:
+        bix = header.views_core.retorna_numero_agente(request.POST['bi'])
+        ref = Reforma.objects.get(agente_id=bix)
+        if ref.reforma == 'Anticipada':
+            messages.warning(request," Não pode! ja exite na reforma..")
+            return False
+        else:
+            return True
+    except Exception as e:
+        return True
 
 
 
@@ -24,6 +53,8 @@ def validar_pedido_transferencia(request):
         return True
 
 
+
+
 def validar_selecionar_formacao(request):
         bi = request.POST['bi']
         id = header.views_core.retorna_numero_agente(bi)
@@ -35,6 +66,7 @@ def validar_selecionar_formacao(request):
                 return False
         except Selecionado_formacao.DoesNotExist:
             return True
+
 
 
 def verficar_falecimento(request, value = None):
@@ -84,6 +116,7 @@ def validar_data_nascimento_igresso_colocacao(request):
         return False
     else:
         return True
+
 
 
 def verficar_bi_numero_agente(request):

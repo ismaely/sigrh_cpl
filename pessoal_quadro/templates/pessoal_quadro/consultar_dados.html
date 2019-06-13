@@ -43,14 +43,14 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nome</th>
-                                <th>Genero</th>
+                                <th>Género</th>
                                 <!-- <th>Data de Nasci...</th>-->
                                 <th>Data de ingresso</th>
                                 <th>Orgão de Colocação</th>
-                                <th>Nivel Academico</th>
-                                <th>Nª Agente</th>
+                                <th>Nível Acádemico</th>
+                                <th>Nº Agente</th>
                                 <th> Patente</th>
-                                <th> Ação</th>
+                                <th> Acção</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,15 +63,15 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{ agente.pessoa.nome|capfirst|safe }}
+                                    {{ agente.pessoa.nome|capfirst|safe|upper }}
                                 </td>
-                                <td>{{ agente.pessoa.genero }}</td>
+                                <td>{{ agente.pessoa.genero|safe|upper }}</td>
                                 <!--<td>{{ list.agente.pessoa.data_nascimento }}</td>-->
                                 <td>{{ agente.data_igresso }}</td>
-                                <td>{{ orgao.orgao_colocacao|striptags|capfirst }}</td>
-                                <td>{{ agente.nivel_academico }}</td>
+                                <td>{{ orgao.orgao_colocacao|striptags|capfirst|safe|upper }}</td>
+                                <td>{{ agente.nivel_academico|safe|upper }}</td>
                                 <td>{{ agente.numero_agente }}</td>
-                                <td>{{ agente.patente }}</td>
+                                <td>{{ agente.patente|safe|upper }}</td>
                                 {% endautoescape %}
                                 <td>
                                     <a href="{% url 'pessoal_quadro:informacao-pessoal' agente.pessoa_id %}" class="btn btn-success tip" title="Visualizar informação">

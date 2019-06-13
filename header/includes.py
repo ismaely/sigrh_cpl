@@ -63,6 +63,8 @@ from header.validators import( verficar_bi_numero_agente, validar_data_nasciment
 verficar_id_nomiacao )
 import header
 
+
+
 #PESSOAL E QUADRO 
 from pessoal_quadro.models import (Pessoa, Agente, Baixa, Despromocao, Feria, Orgao, Reforma,
 Nomiacao_Cargo, Patentiamento, Disciplina)

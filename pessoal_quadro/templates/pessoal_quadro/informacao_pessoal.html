@@ -51,37 +51,37 @@
                         <tr>
                             <th>Nome</th>
                             <th>Nome do Pai</th>
-                            <th>Genero</th>
-                            <th>Nome da Mae</th>
+                            <th>Género</th>
+                            <th>Nome da Mãe</th>
                             <th>Patente</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td> {{ lista.agente.pessoa.nome }} </td>
-                            <td> {{ lista.agente.pessoa.nome_pai }}</td>
-                            <td> {{ lista.agente.pessoa.genero }}</td>
-                            <td> {{ lista.agente.pessoa.nome_mae }}</td>
-                            <td>{{ lista.agente.patente }}</td>
+                            <td> {{ lista.agente.pessoa.nome|safe|upper }} </td>
+                            <td> {{ lista.agente.pessoa.nome_pai|safe|upper }}</td>
+                            <td> {{ lista.agente.pessoa.genero|safe|upper }}</td>
+                            <td> {{ lista.agente.pessoa.nome_mae|safe|upper }}</td>
+                            <td>{{ lista.agente.patente|safe|upper }}</td>
 
                         </tr>
                     </tbody>
                     <thead>
                         <tr>
                             <th>Data de Nascimento</th>
-                            <th>Provincia</th>
-                            <th>Municipio</th>
+                            <th>Província</th>
+                            <th>Município</th>
                             <th>Bi Nº</th>
-                            <th>Numero de Agente</th>
+                            <th>Nº de Agente</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td> {{ lista.agente.pessoa.data_nascimento }}</td>
-                            <td> {{ lista.agente.pessoa.provincia }}</td>
-                            <td> {{ lista.agente.pessoa.municipio }} </td>
+                            <td> {{ lista.agente.pessoa.provincia|safe|upper }}</td>
+                            <td> {{ lista.agente.pessoa.municipio|safe|upper }} </td>
                             <td> {{ lista.agente.pessoa.bi }}</td>
                             <td> {{ lista.agente.numero_agente }}</td>
 
@@ -91,9 +91,9 @@
                             <tr>
 
 
-                                <th>Residencia</th>
+                                <th>Residência</th>
                                 <th> Telefone</th>
-                                <th> Telefone de Parente</th>
+                                <th>Estado Cívil</th>
                                 <th>E-mail</th>
                                 <th>Nip</th>
                             </tr>
@@ -101,30 +101,30 @@
                         <tbody>
                             <tr>
 
-                                <td> {{ lista.agente.pessoa.residencia }}</td>
+                                <td> {{ lista.agente.pessoa.residencia|safe|upper }}</td>
                                 <td> {{ lista.agente.pessoa.telefone }}</td>
-                                <td> {{ lista.agente.pessoa.estado_civil }}</td>
-                                <td> {{ lista.agente.pessoa.email }}</td>
+                                <td> {{ lista.agente.pessoa.estado_civil|safe|upper }}</td>
+                                <td> {{ lista.agente.pessoa.email|safe|upper }}</td>
                                 <td>{{ lista.agente.nip }}</td>
                             </tr>
                         </tbody>
                         <thead>
                             <tr>
                                 <th> Nº de Contribuite </th>
-                                <th>Nivel Academico</th>
+                                <th>Nível Acádemico</th>
                                 <th>Curso</th>
                                 <th>Área de Formação</th>
-                                <th>Orgao de Colocação</th>
+                                <th>Orgão de Colocação</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td> {{ lista.agente.numero_contribuite }}</td>
-                                <td> {{ lista.agente.nivel_academico }}</td>
-                                <td> {{ lista.agente.curso }}</td>
-                                <td>{{ lista.agente.area_formacao }}</td>
-                                <td> {{ lista.orgao_colocacao }}</td>
+                                <td> {{ lista.agente.nivel_academico|safe|upper }}</td>
+                                <td> {{ lista.agente.curso|safe|upper }}</td>
+                                <td>{{ lista.agente.area_formacao|safe|upper }}</td>
+                                <td> {{ lista.orgao_colocacao|safe|upper }}</td>
                             </tr>
                         </tbody>
                     </tbody>

@@ -279,6 +279,7 @@ NOMIACAO_TIPO = (
 
 MOTIVO_REFORMA = (
     ('Acidente', 'Acidente'),
+    ('Incapacidade', 'Incapacidade'),
     ('Dificiência Contraída', 'Dificiência Contraída'),
     ('Outro', 'Outro'),
 )

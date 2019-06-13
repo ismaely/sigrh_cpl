@@ -11,17 +11,10 @@ def area_pessoal_quadro(request):
     return render(request, template, context)
 
 
-#view que vai atualizar o codigo de segurança
-@login_required
-def atualizar_novo_codigo_seguranca(request):
-    if  header.views_core.novo_codigo_seguranca():
-        return HttpResponseRedirect(reverse('pessoal_quadro:gerar-codigo'))
-
-
-
 
 # editar os dados da nomiação do agente
 @login_required
+@csrf_protect
 def editar_nomiacao(request, id):
     nomiar = Nomiacao_Cargo.objects.get(id=id)
     form = Nomiacao_cargoForm(request.POST or None, instance=nomiar)
@@ -42,27 +35,6 @@ def editar_nomiacao(request, id):
     template = TEMPLATE_PESSOAQUADRO['nomiar']
     return render(request, template, context)
 
-
-
-#views que vai editar os dados da ferias
-"""@login_required
-def editar_ferias(request, id):
-    ferias = Feria.objects.get(id=id)
-    form = FeriaForm(request.POST or None, instance=ferias)
-    if request.method == 'POST':
-        if form.is_valid():
-            feria = form.save(commit=False)
-            feria.agente_id = header.views_core.retorna_numero_agente_id(form.cleaned_data.get('numero_agente'))
-            feria.save()
-            sweetify.success(request, 'Dados alterado com sucesso....', button='Ok', timer='3100')
-            return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
-
-    agente = Agente.objects.get(id=ferias.agente_id)
-    forms = AgenteForm(request.POST or None, instance=agente)
-    context = {'form': form, 'feria': ferias, 'form2': forms, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-    template = TEMPLATE_PESSOAQUADRO['feria']
-    return render(request, template, context)
-"""
 
 
 
@@ -108,7 +80,7 @@ def atualizar_despromocao(request, id):
     return render(request, template, context)"""
 
 
-
+@csrf_protect
 def atualizar_documento(request, id):
     docs = Documento.objects.get(id=id)
     form = DocumentoForm(request.POST or None, instance=docs)
@@ -126,6 +98,7 @@ def atualizar_documento(request, id):
 
 #for key, value in idade.items
 @login_required
+@csrf_protect
 def editar_cadastro(request, id):
     try:
         dados = {}
@@ -403,28 +376,6 @@ def codigo_cadastrar(request):
 
 
 
-# VIEWS QUE VALIDAR O CODIGO DE ATUALIZAR QDO SE PRETENDE ATUALIZAR PATENTE
-@login_required
-def codigo_atualizar_recebe(request):
-    if request.method == 'POST':
-        dados = dict()
-        cod = request.body.decode('utf-8')
-        if header.views_core.validar_codigo_atualizar(cod):
-            dados = {
-                'validade': True,
-                'chave': int( DATA_ANO) + int(DATA_MES),
-                'msg': 'Acesso aceite'
-            }
-            return JsonResponse(dados)
-        else:
-            dados = {
-                'validade': False,
-                'msg': 'Acesso Negado!.. sem permisão'
-            }
-            return JsonResponse(dados)
-
-
-
 
 #views que vai eleiminar processo disciplinar
 def eliminar_processoDiciplinar(request):
@@ -436,6 +387,28 @@ def eliminar_processoDiciplinar(request):
         id = lista['id']
         if id > 0:
             docs = Disciplina.objects.filter(id=id).delete()
+            dados = {
+                    'validade': True,
+                }
+            return JsonResponse(dados)
+        else:
+            dados = {
+                'validade': False,
+            }
+            return JsonResponse(dados)
+
+
+
+#views que vai eleiminar processo disciplinar
+def eliminar_reforma_anticipada(request):
+    if request.method == 'POST':
+        dados = dict()
+        cod = []
+        cod = request.body.decode('utf-8')
+        lista = json.loads(cod)
+        id = lista['id']
+        if id > 0:
+            docs = Reforma.objects.filter(id=id).delete()
             dados = {
                     'validade': True,
                 }
@@ -535,6 +508,7 @@ def listar_nomiacao(request):
 
 #views que vai listarr o tempo na policia , o tempo no cargo, tempo na patente
 @login_required
+@csrf_protect
 def listar_tempo_efetividade(request):
     tempo_cargo = {}
     tempo_policia = {}
@@ -636,7 +610,7 @@ def listarReforma(request):
 
         for k in anticipada:
             #ida = header.views_core.retorna_idade(k.agente_id.pessoa_id.data_nascimento)
-            idade[k.agente_id] = 'Anticipada/ '
+            idade[k.agente_id] = 'Antecipada'
 
     except Exception as e:
         print(e)
@@ -689,7 +663,7 @@ def listar_documentos(request):
 
 
 
-#views que vai pode registar a colocação do agente
+#views que vai p    template = TEMPLATE_PESSOAQUADRO['nomiar']
 @login_required
 def efectuar_Colocacao(request):
     form = OrgaoForm(request.POST or None)
@@ -704,11 +678,6 @@ def efectuar_Colocacao(request):
                     novo.data_colocacao = form.cleaned_data.get('data_colocacao')
                     novo.dispacho = form.cleaned_data.get('dispacho')
                     novo.save()
-                    #orgao = form.save(commit=False)
-                    #orgao.agente_id = agen
-                    #orgao.bi_id = form.cleaned_data.get('bi_id')
-                    #orgao.numero_agente_id = form.cleaned_data.get('numero_agente_id')
-
                 else:
                     agen = header.views_core.retorna_numero_agente_id(bi_agente)
                     novo = Orgao.objects.get(agente_id=agen)
@@ -725,11 +694,10 @@ def efectuar_Colocacao(request):
                 context = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
                 template = TEMPLATE_PESSOAQUADRO['orgao']
                 return render(request, template, context)
-
-
     context = {'form': form, 'fotos':request.session['salakiaku'],  'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['orgao']
     return render(request, template, context)
+
 
 
 
@@ -785,6 +753,7 @@ def consultar_documentos(request):
 
 
 @login_required
+@csrf_protect
 def consultar_processo_disciplinar(request):
     if request.method == 'POST':
         value = request.POST['busca']
@@ -821,10 +790,11 @@ def registar_despromocao(request):
 
 
 @login_required
+@csrf_protect
 def registar_baixa(request):
     form = BaixaForm(request.POST or None)
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() and header.validators.validar_baixa(request):
             try:
                 baixa = form.save(commit=False)
                 motivo = form.cleaned_data.get('motivo_baixa')
@@ -846,6 +816,7 @@ def registar_baixa(request):
 
 #views que vai registar a nomiação de um agente com nova patente e cargo
 @login_required
+@csrf_protect
 def registar_nomiacao(request):
     form = Nomiacao_cargoForm(request.POST or None)
     if request.method == 'POST':
@@ -881,11 +852,12 @@ def registar_nomiacao(request):
 
 # viwes que vai resistar reforma anticipada, mais primeiro o usario vai ter que digitar o codigo de segurança
 @login_required
+@csrf_protect
 def registar_reforma_anticipada(request):
     form = Reforma_anticipadaForm(request.POST or None)
 
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() and header.validators.validar_reforma_anticipada(request):
             reforma = form.save(commit=False)
             reforma.agente_id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
             reforma.reforma = "Anticipada"
@@ -900,6 +872,7 @@ def registar_reforma_anticipada(request):
 
 
 @login_required
+@csrf_protect
 def registar_processoDisciplinar(request):
     form = DisciplinaForm(request.POST or None)
     if request.method == 'POST':
@@ -921,7 +894,8 @@ def registar_processoDisciplinar(request):
 @csrf_protect
 def registar_documentos(request):
     form = DocumentoForm(request.POST or None)
-    if request.method == 'POST':
+    if request.method == 'POST':   
+
         if form.is_valid():
             if documentacao.views.registar_documento(request):
                 sweetify.success(request, 'Documento Cadastrado com sucesso...', button='Ok')
@@ -972,6 +946,7 @@ def cadastrar(request):
 
 
 
+
 def cabecarioFicha(id):
     lista = []
     lista = Orgao.objects.select_related('agente').get(agente_id=id)
@@ -988,7 +963,7 @@ def cabecarioFicha(id):
 
     style = getSampleStyleSheet()
     estilosB = style["Normal"]
-    estilosB.alignment = TA_CENTER
+    estilosB.alignment = TA_LEFT
     estilosB.fontSize = 11
     estilosB.fontName = 'Times-Roman'
 
@@ -1070,7 +1045,7 @@ def cabecarioFicha(id):
     table1.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela 2
@@ -1079,7 +1054,7 @@ def cabecarioFicha(id):
     table2.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela3
@@ -1088,7 +1063,7 @@ def cabecarioFicha(id):
     table3.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela4
@@ -1097,7 +1072,7 @@ def cabecarioFicha(id):
     table4.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
 
@@ -1107,7 +1082,7 @@ def cabecarioFicha(id):
     table5.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela 6
@@ -1116,7 +1091,7 @@ def cabecarioFicha(id):
     table6.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela 7
@@ -1125,7 +1100,7 @@ def cabecarioFicha(id):
     table7.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
     #tabela 7
@@ -1134,9 +1109,12 @@ def cabecarioFicha(id):
     table8.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
-
+    p.saveState()
+    p.line(0, 0.86 * inch,600, 0.86 * inch)
+    p.drawString(inch, 0.72 * inch,'CPL / SALAKIAKU')
+    p.restoreState()
     return (buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, table3, table4, table5, table6, table7, table8, estilosB, style)
 
 
@@ -1172,7 +1150,8 @@ def ficha_pessoal(request, id=None):
             # logo da fotofardado
             p.drawImage(fotofardado, 440, 605, width=60, height=60, mask=None)
 
-            # zona do comunicado o informação que deve ser descrita 
+            # zo    template = TEMPLATE_PESSOAQUADRO['nomiar']
+            #na do comunicado o informação que deve ser descrita 
             p.drawString(248,620,'FICHA DO AGENTE')
 
             #imagem para os dados pessoal
@@ -1313,6 +1292,7 @@ def ficha_processo_disciplinar(request, id=None):
             table3.drawOn(p, 25, 462.5)
             #quarta linha
             table4.wrapOn(p, width, height)
+
             table4.drawOn(p, 25, 428.4)
 
             #onde começa se construida a tabela de dados de agente
@@ -1336,7 +1316,7 @@ def ficha_processo_disciplinar(request, id=None):
             table.setStyle(TableStyle([
             ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
             ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+            ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
             ]))
             table.wrapOn(p, width, height)
             table.drawOn(p, 25, 198.5)
@@ -1346,7 +1326,7 @@ def ficha_processo_disciplinar(request, id=None):
             table.setStyle(TableStyle([
             ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
             ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.white)
+            ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
             ]))
             table.wrapOn(p, width, height)
             table.drawOn(p, 25, 163.2)

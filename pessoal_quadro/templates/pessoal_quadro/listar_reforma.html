@@ -9,7 +9,7 @@
     <div class="">
         <div class="block">
             <div class="header">
-                <h2><b> Lista de agente na reforma </b></h2>
+                <h2><b> Lista de agentes na reforma </b></h2>
             </div>
             <div class="content">
                 <table id="example" class="table table-bordered table-striped  datatable-example">
@@ -19,7 +19,7 @@
                             <th>Nº Agente</th>
                             <th>Nome</th>
                             <th>Data Nasc..</th>
-                            <th>Genero</th>
+                            <th>Género</th>
                             <th>Reforma / Idade</th>
                             <th> Patente</th>
                             <th> Opções</th>
@@ -44,11 +44,13 @@
                             <td>{{ list.patente|safe|upper }}</td>
                             <td>
 
-
-
-                                <a href="" class="btn btn-danger tip" title="Cancelar a reforma">
-                                    <i class="icon-trash"></i>
+                                {% if value == "Antecipada" %}
+                                <a onclick=eliminar_reforma_anticipada({{ key }}) class="btn btn-danger tip" title="Cancelar a reforma">
+                                    <i class="icon-remove-sign"></i>
                                 </a>
+                                {% endif %}
+
+
                             </td>
 
                         </tr>

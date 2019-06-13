@@ -51,10 +51,8 @@ class Agente(models.Model):
 class Orgao(models.Model):
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
     orgao_colocacao = models.CharField(max_length=60, null=True, default="cpl", choices=ORGAO_COMANDOS)
-    #localizacao = models.CharField(max_length=40, blank=True, null=True, default="sem local")
     data_colocacao = models.CharField(max_length=20,  blank=True, null=True, default=DATE_FORMAT)
     dispacho = models.CharField(max_length=18,  blank=True, null=True, default="Sem despacho")
-    #unidade = models.CharField(max_length=90,  blank=True, null=True, default="cpl")
 
     def __str__(self):
         return '%d' % (self.id)
