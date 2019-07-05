@@ -111,6 +111,7 @@ class Reforma(models.Model):
         return '%d' % (self.id)
 
 
+
 class Nomiacao_Cargo(models.Model):
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
     cargo = models.CharField(max_length=200, choices=CARGOS_POLICIAL)
@@ -148,4 +149,11 @@ class Disciplina(models.Model):
 
 
 
+
+class Falecimento(models.Model):
+    baixa = models.ForeignKey(Baixa, on_delete=models.CASCADE, to_field='id', parent_link=True)
+    agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
+    cimiteiro = models.CharField(max_length=50, null=True, default="--")
+    numero_campa = models.CharField(max_length=5, null=True, default="--")
+    data_enterro = models.CharField(max_length=20, null=True, default=DATE_FORMAT)
 

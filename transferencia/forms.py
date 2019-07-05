@@ -15,9 +15,10 @@ class TransferenciaForm(ModelForm):
     motivo = forms.CharField(max_length=900, required=False, widget=forms.Textarea(attrs={'length':900}))
     arquivo = forms.FileField(required=False)
     numero_guia = forms.CharField(max_length=10)
+    situacao = forms.CharField(max_length=30, required=False)
     class Meta:
         model = Transferencia
-        fields = [ 'orgao_destino', 'data_entrada', 'dispacho', 'motivo','arquivo', 'numero_guia']
+        fields = [ 'orgao_destino', 'data_entrada', 'dispacho', 'motivo','arquivo', 'numero_guia','situacao']
 
 
 

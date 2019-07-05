@@ -31,6 +31,7 @@ TEMPLATE_PESSOAQUADRO = {
     'disciplina': 'pessoal_quadro/registar_disciplina.html', 
     'lista_discip': 'pessoal_quadro/listar_disciplina.html',
     'info_processo': 'pessoal_quadro/informacao_processoDisciplinar.html',
+    'listar_falecimento': 'pessoal_quadro/listar_falecimento.html',
 }
 
 """ Rotas e templeate do modulo utilizador """
@@ -90,7 +91,7 @@ TEMPLATE_ORGAO = {
 """ Rotas e templeate do modulo transferencia """
 TEMPLATE_TRANSFERENCIA = {
     'transferencia': 'transferencia/adicionar_transferencia.html',
-    'listar_pedido': 'transferencia/listar_transferencia.html',
+    'listar_pedido': 'transferencia/listar_pedido_transferencia.html',
     'listar_troca': 'transferencia/listar_troca.html',
     'consultar': 'transferencia/consulta.html',
     'consultar_doc': 'transferencia/consultar_docs.html',
@@ -98,6 +99,7 @@ TEMPLATE_TRANSFERENCIA = {
     'transferido': 'transferencia/listar_pessoal_transferido.html',
     'docs': 'transferencia/registar_documento.html',
     'listar_docs': 'transferencia/listar_documento.html',
+    'mensagem': 'transferencia/mensagem.html',
 }
 
 

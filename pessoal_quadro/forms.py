@@ -6,8 +6,8 @@ NIVEL_ACADEMICO, IDADE_LIMITE, NOMIACAO_TIPO, NOMIACAO_CATEGORIA, PROVINCIA, ORG
 MOTIVO_DISCILINAR, MOTIVO_DISCILINAR, PENAS_DISCIPLINAR, INVALIDEZ, AREAS_FORMACAO)
 from header.validators import (consultar_bi_existe, validar_comprimento_4, validar_numero_caixa_social, validar_comprimento_3,
  validar_numeros, validar_string, validar_email, validar_bi, consultar_numero_agente, consultar_bi, validar_baixa)
-from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromocao, Nomiacao_Cargo, Reforma, Patentiamento, Disciplina
-
+from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromocao, Nomiacao_Cargo, Reforma, Patentiamento, Disciplina,Falecimento
+import header
 
 class PessoaForm(ModelForm):
     nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
@@ -118,6 +118,16 @@ class BaixaForm(ModelForm):
         model = Baixa
         fields = ['data_entrada', 'data_oucorrencia', 'motivo_baixa', 'descricao', 'dispacho', 'tipo_invalidez']
 
+
+
+
+class FalecimentoForm(ModelForm):
+    data_enterro = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    cimiteiro = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    numero_campa = forms.CharField(max_length=10,required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = Falecimento
+        fields = ['cimiteiro', 'numero_campa', 'data_enterro']
 
 
 

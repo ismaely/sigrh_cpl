@@ -11,6 +11,13 @@ def area_documentacao(request):
 
 
 
+@login_required
+def visualizar_documento(request, id):
+    pdfs = Documento.objects.get(id=id)
+    nome = str(pdfs.arquivo)
+    nome = nome.split('/')
+    return FileResponse(open('media/'+ str(pdfs.arquivo), 'rb'), content_type='application/pdf')
+
 
 
 def atualizar_documento(request, id):

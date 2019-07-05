@@ -3,21 +3,22 @@
     <div class="">
         <div class="block">
             <div class="header">
-                <h2><b> Lista de Agentes Transferidos </b></h2>
+                <h2><b>Lista de Agentes Transferidos</b></h2>
             </div>
             <div class="content">
                 <table id="example" class="table table-bordered table-striped  datatable-example">
                     <thead>
                         <tr>
                             <th> #</th>
+                            <th>Nº Guia</th>
                             <th>Nome</th>
-                            <th>Genero</th>
-                            <th>Orgão de Origem</th>
                             <th>Orgão de Destino</th>
-                            <th>Data de entrada</th>
-                            <th>Data de aprovação</th>
-                            <th>Dispacho</th>
+                            <th>Data de Entrada</th>
+                            <th>Data de Aprovação</th>
+                            <th>Despacho</th>
+                            <th>Motivo</th>
                             <th>Patente</th>
+                            <th> Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,22 +30,37 @@
 
                                 </a>
                             </td>
+                            <td>{{ list.numero_guia}}</td>
                             <td>
                                 {{ list.agente.pessoa.nome|capfirst|safe }}
                             </td>
-                            <td>{{ list.agente.pessoa.genero}}</td>
-                            <td> {{ list.orgao_origem }}</td>
-                            <td> {{ list.orgao_destino}}</td>
+
+                            <td> {{ list.orgao_destino }}</td>
                             <td> {{ list.data_entrada }}</td>
-                            <td> {{ list.data }}</td>
+                            <td> {{ list.data_entrada }}</td>
                             <td> {{ list.dispacho }}</td>
+                            <td> {{ list.motivo|striptags|capfirst|truncatechars:20 }}</td>
                             <td> {{ list.agente.patente }}</td>
                             <td>
-                                <a href="#" class="btn btn-primary tip" title="Imprimir a ficha">
-                                    <span class="icon-edit"></span> </a>
-                                <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
-                                    <i class="icon-trash"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                              Acção <span class="caret"></span>
+                                             </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'transferencia:emitir-guia' list.id %}" class=" btn btn-success tip" title="Imprimir o Guia de Transferencia">
+                                                 Emitir o Guia
+                                             </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'transferencia:atualizar-pedido' list.id %}" class="btn btn-primary tip" title="Editar os Dado">
+                                               Editar Transferência
+                                         </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                         {% endfor %}

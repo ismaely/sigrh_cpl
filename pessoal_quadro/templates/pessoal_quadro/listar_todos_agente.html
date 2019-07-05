@@ -23,7 +23,7 @@
                             <th>Orgão de Colocação</th>
                             <th>Nip</th>
                             <th> Patente</th>
-                            <th> Ação</th>
+                            <th> Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,14 +44,24 @@
                             <td>{{ list.agente.patente|upper }}</td>
                             {% endautoescape %}
                             <td>
-                                <a href="{% url 'pessoal_quadro:informacao-pessoal' list.agente.pessoa.id %}" class="btn btn-success tip" title="Visualizar informação">
-                                    <span class="icon-user"></span>
-                                </a>
-                                {% if user.email == 'Gestor' %}
-                                <a href="{% url 'pessoal_quadro:editar-cadastro' list.agente.pessoa.id %}" class="btn btn-primary tip" title="Editar os Dados">
-                                    <span class="icon-edit"></span>
-                                </a>
-                                {% endif %}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                            Acção <span class="caret"></span>
+                                            </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'pessoal_quadro:informacao-pessoal' list.agente.pessoa.id %}" class="btn btn-success tip" title="Visualizar informação">
+                                              Ver Informação
+                                            </a>
+                                        </li>
+                                        <li>{% if user.email == 'Gestor' %}
+                                            <a href="{% url 'pessoal_quadro:editar-cadastro' list.agente.pessoa.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                                    Editar
+                                                </a> {% endif %}
+                                        </li>
+
+                                    </ul>
+                                </div>
 
                             </td>
                         </tr>

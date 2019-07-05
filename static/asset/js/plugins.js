@@ -166,6 +166,7 @@ $(document).ready(function(){
         $("input.mask_phone_ext").mask('99 (999) 999-9999? x99999');
         $("input.mask_credit").mask('9999-9999-9999-9999');        
         $("input.mask_percent").mask('99%');
+        $("input.mask_despacho").mask('9999/99');
     }    
     /* EOF Masked Input */
     

@@ -5,10 +5,10 @@ from header.includes import *
 @login_required
 def area_pessoal_quadro(request):
     fotos = request.session['salakiaku']
-
     context = {'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos': fotos}
     template = TEMPLATE_UTILIZADOR['pq']
     return render(request, template, context)
+
 
 
 
@@ -128,6 +128,7 @@ def editar_cadastro(request, id):
 
 
 #views que vai atualizar a patente do agennte
+@csrf_protect
 @login_required
 def atualizar_patente(request):
     form = Atualizar_patenteForm(request.POST or None)
@@ -378,6 +379,7 @@ def codigo_cadastrar(request):
 
 
 #views que vai eleiminar processo disciplinar
+@csrf_protect
 def eliminar_processoDiciplinar(request):
     if request.method == 'POST':
         dados = dict()
@@ -423,6 +425,7 @@ def eliminar_reforma_anticipada(request):
 
 
 #views que vai eliminar nomiação de um agente, (javascript)
+@csrf_protect
 @login_required
 def eliminar_nomiacao(request):
     if request.method == 'POST':
@@ -472,6 +475,7 @@ def remover_despromocao(request):
 
 
 #views que vai eliminar a baixa dos agentte
+@csrf_protect
 def eliminar_baixa(request):
     if request.method == 'POST':
         dados = dict()
@@ -550,8 +554,20 @@ def listarDespromocao(request):
     return render(request, template, dados)"""
 
 
+@csrf_protect
+@login_required
+def listar_falecimento(request):
+    lista = dict()
+    lista = Falecimento.objects.select_related('agente').all().order_by('-id')
+    dados = {'lista': lista, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    template = TEMPLATE_PESSOAQUADRO['listar_falecimento']
+    return render(request, template, dados)
+
+
+
 
 #views que vai listar a baixas
+@csrf_protect
 @login_required
 def listarBaixas(request):
     baixa = Baixa.objects.all().order_by('-id')
@@ -562,6 +578,7 @@ def listarBaixas(request):
 
 
 #views que vai listar a informação pessoal
+@csrf_protect
 @login_required
 def informacao_pessoal(request, id=None):
     lista = Orgao.objects.select_related('agente').get(agente_id=id)
@@ -589,6 +606,7 @@ def informacao_processo_disciplinar(request, id=None):
 
 
 # ONDE ESTA SER LISTADO A REFFORMA E INSERIR OS DADOS NA TABELA DA REFORMA
+@csrf_protect
 @login_required
 def listarReforma(request):
     idade = {}
@@ -627,6 +645,7 @@ def imprimir_informacao(request):
 
 
 #views que vai listar todos agentes
+@csrf_protect
 @login_required
 def listar_todos_agente(request):
     lista =[]
@@ -636,7 +655,7 @@ def listar_todos_agente(request):
     return render(request, template, context)
 
 
-
+@csrf_protect
 @login_required
 def listar_processoDisciplinar(request):
     lista =[]
@@ -647,7 +666,7 @@ def listar_processoDisciplinar(request):
 
 
 
-
+@csrf_protect
 @login_required
 def listar_documentos(request):
     try:
@@ -664,6 +683,7 @@ def listar_documentos(request):
 
 
 #views que vai p    template = TEMPLATE_PESSOAQUADRO['nomiar']
+@csrf_protect
 @login_required
 def efectuar_Colocacao(request):
     form = OrgaoForm(request.POST or None)
@@ -793,22 +813,29 @@ def registar_despromocao(request):
 @csrf_protect
 def registar_baixa(request):
     form = BaixaForm(request.POST or None)
+    form2 = FalecimentoForm(request.POST or None)
     if request.method == 'POST':
-        if form.is_valid() and header.validators.validar_baixa(request):
+        if form.is_valid() and form2.is_valid() and header.validators.validar_baixa(request):
             try:
                 baixa = form.save(commit=False)
                 motivo = form.cleaned_data.get('motivo_baixa')
                 tipo = form.cleaned_data.get('tipo_invalidez')
-                baixa.agente_id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
+                id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
+                baixa.agente_id = id
                 if motivo == 'Invalidez' and tipo == '':
                     baixa.tipo_invalidez = 'Parcial'
                 baixa.save()
-                sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='3100')
+                if motivo == 'Falecimento' and request.POST['cimiteiro'] is not None:
+                    falec = form2.save(commit=False)
+                    falec.baixa_id = baixa.id
+                    falec.agente_id = id
+                    falec.save()
+                sweetify.success(request, 'Dados Registado com sucesso!....', button='Ok', timer='4000')
                 return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
             except Exception as e:
                 messages.warning(request, ' O numero de Agente esta errado')
 
-    context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    context = {'form': form,  'form2': form2, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['baixa']
     return render(request, template, context)
 

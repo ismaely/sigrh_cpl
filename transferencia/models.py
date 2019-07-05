@@ -12,10 +12,11 @@ class Transferencia(models.Model):
     orgao_destino = models.CharField(max_length=500, choices=ORGAO_COMANDOS)
     data_entrada = models.CharField(max_length=20)
     #data = models.CharField(max_length=20, null=True, default=DATE_FORMAT)
-    dispacho = models.CharField(max_length=20, default="Sem dispacho")
+    dispacho = models.CharField(max_length=20, null=True, default="Sem dispacho")
     motivo = models.TextField(max_length=5000, blank=True, null=True)
     arquivo = models.FileField(upload_to="transferencia/%Y/", blank=True, null=True)
     numero_guia = models.CharField(max_length=10, null=True, default=00)
+    situacao = models.CharField(max_length=30, null=True, default="Espera")
 
     def __str__(self):
         return '%d' % (self.id)

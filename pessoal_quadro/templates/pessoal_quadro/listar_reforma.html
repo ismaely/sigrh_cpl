@@ -22,7 +22,7 @@
                             <th>Género</th>
                             <th>Reforma / Idade</th>
                             <th> Patente</th>
-                            <th> Opções</th>
+                            <th>Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,12 +44,23 @@
                             <td>{{ list.patente|safe|upper }}</td>
                             <td>
 
-                                {% if value == "Antecipada" %}
-                                <a onclick=eliminar_reforma_anticipada({{ key }}) class="btn btn-danger tip" title="Cancelar a reforma">
-                                    <i class="icon-remove-sign"></i>
-                                </a>
-                                {% endif %}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                     Acção <span class="caret"></span>
+                                     </button>
+                                    <ul class="dropdown-menu lista" role="menu">
 
+                                        {% if value == "Antecipada" %}
+                                        <li>
+                                            <a onclick=eliminar_reforma_anticipada({{ key }}) class="btn btn-danger tip" title="Cancelar a reforma">
+                                           Cancelar
+                                         </a>
+
+                                        </li>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
 
                             </td>
 

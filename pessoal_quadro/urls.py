@@ -44,5 +44,7 @@ urlpatterns = [
     path('ficha_processo_disciplinar/<int:id>/', views.ficha_processo_disciplinar, name='ficha-processo'),
     path('retorna_cursos/', views.retorna_cursos, name='retorna-cursos'),
     path('retorna_municipio/', views.retorna_municipio, name='retorna-municipio'),
+    path('listar_falecimento/', views.listar_falecimento, name='listar-falecidos'),
+    
     #path('consultar_dados_atualizar/', views.consultar_dados_atualizar, name='consultar-atualizar'),
 ]

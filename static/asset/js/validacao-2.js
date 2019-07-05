@@ -6,6 +6,7 @@ var bi1 = $('#id_bi1');
 var bi2 = $('#id_bi2');
 var numero_guia = $('#id_numero_guia');
 var tipoValidez = $('.tipoValidez');
+var falecimento =  $('.falecimento');
 
 
 
@@ -15,7 +16,7 @@ $('#id_pais').attr("disabled","disabled");
 
 $('#id_origem_primeiro').click(validar_origem_primeiro);
 $('#id_destino_primeiro').click(validar_destino_primeiro);
-$('#id_motivo_baixa').click(validar_invalidez_baixa);
+$('#id_motivo_baixa').click(motivo_baixa_esclha);
 $('#id_razao_posse').click(validar_bolsaEstudo);
 
 
@@ -70,7 +71,7 @@ numero_guia.bind("keydown", function (evento) {
     }
 });
 
-
+ 
 
 function validar_bolsaEstudo(){
     if ($('#id_razao_posse').val() == 'Bolsa Interna') {
@@ -89,13 +90,20 @@ function validar_bolsaEstudo(){
 }
 
 
-function validar_invalidez_baixa(){
+function motivo_baixa_esclha(){
     if ($('#id_motivo_baixa').val() == "Invalidez") {
         document.getElementById('tipoValidez').style.display = '';
+        document.getElementById('falecimento').style.display = 'none';
+        return true;
+    }
+    if ($('#id_motivo_baixa').val() == "Falecimento") {
+        document.getElementById('tipoValidez').style.display = 'none';
+        document.getElementById('falecimento').style.display = '';
         return true;
     }
     else{
         document.getElementById('tipoValidez').style.display = 'none';
+        document.getElementById('falecimento').style.display = 'none';
         return false;
     }
    
