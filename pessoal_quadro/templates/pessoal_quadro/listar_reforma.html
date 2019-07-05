@@ -9,7 +9,7 @@
     <div class="">
         <div class="block">
             <div class="header">
-                <h2><b> Lista de agente na reforma </b></h2>
+                <h2><b> Lista de agentes na reforma </b></h2>
             </div>
             <div class="content">
                 <table id="example" class="table table-bordered table-striped  datatable-example">
@@ -19,9 +19,10 @@
                             <th>Nº Agente</th>
                             <th>Nome</th>
                             <th>Data Nasc..</th>
-                            <th>Genero</th>
+                            <th>Género</th>
                             <th>Reforma / Idade</th>
                             <th> Patente</th>
+                            <th>Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +42,27 @@
                             <td>{{ list.pessoa.genero|safe|upper }}</td>
                             <td class="">{{ value }}</td>
                             <td>{{ list.patente|safe|upper }}</td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                     Acção <span class="caret"></span>
+                                     </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+
+                                        {% if value == "Antecipada" %}
+                                        <li>
+                                            <a onclick=eliminar_reforma_anticipada({{ key }}) class="btn btn-danger tip" title="Cancelar a reforma">
+                                           Cancelar
+                                         </a>
+
+                                        </li>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+
+                            </td>
 
                         </tr>
                         {% endif %} {% endfor %} {% endfor %}

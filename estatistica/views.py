@@ -236,22 +236,22 @@ def cabecario_listas():
     return (buffer, dados, doc, styles)
     
 
-def myFirstPage(canvas, doc):
+def top_rodape(canvas, doc):
     #PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
-    Title = "Salakiaku"
+    Title = "SALAKIAKU"
     canvas.saveState()
     #canvas.setFont('Times-Bold',16)
     #canvas.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-108, Title)
     canvas.setFont('Times-Roman',9)
-    canvas.drawString(inch, 0.45 * inch, "Comando Províncial de Luanda / %s" % Title)
+    canvas.drawString(inch, 0.45 * inch, "CPL / %s" % Title)
     canvas.restoreState()
 
 
 def footer_rodape(canvas, doc):
-    pageinfo = "Salakiaku"
+    pageinfo = "SALAKIAKU"
     canvas.saveState()
-    canvas.setFont('Times-Roman',9)
-    canvas.drawString(inch, 0.75 * inch, "Comando Províncial de Luanda /  %s" %  pageinfo)
+    canvas.setFont('Times-Roman',9,'Bloder')
+    canvas.drawString(inch, 0.75 * inch, "CPL /  %s" %  pageinfo)
     canvas.restoreState()
 
 
@@ -268,7 +268,7 @@ def listar_tabelas(dados, cabeca, lista, doc, response, buffer):
     ))
     dados.append(folha)
     dados.append(PageBreak())
-    doc.build(dados, onFirstPage=myFirstPage, onLaterPages=footer_rodape)
+    doc.build(dados, onFirstPage=top_rodape, onLaterPages=footer_rodape)
     response.write(buffer.getvalue())
     buffer.close()
 

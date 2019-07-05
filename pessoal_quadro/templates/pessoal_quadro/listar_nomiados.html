@@ -18,12 +18,12 @@
                         <tr>
                             <th>#</th>
                             <th>Nome</th>
-                            <th>Genero</th>
-                            <th>Data de Nomiação</th>
-                            <th>Nomiado Por</th>
+                            <th>Género</th>
+                            <th>Data de Nomeação</th>
+                            <th>Nomeado Por</th>
                             <th>Cargo</th>
                             <th> Patente</th>
-                            <th>Ação</th>
+                            <th>Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,13 +46,25 @@
                             <td>{{ des.agente.patente|safe|upper }}</td>
                             {% endautoescape %}
                             <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                     Acção <span class="caret"></span>
+                                     </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'pessoal_quadro:editar-dados-nomiacao' des.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                              Editar     
+                                             </a>
+                                        </li>
+                                        <li>{% if user.email == 'Gestor' %}
+                                            <a onclick=eliminar_nomiacao({{ des.id }}) class="btn btn-danger tip" title="Remover do Cargo">
+                                             Eliminar
+                                             </a> {% endif %}
+                                        </li>
 
-                                <a href="{% url 'pessoal_quadro:editar-dados-nomiacao' des.id %}" class="btn btn-primary tip" title="Editar os Dados">
-                                    <span class="icon-edit"></span> </a>
+                                    </ul>
+                                </div>
 
-                                <a onclick=eliminar_nomiacao({{ des.id }}) class="btn btn-danger tip" title="Remover do Cargo">
-                                    <i class="icon-trash"></i>
-                                </a>
                             </td>
                         </tr>
                         {% endfor %}

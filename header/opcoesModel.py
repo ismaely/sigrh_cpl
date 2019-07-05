@@ -193,8 +193,8 @@ PATENTE = (
     ('Intendente', 'Intendente'),
     ('Superintendente', 'Superintendente'),
     ('Sub-comissário', 'Sub-comissário'),
-    ('Comissário-geral', 'Comissário geral'),
     ('Comissário-chefe', 'Comissário chefe'),
+    ('Comissário-geral', 'Comissário geral'),
 )
 
 
@@ -279,6 +279,7 @@ NOMIACAO_TIPO = (
 
 MOTIVO_REFORMA = (
     ('Acidente', 'Acidente'),
+    ('Incapacidade', 'Incapacidade'),
     ('Dificiência Contraída', 'Dificiência Contraída'),
     ('Outro', 'Outro'),
 )

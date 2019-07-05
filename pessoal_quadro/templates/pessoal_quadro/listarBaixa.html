@@ -19,11 +19,10 @@
                             <th>Nome</th>
                             <th>Motivo</th>
                             <th>Invalidez</th>
-                            <th>Descrição</th>
                             <th>Data de Oucorrência</th>
                             <th>Data de Entrada</th>
                             <th> Patente</th>
-                            <th> Ação</th>
+                            <th> Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,16 +39,30 @@
                             </td>
                             <td>{{ bax.motivo_baixa|striptags|capfirst|safe|upper }}</td>
                             <td>{{ bax.tipo_invalidez|striptags|capfirst|safe|upper }}</td>
-                            <td>{{ bax.descricao|striptags|capfirst|truncatechars:20 }}</td>
+                            <!--<td>{{ bax.descricao|striptags|capfirst|truncatechars:20 }}</td>-->
                             <td>{{ bax.data_oucorrencia }}</td>
                             <td>{{ bax.data_entrada}}</td>
                             <td>{{ bax.agente.patente|safe|upper }}</td>
                             <td>
-                                <a href="{% url 'pessoal_quadro:editar-baixas' bax.id %}" class="btn btn-primary tip" title="Editar os Dados">
-                                    <span class="icon-edit"></span> </a>
-                                <a onclick=eliminar_baixas({{ bax.id }}) class="btn btn-danger tip" title="Remover da lista">
-                                    <i class="icon-trash"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                    Acção <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'pessoal_quadro:editar-baixas' bax.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                               Editar
+                                             </a>
+                                        </li>
+                                        <li>{% if user.email == 'Gestor' %}
+                                            <a onclick=eliminar_baixas({{ bax.id }}) class="btn btn-danger tip" title="Remover da lista">
+                                             Eliminar
+                                            </a> {% endif %}
+                                        </li>
+
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                         {% endfor %}

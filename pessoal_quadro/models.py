@@ -33,7 +33,6 @@ class Agente(models.Model):
     numero_caixa_social = models.CharField(max_length=20)
     nivel_academico = models.CharField(max_length=20, choices=NIVEL_ACADEMICO)
     curso = models.CharField(max_length=80, null=True, default="--")
-    #funcao = models.CharField(max_length=50, blank=True, null=True)
     patente = models.CharField(max_length=60, choices=PATENTE)
     categoria = models.CharField(max_length=100)
     numero_agente = models.IntegerField(unique='true')
@@ -52,10 +51,8 @@ class Agente(models.Model):
 class Orgao(models.Model):
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
     orgao_colocacao = models.CharField(max_length=60, null=True, default="cpl", choices=ORGAO_COMANDOS)
-    #localizacao = models.CharField(max_length=40, blank=True, null=True, default="sem local")
     data_colocacao = models.CharField(max_length=20,  blank=True, null=True, default=DATE_FORMAT)
     dispacho = models.CharField(max_length=18,  blank=True, null=True, default="Sem despacho")
-    #unidade = models.CharField(max_length=90,  blank=True, null=True, default="cpl")
 
     def __str__(self):
         return '%d' % (self.id)
@@ -114,6 +111,7 @@ class Reforma(models.Model):
         return '%d' % (self.id)
 
 
+
 class Nomiacao_Cargo(models.Model):
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
     cargo = models.CharField(max_length=200, choices=CARGOS_POLICIAL)
@@ -151,4 +149,11 @@ class Disciplina(models.Model):
 
 
 
+
+class Falecimento(models.Model):
+    baixa = models.ForeignKey(Baixa, on_delete=models.CASCADE, to_field='id', parent_link=True)
+    agente = models.ForeignKey(Agente, on_delete=models.CASCADE, to_field='id', parent_link=True)
+    cimiteiro = models.CharField(max_length=50, null=True, default="--")
+    numero_campa = models.CharField(max_length=5, null=True, default="--")
+    data_enterro = models.CharField(max_length=20, null=True, default=DATE_FORMAT)
 

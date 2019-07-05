@@ -29,9 +29,7 @@ urlpatterns = [
     path('registar_reforma/', views.registar_reforma_anticipada, name='registar-reforma'),
     path('atualizar_patente/', views.atualizar_patente, name='atualizar-patente'),
     #path('gerar-codigo/', views.gerar_codigo_seguranca, name='gerar-codigo'),
-    path('codigo_atualizar/', views.codigo_atualizar_recebe, name='codigo-atualizar-recebe'),
     path('codigo_cadastrar/', views.codigo_cadastrar, name='codigo-cadastrar'),
-    path('atualizar_codigo/', views.atualizar_novo_codigo_seguranca, name='atualizar-novo-codigo'),
     #path('codigo_validar_despromocao/', views.codigo_validar_despromocao, name='codigo-validar-despromocao'),
     path('ficha_pessoal/<int:id>/', views.ficha_pessoal, name='ficha-pessoal'),
     path('registar_documento/', views.registar_documentos, name='documento'),
@@ -42,8 +40,11 @@ urlpatterns = [
     path('processo_disciplinar_informacao/<int:id>/', views.informacao_processo_disciplinar, name='pessoal-informacao'),
     path('eliminar_processo_disciplinar/', views.eliminar_processoDiciplinar, name='eliminar-processo'),
     path('consultar_processo_disciplinar/', views.consultar_processo_disciplinar, name='consultar-processo'),
+    path('eliminar_reforma_anticipada/', views.eliminar_reforma_anticipada, name='eliminar-reforma'),
     path('ficha_processo_disciplinar/<int:id>/', views.ficha_processo_disciplinar, name='ficha-processo'),
     path('retorna_cursos/', views.retorna_cursos, name='retorna-cursos'),
     path('retorna_municipio/', views.retorna_municipio, name='retorna-municipio'),
+    path('listar_falecimento/', views.listar_falecimento, name='listar-falecidos'),
+    
     #path('consultar_dados_atualizar/', views.consultar_dados_atualizar, name='consultar-atualizar'),
 ]

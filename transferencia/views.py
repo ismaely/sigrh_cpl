@@ -11,33 +11,15 @@ def area_transferencia(request):
 
 #função que vai aprovar o pedido de transferencia do agente
 @login_required
-def aprovar_transferencia(request):
+def aprovar_transferencia(request, id):
     if request.method == 'POST':
-        dados = dict()
-        cod = []
-        cod = request.body.decode('utf-8')
-        lista = json.loads(cod)
-        codigo = lista['codigo']
-        dispachos = lista['dispacho']
-        id = lista['id']
+        ap = Transferencia.objects.get(id=id) 
+        ap.situacao = "Aprovado" 
+        ap.dispacho = request.POST['despacho']
+        ap.save()
+        sweetify.success(request, 'Trnsferência Realizada com Sucesso!....', button='Ok', timer='3500')
+        return HttpResponseRedirect(reverse('transferencia:listar-pedidos'))
 
-        if request.method == 'POST':
-            if header.views_core.validar_codigo_cadastro(codigo):
-                pedido = Transferencia.objects.get(id=id)
-                trans = Transferencia.objects.create(orgao_origem=pedido.origem, orgao_destino=pedido.destino, data_entrada=pedido.data_entrada,
-                motivo=pedido.motivo, agente_id=pedido.agente_id, arquivo=pedido.arquivo, dispacho=dispachos)
-                trans.save()
-                pedido.delete()
-                dados = {
-                        'validade': True,
-                    }
-                return JsonResponse(dados) 
-            else:
-                dados = {
-                    'validade': False,
-                }
-                return JsonResponse(dados)
-  
    
 
 #função que vai cadastrar o pedido de troca do agente
@@ -78,7 +60,7 @@ def registar_transferencia(request):
                 desp = form.save(commit=False)
                 desp.agente_id = ids
                 desp.save()
-                sweetify.success(request, 'Transferencia realizada com sucesso!....', button='Ok', timer='3500')
+                sweetify.success(request, 'Dados Adicionado com sucesso!....', button='Ok', timer='3500')
                 template = TEMPLATE_UTILIZADOR['perfil_rota']
                 return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
             except Exception as e :
@@ -87,8 +69,6 @@ def registar_transferencia(request):
     context = {'form': form, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferencia']
     return render(request, template, context)
-
-
 
 
 
@@ -115,6 +95,7 @@ def atualizar_pedido_transferencia(request, id):
     return render(request, template, context)
 
 
+
 @login_required
 def atualizar_documento(request, id):
     docs = Documento.objects.get(id=id)
@@ -128,6 +109,7 @@ def atualizar_documento(request, id):
     dados = {'form': form, 'docs': docs, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['docs']
     return render(request, template, dados)
+
 
 
 @login_required
@@ -170,7 +152,7 @@ def listar_documentos(request):
 #FUNÇÃO QUE VAI LISTAR TODOS PEDIDOS DE TRANSFERENCIA
 @login_required
 def listar_pedido_transferencia(request):
-    lista = Transferencia.objects.select_related('agente').all().order_by('-id')
+    lista = Transferencia.objects.select_related('agente').all().filter(situacao="Espera")
     context = {'lista': lista, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['listar_pedido']
     return render(request, template, context)
@@ -180,7 +162,7 @@ def listar_pedido_transferencia(request):
 #FUNÇÃO QUE VAI LISTAR TODOS AGENTES TRANSFERIDOS
 @login_required
 def listar_agentes_transferido(request):
-    lista = Transferencia.objects.select_related('agente').all()
+    lista = Transferencia.objects.select_related('agente').all().filter(situacao="Aprovado")
     context = {'lista': lista, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferido']
     return render(request, template, context)
@@ -202,7 +184,7 @@ def listar_troca_transferencia(request):
 def consultar_transferencia(request):
     if request.method == 'POST':
         value = request.POST['busca']
-        if value is not None:
+        if value is not None and len(value) > 0:
             try:
                 agen = Agente.objects.get(nip=value)
                 if agen.nip is not None:
@@ -222,8 +204,8 @@ def consultar_transferencia(request):
                     sweetify.warning(request, 'Não existem Transferencia para este agente!....', button='Ok', timer='3800')
                     return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
 
-    context = {'transferencias': MENU_TRANSFERENCIA}
-    template = TEMPLATE_UTILIZADOR['mensagem']
+    context = {'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
+    template = TEMPLATE_TRANSFERENCIA['mensagem']
     return render(request, template, context)
 
 
@@ -245,7 +227,6 @@ def registar_documentos(request):
 
 
 
-
 @login_required
 def eliminar_documento(request, id=None):
     if id is not None:
@@ -256,6 +237,16 @@ def eliminar_documento(request, id=None):
         sweetify.error(request, 'Falha Não foi possivel!....', button='Ok', timer='3500')
         return HttpResponseRedirect(reverse('transferencia:listar-docs'))
  
+
+
+@login_required
+def emitir_guia_transferencia(request, id):
+    try:
+        ap = Transferencia.objects.get(id=id)
+        
+    except Transferencia.DoesNotExist:
+        pass 
+
 
 
 
@@ -280,3 +271,6 @@ def remover_pedido_transferencia(request):
             }
             return JsonResponse(dados)
   
+
+
+

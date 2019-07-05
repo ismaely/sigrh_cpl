@@ -1,5 +1,5 @@
 {% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %}
-<div class="user bg-default bg-light-rtl">
+<div class="user bg-default ">
     <div class="row">
 
         <div class="col-md-3">
@@ -10,7 +10,7 @@
             <div class="block block-fill">
                 <div class="header">
                     <p></p>
-                    <h4><b><span class="icon-group"></span> Registar Baixa</b> </h4>
+                    <h4><b><span class="icon-group"></span> Registar Baixa de Oucorrências</b> </h4>
                 </div>
 
                 <div class="content controls container">
@@ -62,6 +62,23 @@
                                 <div class="col-md-6 " id="tipoValidez" style="display:none"><b>Tipo de Invalidez:</b> {{ form.tipo_invalidez }} {{ form.tipo_invalidez.errors }} </div>
 
                             </div>
+
+                            <div class="form-row" id="falecimento" style="display:none">
+                                <div class="col-md-6 ">
+                                    <b>Nome do Cimiteiro:</b> {{ form2.cimiteiro }} {{ form2.cimiteiro.errors }}
+                                </div>
+                                <div class="col-md-6 ">
+                                    <b>Numero da Campa:</b> {{ form2.numero_campa }} {{ form2.numero_campa.errors }}
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-6 ">
+                                        <b>Data do Enterro:</b> {{ form2.data_enterro }} {{ form2.data_enterro.errors }}
+                                    </div>
+                                </div>
+
+                            </div>
+
 
                             <div class="form-row">
                                 <div class="col-md-12"><b>Descrição:</b> {{ form.descricao }} {{ form.descricao.errors }} </div>

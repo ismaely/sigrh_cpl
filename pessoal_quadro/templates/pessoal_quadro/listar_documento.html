@@ -14,7 +14,7 @@
                             <th>Categoria</th>
                             <th>Data de Entrada</th>
                             <th>Descrição</th>
-                            <th>Ação</th>
+                            <th>Acção</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,13 +27,34 @@
                             <td> {{ doc.data_entrada }}</td>
                             <td> {{ doc.descricao|safe|upper|truncatewords:"10" }}</td>
                             <td>
-                                <a href="{% url 'documentacao:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados">
-                                    <i class="icon-edit"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                         Acção <span class="caret"></span>
+                                     </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'documentacao:visualizar-documentos' doc.id %}" class="btn btn-success tip" title="Visualizar o Documento" target="_blank">
+                                              Abre Documento
+                                            </a>
+                                        </li>
+                                        {% if user.email == 'Gestor' %}
+                                        <li>
+                                            <a href="{% url 'documentacao:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados">
+                                              Editar Documento
+                                            </a>
 
-                                <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
-                                    <i class="icon-trash"></i>
-                                </a>
+                                        </li>
+                                        <li>
+                                            <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                             Eliminar Documento
+                                            </a>
+
+                                        </li>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                         {% endfor %}

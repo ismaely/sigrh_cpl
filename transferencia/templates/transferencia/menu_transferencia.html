@@ -28,14 +28,14 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-refresh"></span> Transferência</a>
                             <ul class="dropdown-menu">
                                 {% if user.email == 'Gestor' %}
-                                <li><a href="{% url 'transferencia:adicionar-transferencia' %}">Adicionar Transferência</a></li>
+                                <li><a href="{% url 'transferencia:adicionar-transferencia' %}">Adicionar Pedido de Transferência</a></li>
                                 <li><a href="{% url 'transferencia:troca' %}">Adicionar Troca</a></li>
                                 {% endif %}
-                                <li><a href="{% url 'transferencia:listar-pedidos' %}">Listar Transferência</a></li>
-                                <!-- <li><a href="{% url 'transferencia:listar' %}">Listar Agentes Transferidos</a></li>-->
+                                <li><a href="{% url 'transferencia:listar-pedidos' %}">Listar Pedido de Transferência</a></li>
+                                <li><a href="{% url 'transferencia:listar' %}">Listar Agentes Transferidos</a></li>
                                 <li><a href="{% url 'transferencia:listar-troca' %}">Listar Troca de Agente</a></li>
+                                <li><a href="#emitir_guia_transferencia" data-toggle="modal">Emitir o Guia de Transferência</a></li>
                                 <li><a href="#consultar_transferencia" data-toggle="modal" class=" btn-block btn-clean">Consultar Transferência</a></li>
-                                <!--<li><a href=""> Imprimir o Comprovativo</a></li>-->
 
                             </ul>
                         </li>
@@ -142,6 +142,67 @@
                                                     </div>
                                                     <div class="col-md-5">
                                                         <button class="btn btn-primary " type="submit">Consultar</button>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            {% endautoescape %}
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="emitir_guia_transferencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Imprimir Guia de Transferência</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="user bg-default bg-light-rtl">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="block block-fill-white ">
+                                    <div class="header">
+                                        <p></p>
+                                        <h4><b></b> </h4>
+                                    </div>
+
+                                    <div class="content controls container">
+                                        <form class="" action="#" method="POST">
+                                            {% csrf_token %} {% autoescape on %}
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="form-row col-md-6">
+                                                <div class="col-md-8 pull-right"><span class="">Nip:</span> <input type="text" name="guia" class="form-control" class="" /></div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-5">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <button class="btn btn-primary " type="submit">Emitir Guia</button>
                                                     </div>
                                                     <div class="col-md-1">
                                                     </div>

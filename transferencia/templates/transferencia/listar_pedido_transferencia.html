@@ -1,0 +1,144 @@
+{% extends 'transferencia/menu_transferencia.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b>Lista de Pedido de Transferência</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th>Nº Guia</th>
+                            <th>Nome</th>
+                            <th>Orgão de Destino</th>
+                            <th>Data</th>
+                            <th>Motivo</th>
+                            <th>Patente</th>
+                            <th>Situação</th>
+                            <th> Acção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for list in lista %}
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ list.agente.foto_fardado }}" width=38px class="img-circle ">
+
+                                </a>
+                            </td>
+
+                            <td>{{ list.numero_guia }}</td>
+                            <td>
+                                {{ list.agente.pessoa.nome|capfirst|safe }}
+                            </td>
+
+                            <td> {{ list.orgao_destino }}</td>
+                            <td> {{ list.data_entrada }}</td>
+                            <td> {{ list.motivo|striptags|capfirst|truncatechars:20 }}</td>
+                            <td> {{ list.agente.patente }}</td>
+                            <td> <span class="alert alert-danger">{{ list.situacao }}</span> </td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                      Acção <span class="caret"></span>
+                                     </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="#aprovar_transferencia" data-toggle="modal" class=" btn btn-success tip" title="Aprovar a Transferencia">
+                                             Aprovar Transferenciaa
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'transferencia:atualizar-pedido' list.id %}" class="btn btn-primary tip" title="Editar os Dado">
+                                               Editar Transferencia
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
+                                             Remover Transferencia
+                                         </a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <div class="modal" id="aprovar_transferencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Informação do Despacho de Transferência</h4>
+                                    </div>
+                                    <div class="modal-body clearfix">
+                                        <div class="user bg-default bg-light-rtl">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <div class="block block-fill-white ">
+                                                        <div class="header">
+                                                            <p></p>
+                                                            <h4><b></b> </h4>
+                                                        </div>
+
+                                                        <div class="content controls container">
+                                                            <form class="" action="{% url 'transferencia:aprovar-transferencia' list.id %}" method="POST">
+                                                                {% csrf_token %} {% autoescape on %}
+                                                                <div class="form-row ">
+                                                                    <div class="col-md-3">
+                                                                    </div>
+
+                                                                    <div class="col-md-6">Despacho<input type="text" name="despacho" class="form-control" class="mask_despacho " required /></div>
+                                                                    <div class="col-md-3">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="col-md-5">
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            <button class="btn btn-primary " type="submit">Salvar</button>
+                                                                        </div>
+                                                                        <div class="col-md-1">
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                {% endautoescape %}
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+{% endblock %}

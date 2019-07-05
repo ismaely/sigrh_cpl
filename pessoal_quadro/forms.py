@@ -5,10 +5,9 @@ from header.opcoesModel import (ESTADO_CIVIL, GENERO, PATENTE, MOTIVO_BAIXA, MOT
 NIVEL_ACADEMICO, IDADE_LIMITE, NOMIACAO_TIPO, NOMIACAO_CATEGORIA, PROVINCIA, ORGAO_COMANDOS, SUSPENSAO, CARGOS_POLICIAL,
 MOTIVO_DISCILINAR, MOTIVO_DISCILINAR, PENAS_DISCIPLINAR, INVALIDEZ, AREAS_FORMACAO)
 from header.validators import (consultar_bi_existe, validar_comprimento_4, validar_numero_caixa_social, validar_comprimento_3,
- validar_numeros, validar_string, validar_email, validar_bi, consultar_numero_agente, consultar_bi)
-from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromocao, Nomiacao_Cargo, Reforma, Patentiamento, Disciplina
-
-
+ validar_numeros, validar_string, validar_email, validar_bi, consultar_numero_agente, consultar_bi, validar_baixa)
+from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromocao, Nomiacao_Cargo, Reforma, Patentiamento, Disciplina,Falecimento
+import header
 
 class PessoaForm(ModelForm):
     nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
@@ -99,10 +98,8 @@ class AgenteForm(ModelForm):
 class OrgaoForm(ModelForm):
     bi = forms.CharField(max_length=14, required=False, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi])
     orgao_colocacao = forms.CharField(required=False, widget=forms.Select(choices=ORGAO_COMANDOS))
-    #localizacao = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'placeholder': 'Localização'}),)
     data_colocacao = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     dispacho = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999/99'"}))
-    #unidade = forms.CharField(max_length=90, required=False, widget=forms.TextInput(attrs={'placeholder': 'Unidade'}))
     class Meta:
         model = Orgao
         fields = ['orgao_colocacao', 'data_colocacao', 'dispacho']
@@ -121,7 +118,17 @@ class BaixaForm(ModelForm):
         model = Baixa
         fields = ['data_entrada', 'data_oucorrencia', 'motivo_baixa', 'descricao', 'dispacho', 'tipo_invalidez']
 
-    
+
+
+
+class FalecimentoForm(ModelForm):
+    data_enterro = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
+    cimiteiro = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    numero_campa = forms.CharField(max_length=10,required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = Falecimento
+        fields = ['cimiteiro', 'numero_campa', 'data_enterro']
+
 
 
 
@@ -214,7 +221,7 @@ class Atualizar_patenteForm(ModelForm):
 
 class DisciplinaForm(ModelForm):
     bi = forms.CharField(max_length=14, required=True, widget=forms.TextInput(attrs={'class': 'form-control bi_agente'}), validators=[validar_bi,consultar_bi_existe])
-    numero_processo = forms.CharField(max_length=30, required=False )
+    numero_processo = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '9999'"}))
     data = forms.CharField(required=True, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     motivo = forms.CharField(required=True, widget=forms.Select(choices=MOTIVO_DISCILINAR))
     pena = forms.CharField(required=True, widget=forms.Select(choices=PENAS_DISCIPLINAR))

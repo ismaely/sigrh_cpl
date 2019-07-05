@@ -37,21 +37,20 @@
                             </ul>
                         </li>
 
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-star"></span> Caderno de Serviço</a>
                             <ul class="dropdown-menu">
                                 {% if user.email == 'Gestor' %}
                                 <li><a href="{% url 'pessoal_quadro:registar-baixa' %}"> Registar Baixa</a> </li>
                                 <li><a href="{% url 'pessoal_quadro:registar-reforma' %}">Registar Reforma Antecipada</a></li>
-                                <li><a href="{% url 'pessoal_quadro:registar-nomiacao' %}">Registar Nomiação de cargo</a></li>
+                                <li><a href="{% url 'pessoal_quadro:registar-nomiacao' %}">Registar Nomeação de Cargo</a></li>
                                 <li><a href="{% url 'pessoal_quadro:atualizar-patente' %}">Actualizar Patente do Agente</a></li>
                                 {% endif %}
                                 <li><a href="{% url 'pessoal_quadro:listar-baixas' %}">Listar Baixa</a></li>
                                 <li><a href="{% url 'pessoal_quadro:listar-reforma' %}">Listar Agentes na Reforma</a></li>
-                                <li><a href="{% url 'pessoal_quadro:listar-nomiacao' %}">Listar Agentes Nomiados</a></li>
-                                <li><a href="{% url 'pessoal_quadro:listar-efetividade' %}">Listar Tempo de Efetividade</a></li>
-
+                                <li><a href="{% url 'pessoal_quadro:listar-nomiacao' %}">Listar Agentes Nomeados</a></li>
+                                <li><a href="{% url 'pessoal_quadro:listar-efetividade' %}">Listar Tempo de Efectividade</a></li>
+                                <li><a href="{% url 'pessoal_quadro:listar-falecidos' %}">Listar Agentes Falecidos</a></li>
 
                             </ul>
                         </li>
@@ -70,8 +69,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-book"></span> Documentação</a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'pessoal_quadro:documento' %}">Registar Referencia Documental</a></li>
-                                <li><a href="{% url 'pessoal_quadro:listar-docs' %}">Listar documentos</a></li>
-                                <li><a href="{% url 'pessoal_quadro:consultar-docs' %}">Consultar documento</a></li>
+                                <li><a href="{% url 'pessoal_quadro:listar-docs' %}">Listar Documentos</a></li>
+                                <li><a href="{% url 'pessoal_quadro:consultar-docs' %}">Consultar Documento</a></li>
 
 
                             </ul>

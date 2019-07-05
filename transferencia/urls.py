@@ -10,7 +10,7 @@ urlpatterns = [
     path('adicionar_troca/', views.adicionar_troca, name='troca'),
     path('listar_transferencia/', views.listar_agentes_transferido, name='listar'),
     path('listar_troca/', views.listar_troca_transferencia, name='listar-troca'),
-    path('aprovar_transferencia/', views.aprovar_transferencia, name='aceitar'),
+    path('aprovar_transferencia/<int:id>/', views.aprovar_transferencia, name='aprovar-transferencia'),
     path('remover_pedido_transferencia/', views.remover_pedido_transferencia, name='remover-pedido'),
     path('atualizar_pedido_transferencia/<int:id>/', views.atualizar_pedido_transferencia, name='atualizar-pedido'),
     path('registar_documento/', views.registar_documentos, name='documento'),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('atualizar_documento/<int:id>/', views.atualizar_documento, name='atualizar-documento'),
     path('consultar_docs/', views.consultar_documento, name='consultar-documento'),
     path('eliminar_documento/<int:id>/', views.eliminar_documento, name='eliminar-documento'),
+    path('emitir_guia_transferencia/<int:id>/', views.emitir_guia_transferencia, name='emitir-guia'),
 
 ]
