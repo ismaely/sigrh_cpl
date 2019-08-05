@@ -10,16 +10,16 @@ from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromoc
 import header
 
 class PessoaForm(ModelForm):
-    nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_4, validar_string])
-    nome_pai = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    nome_mae = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}), validators=[validar_comprimento_4, validar_string])
+    nome_pai = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}))
+    nome_mae = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}))
     data_nascimento = forms.CharField(widget=forms.DateInput(attrs={'type': 'date', 'data-inputmask': "'mask' : '99/99/9999'"}))
     bi = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'class': 'form-control bi_mask'}))
     estado_civil = forms.CharField(max_length=20, widget=forms.Select(choices=ESTADO_CIVIL))
     provincia = forms.CharField(max_length=25, widget=forms.Select(choices=PROVINCIA))
     municipio = forms.CharField(max_length=30, required=False, widget=forms.Select(choices=''))
-    residencia = forms.CharField(max_length=60, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_3])
-    telefone = forms.CharField(max_length=18, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '(+244) 999-999-999'" }))
+    residencia = forms.CharField(max_length=60, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}), validators=[validar_comprimento_3])
+    telefone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '(+244) 999-999-999'" }))
     email = forms.EmailField(max_length=80, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_email])
     genero = forms.CharField(max_length=12, widget=forms.Select(choices=GENERO))
     class Meta:

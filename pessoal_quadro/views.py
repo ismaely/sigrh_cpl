@@ -993,6 +993,7 @@ def cabecarioFicha(id):
     estilosB.alignment = TA_LEFT
     estilosB.fontSize = 11
     estilosB.fontName = 'Times-Roman'
+    estilosB.fstcolor = 'blod'
 
     # as colunas de cada linha
     nome = Paragraph(''' Nome Completo ''',estilosB)

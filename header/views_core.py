@@ -337,3 +337,11 @@ def prepara_foto(request):
 #função que vai inserir o codigo de segurança pela primeira vez qdo esta vazio a tabela
 def inserir_codigo():
     inserir = Codigo.objects.create(cadastro=gerar_codigo_cadastro(), atualizar=gerar_codigo_atualiadr(), eliminar=gerar_codigo_eliminar(), listar=gerar_codigo_listar(), data=DATE_FORMAT)
+
+
+def rodape_imagem_Vertical(canvas, doc):
+    #logo = os.path.join(settings.MEDIA_ROOT, str('logo/folha_simples.png'))
+    #canvas.drawImage(logo, 0, 15, width=580, height=764, mask=None)
+    page_num = canvas.getPageNumber()
+    #text = "Pagina #%s" % page_num
+    #canvas.drawRightString(200*mm, 20*mm, text)

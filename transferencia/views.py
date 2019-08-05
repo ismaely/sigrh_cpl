@@ -241,12 +241,71 @@ def eliminar_documento(request, id=None):
 
 @login_required
 def emitir_guia_transferencia(request, id):
-    try:
-        ap = Transferencia.objects.get(id=id)
-        
-    except Transferencia.DoesNotExist:
-        pass 
 
+    
+    ap = Transferencia.objects.get(id=id)
+    buffer = BytesIO()
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="Declaração_pessoal.pdf"'
+    #p = canvas.Canvas(buffer)
+    
+    doc = SimpleDocTemplate(buffer,pagesize=letter, rightMargin=55,leftMargin=55,topMargin=150,bottomMargin=75)
+    
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
+
+    Story = []
+    print(doc.height)
+
+    #estilo = ParagraphStyle('TITULO', alignment = TA_CENTER ,fontSize = 12, fontName="Times-Roman")
+    #ptext =Paragraph('LISTA NOMINAL',estilo)
+    #LISTA.append(ptext)
+    #LISTA.append(Spacer(1, 12))
+    magName = "Pythonista"
+    issueNum = 12
+    subPrice = "99.00"
+    limitedDate = "03/05/2010"
+    freeGift = "tin foil hat"
+    full_name = "Marvin Jones"
+    address_parts = ["411 State St.", "Reno, NV 80158"]
+
+    for page in range(10):
+        # Create return address
+        ptext = '<font size=12>%s</font>' % full_name
+        Story.append(Paragraph(ptext, styles["Normal"]))       
+        for part in address_parts:
+            ptext = '<font size=12>%s</font>' % part.strip()
+            Story.append(Paragraph(ptext, styles["Normal"]))
+ 
+        Story.append(Spacer(1, 12))
+        ptext = '<font size=12>Dear %s:</font>' % full_name.split()[0].strip()
+        Story.append(Paragraph(ptext, styles["Normal"]))
+        Story.append(Spacer(1, 12))
+ 
+        ptext = """<font size=12>We would like to welcome you to our subscriber base 
+        for %s Magazine! You will receive %s issues at the excellent introductory 
+        price of $%s. Please respond by %s to start receiving your subscription 
+        and get the following free gift: %s.</font>""" 
+        ptext = ptext % (magName, issueNum, subPrice, limitedDate, freeGift)
+        Story.append(Paragraph(ptext, styles["Justify"]))
+        Story.append(Spacer(1, 12))
+ 
+        ptext = '<font size=12>Thank you very much and we look forward to serving you.</font>'
+        Story.append(Paragraph(ptext, styles["Justify"]))
+        Story.append(Spacer(1, 12))
+        ptext = '<font size=12>Sincerely,</font>'
+        Story.append(Paragraph(ptext, styles["Normal"]))
+       
+        Story.append(PageBreak())
+        #p.showPage()
+        
+       
+        doc.build(Story, onFirstPage=header.views_core.rodape_imagem_Vertical, onLaterPages=header.views_core.rodape_imagem_Vertical)
+        response.write(buffer.getvalue())
+        buffer.close()
+        return response
+        
+   
 
 
 

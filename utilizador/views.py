@@ -236,7 +236,7 @@ def adicionar_Utilizador(request):
             return render(request, template, context)
 
     
-    dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    dados = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = header.rotas.TEMPLATE_UTILIZADOR['utilizador']
     return render(request, template, dados) 
 
