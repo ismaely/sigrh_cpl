@@ -13,7 +13,7 @@
                     <span> <b>Altera a senha padrão da sua conta no sistema</b></span>
                     <div class="user">
                         <div class="info">
-                            <img src="{% static '/assets/images/poli5.png' %}" width="180px" class="img-circle img-thumbnail" />
+                            <img src="{% static '/asset/img/poli5.png' %}" width="180px" class="img-circle img-thumbnail" />
                             <div class="user-change-button">
                                 <span class="icon-off"></span>
                             </div>
@@ -39,9 +39,9 @@
                             <div class="col-md-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">
-                                        <span class="icon-key"></span>
+                                        <span class="icon-user"></span>
                                     </div>
-                                    {{ form.senhaPadrao }} {{ form.senhaPadrao.errors }}
+                                    Nome de utilizador {{ form.nome_utilizador }} {{ form.nome_utilizador.errors }}
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                     <div class="input-group-addon">
                                         <span class="icon-key"></span>
                                     </div>
-                                    {{ form.senhaNova }} {{ form.senhaNova.errors }}
+                                    Senha: {{ form.senhaNova }} {{ form.senhaNova.errors }}
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                     <div class="input-group-addon">
                                         <span class="icon-key"></span>
                                     </div>
-                                    {{ form.confirmaSenha }} {{ form.confirmaSenha.errors }}
+                                    Confirma a senha {{ form.confirmaSenha }} {{ form.confirmaSenha.errors }}
                                 </div>
                             </div>
                         </div>

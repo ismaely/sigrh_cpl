@@ -3,7 +3,8 @@ from header.includes import *
 
 @login_required
 def area_transferencia(request):
-    dados = {'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
+    form = Nip_Form(request.POST or None)
+    dados = {'fotos':request.session['salakiaku'],'form':form, 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_UTILIZADOR['tras']
     return render(request, template, dados)
 
@@ -77,18 +78,19 @@ def registar_transferencia(request):
 def atualizar_pedido_transferencia(request, id):
     pedido =Transferencia.objects.get(id=id)
     form = TransferenciaForm(request.POST or None, instance=pedido)
-    if request.method == 'POST':
-        if form.is_valid():
-            ids = header.views_core.retorna_numero_agente(form.cleaned_data.get('bi'))
-            desp = form.save(commit=False)
-            desp.agente_id = ids
-            desp.save()
-            template = TEMPLATE_UTILIZADOR['perfil_rota']
-            sweetify.success(request, 'Dados atualizado com sucesso!....', button='Ok', timer='3500')
-            return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
-    
+    try:
+        if request.method == 'POST':
+            if form.is_valid():
+                ids = header.views_core.retorna_numero_agente(form.cleaned_data.get('bi'))
+                desp = form.save(commit=False)
+                desp.agente_id = ids
+                desp.save()
+                template = TEMPLATE_UTILIZADOR['perfil_rota']
+                sweetify.success(request, 'Dados atualizado com sucesso!....', button='Ok', timer='3500')
+                return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
+    except Exception as e:
+        print(" ERRO AO EDITAR TRANSFERENCIA")
     pes = Pessoa.objects.get(id=pedido.agente_id)
-    #pes = header.views_core.retorna_nip_bi()
     pessoa = PessoaForm(request.POST or None, instance=pes)
     context = {'form': form, 'form2': pessoa, 'pedido': pedido, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['transferencia']
@@ -200,10 +202,11 @@ def consultar_transferencia(request):
                         context = {'lista':tras, 'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
                         template = TEMPLATE_TRANSFERENCIA['listar_pedido']
                         return render(request, template, context)
-                except Agente.DoesNotExist:
+                except Exception as e:
                     sweetify.warning(request, 'Não existem Transferencia para este agente!....', button='Ok', timer='3800')
                     return HttpResponseRedirect(reverse('transferencia:area-transferencia'))
-
+                    
+                
     context = {'fotos':request.session['salakiaku'], 'transferencias': MENU_TRANSFERENCIA}
     template = TEMPLATE_TRANSFERENCIA['mensagem']
     return render(request, template, context)
@@ -241,71 +244,119 @@ def eliminar_documento(request, id=None):
 
 @login_required
 def emitir_guia_transferencia(request, id):
+    value = id
+    form = Nip_Form(request.POST or None)
+    if request.method == 'POST' or value > 0:
+        if form.is_valid():
+            value = header.views_core.retorna_numero_agente(request.POST['nip'])
+            print(value)
+            #sweetify.error(request, 'Não pode ser lançada a nota porque, não esta inscrito na cadeira', position ='top-end',   persistent='OK')
+        try:
+            resp= Transferencia.objects.get(Q(id=value) | Q(agente_id=value))
+            buffer = BytesIO()
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'inline; filename="guia_transferencia.pdf"'
+            #p = canvas.Canvas(buffer)
+            doc = SimpleDocTemplate(response ,pagesize=letter, rightMargin=55,leftMargin=55,topMargin=30,bottomMargin=75, author="Ismael")
+            
+            styles = getSampleStyleSheet()
+            styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
 
-    
-    ap = Transferencia.objects.get(id=id)
-    buffer = BytesIO()
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="Declaração_pessoal.pdf"'
-    #p = canvas.Canvas(buffer)
-    
-    doc = SimpleDocTemplate(buffer,pagesize=letter, rightMargin=55,leftMargin=55,topMargin=150,bottomMargin=75)
-    
-    styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
+            estilos = styles["Normal"]
+            centro = ParagraphStyle(name='top',alignment=TA_CENTER, fontName="Times-Roman")
+            negrito = ParagraphStyle(name='top',alignment=TA_CENTER, fontName="Times-Bold")
+            direito = ParagraphStyle(name='top',alignment=TA_RIGHT, fontName="Times-Bold")
+            simples = ParagraphStyle(name='top',alignment=TA_CENTER)
+            Story = []
 
-    Story = []
-    print(doc.height)
+            #estilo = ParagraphStyle('TITULO', alignment = TA_CENTER ,fontSize = 12, fontName="Times-Roman")
+            logo = os.path.join(settings.MEDIA_ROOT, str('logo.jpeg'))
+            img = Image(logo, width=65, height=70,  mask=None, hAlign='CENTER')
+            Story.append(img)
 
-    #estilo = ParagraphStyle('TITULO', alignment = TA_CENTER ,fontSize = 12, fontName="Times-Roman")
-    #ptext =Paragraph('LISTA NOMINAL',estilo)
-    #LISTA.append(ptext)
-    #LISTA.append(Spacer(1, 12))
-    magName = "Pythonista"
-    issueNum = 12
-    subPrice = "99.00"
-    limitedDate = "03/05/2010"
-    freeGift = "tin foil hat"
-    full_name = "Marvin Jones"
-    address_parts = ["411 State St.", "Reno, NV 80158"]
-
-    for page in range(10):
-        # Create return address
-        ptext = '<font size=12>%s</font>' % full_name
-        Story.append(Paragraph(ptext, styles["Normal"]))       
-        for part in address_parts:
-            ptext = '<font size=12>%s</font>' % part.strip()
-            Story.append(Paragraph(ptext, styles["Normal"]))
- 
-        Story.append(Spacer(1, 12))
-        ptext = '<font size=12>Dear %s:</font>' % full_name.split()[0].strip()
-        Story.append(Paragraph(ptext, styles["Normal"]))
-        Story.append(Spacer(1, 12))
- 
-        ptext = """<font size=12>We would like to welcome you to our subscriber base 
-        for %s Magazine! You will receive %s issues at the excellent introductory 
-        price of $%s. Please respond by %s to start receiving your subscription 
-        and get the following free gift: %s.</font>""" 
-        ptext = ptext % (magName, issueNum, subPrice, limitedDate, freeGift)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
- 
-        ptext = '<font size=12>Thank you very much and we look forward to serving you.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size=12>Sincerely,</font>'
-        Story.append(Paragraph(ptext, styles["Normal"]))
-       
-        Story.append(PageBreak())
-        #p.showPage()
+            Story.append(Spacer(1, 4))
+            ANGOLA = '<font size=12>%s</font>' % ("REPÚBLICA DE ANGOLA")
+            Story.append(Paragraph(ANGOLA, centro))
+            Story.append(Spacer(1, 3))
+            MINISTERIO = '<font size=12>%s</font>' % ("MINISTÉRIO DO INTERIOR")
+            Story.append(Paragraph(MINISTERIO, centro))
+            Story.append(Spacer(1, 3))
+            POLICIA = '<font size=12>%s</font>' % ("COMANDO GERAL DA POLICIA NACIONAL")
+            Story.append(Paragraph(POLICIA, centro))
+            Story.append(Spacer(1, 3))
+            GABINETE = '<font size=12>%s</font>' % ("GABINETE DO COMANDANTE")
+            Story.append(Paragraph(GABINETE,negrito))
+            Story.append(Spacer(1, 35))
+            LETRA = '<font size=12>%s</font>' % ("À")
+            Story.append(Paragraph(LETRA,negrito))
+            Story.append(Spacer(1, 60))
+            
+            LUANDA = '<font size=12>= LUANDA =</font>'
+            Story.append(Paragraph(LUANDA, direito))
+            Story.append(Spacer(1, 65))
+            
+            DESPACHO = """<font size=12>Of. Nr. %s /GAB CGPN/328-L2GCG/2019</font>"""  %(str(resp.numero_guia))
+            Story.append(Paragraph(DESPACHO,centro))
+            Story.append(Spacer(1, 60))
+            
+            TEXTO = """ <font size=12>Para comprimento tenho a honra de autorizar a solicitação da transferencia,
         
-       
-        doc.build(Story, onFirstPage=header.views_core.rodape_imagem_Vertical, onLaterPages=header.views_core.rodape_imagem_Vertical)
-        response.write(buffer.getvalue())
-        buffer.close()
-        return response
+            </font>""" 
+            #styles["Justify"]
+            Story.append(Paragraph(TEXTO, simples))
+            Story.append(Spacer(1, 2))
+
+            TEXTO = """<font size=12>
+            datada do mes,e anexo, firmada pelo Agente: %s, que mereceu da sua Excelência Comandante Geral da Policia Nacional,
+            o seguinte despacho: %s
+            .</font>""" 
+            TEXTO = TEXTO % (str(resp.agente.pessoa.nome), str(resp.dispacho))
+            Story.append(Paragraph(TEXTO, styles["Justify"]))
+
+            TEXTO = """<font size=12>
+            O mesmo fara parate do orgão: %s, partir da data anuciada %s, que consta no despacho da autorização. O referido 
+            documento entra imediadamente emm vigor. </font>""" 
+            TEXTO = TEXTO % (str(resp.orgao_destino), str(resp.data_entrada))
+            Story.append(Paragraph(TEXTO, styles["Justify"]))
+
+            Story.append(Spacer(1, 75))
+            GABINETE = '<font size=12>%s</font>' % ("PELA ORDEM E PELA PAZ AO SERVIÇO DA NAÇÃO")
+            Story.append(Paragraph(GABINETE,negrito))
+
+            Story.append(Spacer(1, 95))
+            GABINETE = '<font size=12>%s</font>' % ("**** COMISSÁRIO-GERAL ****")
+            Story.append(Paragraph(GABINETE,negrito))
+            Story.append(Spacer(1, 12))
+
+            Story.append(PageBreak())
+            #p.showPage()
+            doc.build(Story, onFirstPage=rodape_guia, onLaterPages=rodape_guia)
+            response.write(buffer.getvalue())
+            buffer.close()
+            return response
+        except Exception as e:
+            sweetify.error(request, 'Não possui guia de transferencia', position ='top-end',   persistent='OK')
         
-   
+    sweetify.error(request, 'Não possui guia de transferencia', position ='top-end',   persistent='OK')
+    return HttpResponseRedirect(reverse('transferencia:listar'))
+
+
+def rodape_guia(canvas, doc):
+    #page_num = canvas.getPageNumber()
+    SR = "S/Referência"
+    canvas.drawRightString(7.9*cm, 16.2*cm, SR)
+    SC = "S/Comunicação"
+    canvas.drawRightString(13.4*cm, 16.2*cm, SC)
+    NR= "N/Referência"
+    canvas.drawRightString(18.4*cm, 16.2*cm, NR)
+    canvas.setFont('Times-Roman', 11)
+    GUIA= "GUIA DE AUTORIZAÇÃO DE TRANSFERÊNCIA.-"
+    canvas.drawRightString(13.0*cm, 13.6*cm, GUIA)
+    canvas.line(125,384,370,384)
+    canvas.setFont('Times-Bold', 12)
+    DN = "D.N. RECURSOS HUMANOS"
+    canvas.drawRightString(16.2*cm, 19.8*cm, DN)
+    
 
 
 
@@ -330,6 +381,3 @@ def remover_pedido_transferencia(request):
             }
             return JsonResponse(dados)
   
-
-
-

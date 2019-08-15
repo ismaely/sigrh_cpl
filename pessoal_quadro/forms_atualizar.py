@@ -20,7 +20,7 @@ class PessoaForm_atualizar(ModelForm):
     provincia = forms.CharField(max_length=25, widget=forms.Select(choices=PROVINCIA))
     municipio = forms.CharField(max_length=30, required=False, widget=forms.Select(choices=''))
     residencia = forms.CharField(max_length=60, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_comprimento_3])
-    telefone = forms.CharField(max_length=18, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '(+244) 999-999-999'" }))
+    telefone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': "'mask' : '(+244) 999-999-999'" }))
     email = forms.EmailField(max_length=80, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_email])
     genero = forms.CharField(max_length=12, widget=forms.Select(choices=GENERO))
     class Meta:

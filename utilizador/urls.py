@@ -16,6 +16,7 @@ urlpatterns = [
     path('eliminar_conta/<int:id>/', views.eliminar_conta, name='eliminar'),
     path('redifinir_senha/<int:id>/', views.redifinir_senha, name='redifinir-senha'),
     path('alterar_senha_padrao/<int:id>/', views.alterar_senha_padrao, name='alterar-senha-padrao'),
+    path('alterar_senha_utilizador/<int:id>/', views.alterar_senha_utilizador, name='alterar-senha-utilizador'),
     path('utilizador_home/', views.utilizador_home, name='home'),
     # EXcel avançado---cpl
 ]

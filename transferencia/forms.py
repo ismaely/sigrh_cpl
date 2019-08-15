@@ -54,3 +54,5 @@ class TrocaForm(ModelForm):
 
 
     
+class Nip_Form(forms.Form):
+    nip = forms.CharField(max_length=14, required=True)

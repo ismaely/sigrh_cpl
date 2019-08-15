@@ -50,7 +50,7 @@
                             </ul>
                         </li>
 
-
+                        <!--
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> ÁREAS DE TRABALHO</a>
                             <ul class="dropdown-menu">
@@ -61,6 +61,7 @@
 
                             </ul>
                         </li>
+                        -->
 
                     </ul>
                     <div class="navbar-header navbar-right dropdown">
@@ -187,48 +188,48 @@
                                     </div>
 
                                     <div class="content controls container">
-                                        <form class="" action="#" method="POST">
+                                        <form class="" action="{% url 'transferencia:emitir-guia' id=0 %}" method="POST" target="_blank">
                                             {% csrf_token %} {% autoescape on %}
                                             <div class="col-md-2">
                                             </div>
                                             <div class="form-row col-md-6">
-                                                <div class="col-md-8 pull-right"><span class="">Nip:</span> <input type="text" name="guia" class="form-control" class="" /></div>
-                                            </div>
-                                            <div class="col-md-2">
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="col-md-12">
-                                                    <div class="col-md-5">
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <button class="btn btn-primary " type="submit">Emitir Guia</button>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                    </div>
+                                                <div class="col-md-8 pull-right"><span class="">Nip:</span> {{ form.nip }} {{ form.nip.errors }}
+                                                </div>
+                                                <div class="col-md-2">
                                                 </div>
 
-                                            </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-5">
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <button class="btn btn-primary " type="submit">Emitir Guia</button>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                        </div>
+                                                    </div>
 
-                                            {% endautoescape %}
+                                                </div>
+
+                                                {% endautoescape %}
                                         </form>
+                                        </div>
                                     </div>
+
                                 </div>
-
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Close</button>-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <!-- <div class="page-footer">
+        <div class="row">
+            <!-- <div class="page-footer">
             <div class="page-footer-wrap">
                 <div class="side text-center">
                     © SALAKIAKU - (SIGRH-CPL) Todo Direito Reservado.
@@ -236,8 +237,8 @@
             </div>
         </div>
            </div>-->
+        </div>
+
     </div>
 
-</div>
-
-{% endblock %}
+    {% endblock %}

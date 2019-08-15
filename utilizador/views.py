@@ -1,13 +1,17 @@
 from header.includes import *
+import sys
 
 
 def home(request):
+    a ='2019-07-12'
+    print(a[:-3])
     template = header.rotas.TEMPLATE_UTILIZADOR['home']
     return render(request, template)
 
 
 
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
+@login_required
 def areas_servico(request):
     dados = {}
     template =  header.rotas.TEMPLATE_UTILIZADOR['areas_servico']
@@ -18,7 +22,7 @@ def areas_servico(request):
 def perfil_utilizador(request):
     try:
         lista = []
-        id =0
+        #print(request.META.get('REMOTE_ADDR'))
         #lista = Agente.objects.get(id=int(id))
         dados = {'lista': lista, 'fotos':request.session['salakiaku'],  'perfil': MENU_PERFIL}
     except Exception as e:
@@ -38,14 +42,16 @@ def utilizador_home(request):
 @login_required
 def listar_utilizador(request):
     try:
-        agente = {}
-        lista = [ User.objects.all()]
+        agente = []
+        lista = User.objects.all()
         for n in lista:
-            agente[n.first_name] = Agente.objects.get(id=int(n.first_name) )
+            agente.append([Agente.objects.get(id=int(n.first_name))])
+        
 
     except Exception as e:
         print(e)
-
+    #print(agente)
+    #print(lista)
     context = {'lista': lista, 'agente':agente, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = header.rotas.TEMPLATE_UTILIZADOR['listar']
     return render(request, template, context)
@@ -97,7 +103,7 @@ def redifinir_senha(request, id):
     if id > 0:
         user = User.objects.get(id=id)
         #novo = User.objects.create_user(username=user.nome,first_name=user.agente.id,last_name=0, email=user.categoria,password=header.views_core.SENHA_PADRAO)
-        user.set_password(header.views_core.SENHA_PADRAO)
+        user.last_name = 0
         user.save()
         sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
         return HttpResponseRedirect(reverse('utilizador:listar'))
@@ -106,27 +112,43 @@ def redifinir_senha(request, id):
         return HttpResponseRedirect(reverse('utilizador:listar'))
 
 
+@login_required
+def alterar_senha_utilizador(request, id):
+    form = Alterar_senha_UtilizadorForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            pass
+
+    template = header.rotas.TEMPLATE_UTILIZADOR['senha_utilizador']
+    return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
+
+
 
 #FUNÇÃO QUE VAI RECEBER A A NOVA SENHA, PARA ALTERAR A SENHA PADRÃO
 def alterar_senha_padrao(request, id):
     form = Troca_senhaPadrao_Form(request.POST or None)
-    
     if request.method == 'POST':
         if form.is_valid():
             senha = form.cleaned_data.get('senhaNova')
-            user = User.objects.get(id=id)
-            user.set_password(senha)
-            user.last_name = 1
-            user.save()
-            return HttpResponseRedirect(reverse('utilizador:login'))
-        else:
-            form = Troca_senhaPadrao_Form(None)
-            template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
-            return render(request, template, {'form': form, 'id': id})
-
+            nome = form.cleaned_data.get('nome_utilizador')
+            user = User.objects.get(username=nome)
+            if int(user.id) == id and int(user.last_name) == 0:
+                nome= user.username
+                nivel = user.email
+                id_pessoa = user.first_name
+                user.delete()
+                sweetify.success(request, 'Senha alterada com sucesso! já podes fazer Login.', persistent='OK', timer='3100')
+                if nome is not None:
+                    #last_name = 1  demostra que ja fez alteração da senha quando last_name ser 1
+                    novo = User.objects.create_user(username=nome, first_name=id_pessoa, last_name=1,email=nivel,password=senha)
+                    novo.save()
+                    
+                return HttpResponseRedirect(reverse('utilizador:login'))
+            else:
+                sweetify.success(request, 'Essa conta Não ś sua! Consulto Admin.', persistent='OK', timer='3100')
     
     template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
-    return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
+    return render(request, template, {'form': form, 'id': id})
             
 
 

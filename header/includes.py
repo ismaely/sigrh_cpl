@@ -19,7 +19,7 @@ import cv2
 import base64
 import random
 from django.template import Context, loader
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from sigrh_cpl.settings import (DATA_ANO, DATA_MES, DATE_FORMAT, DATA_HORA_ZONA, MEDIA_ROOT, MEDIA_URL,
  STATICFILES_DIRS, STATIC_URL, DATE_INPUT_FORMATAR, MAX_UPLOAD_SIZE, CONTENT_TYPES)
@@ -48,7 +48,7 @@ from documentacao.forms import DocumentoForm, ConsultarDocumentoForms
 import documentacao
 
 #UTILIZADOR
-from utilizador.forms import UtilizadorForm, LoginForm, Troca_senhaPadrao_Form
+from utilizador.forms import UtilizadorForm, LoginForm, Troca_senhaPadrao_Form, Alterar_senha_UtilizadorForm
 
 
 #HEADER O SEGUNDO CORAÇÃO DA APLICAÇÃO
@@ -61,7 +61,7 @@ CIENCIAS_SOCIAIS, SAUDE, DIREITO, ECONOMIA, LETRAS, ENGENHARIA, CIENCIA, BENGO, 
 LUNDA_NORTE, LUNDA_SUL, MALANJE, MOXICO, NAMIBE, UIGE, ZAIRE)
 from header.validators import( verficar_bi_numero_agente, validar_data_nascimento_igresso_colocacao,
 verficar_id_nomiacao )
-import header
+import qrcode, header
 
 
 
@@ -85,7 +85,7 @@ ReformaLista_Form, DisciplinarLista_Form, FormacaoLista_Form)
 
 #TRANSFERENCIA
 from transferencia.models import Transferencia, Troca
-from transferencia.forms import TransferenciaForm, TrocaForm
+from transferencia.forms import TransferenciaForm, TrocaForm, Nip_Form
 
 
 

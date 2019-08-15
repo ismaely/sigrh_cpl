@@ -133,8 +133,8 @@ PAIS_PRESPECTIVA = (
 
 
 GENERO = (
-    ('Masculino', 'Masculino'),
-    ('Feminino', 'Feminino'),
+    ('M', 'Masculino'),
+    ('F', 'Feminino'),
 )
 
 

@@ -53,6 +53,7 @@ TEMPLATE_UTILIZADOR = {
     'listar': 'utilizador/listar_utilizador.html',
     'troca_padrao': 'utilizador/troca_senhaPadrao.html',
     'mensagem': 'header/mensagem.html',
+    'senha_utilizador': 'utilizador/alterar_senha_utilizador.html',
 }
 
 """ Rotas e templeate do modulo documento """

@@ -7,7 +7,7 @@ from header.includes import *
 alf = 'abcdefghijklmnopqrstuvxwyz'
 numero = '01234567890'
 SENHA_PADRAO = 'CPL0203'
-SENHA_PADRAO_NAOVALIDA = ['cpl0203', 'CPL0203', 'cpl0302', 'CPL0302']
+SENHA_PADRAO_NAOVALIDA = ['cpl0203', 'CPL0203', 'cpl0302', 'CPL0302','123456789','1234567','987654321','1234']
 
 PATENTENS = [
     'Agente-1ª-Classe',
@@ -52,10 +52,7 @@ def categoria_patente(value):
 
         elif value == dados and idx >= 4 and idx < 7:
             return 'Classe de subchefe'
-
-        elif value == dados and idx >= 4 and idx < 7:
-            return 'Classe de subchefe'
-
+       
         elif value == dados and idx >= 7 and idx < 10:
             return 'Classe de oficiais subalterno'
 

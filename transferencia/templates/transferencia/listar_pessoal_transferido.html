@@ -16,7 +16,7 @@
                             <th>Data de Entrada</th>
                             <th>Data de Aprovação</th>
                             <th>Despacho</th>
-                            <th>Motivo</th>
+                            <!--<th>Motivo</th>-->
                             <th>Patente</th>
                             <th> Acção</th>
                         </tr>
@@ -39,7 +39,7 @@
                             <td> {{ list.data_entrada }}</td>
                             <td> {{ list.data_entrada }}</td>
                             <td> {{ list.dispacho }}</td>
-                            <td> {{ list.motivo|striptags|capfirst|truncatechars:20 }}</td>
+                            <!-- <td> {{ list.motivo|striptags|capfirst|truncatechars:20 }}</td>-->
                             <td> {{ list.agente.patente }}</td>
                             <td>
                                 <div class="btn-group">
@@ -48,15 +48,15 @@
                                              </button>
                                     <ul class="dropdown-menu lista" role="menu">
                                         <li class="">
-                                            <a href="{% url 'transferencia:emitir-guia' list.id %}" class=" btn btn-success tip" title="Imprimir o Guia de Transferencia">
+                                            <a href="{% url 'transferencia:emitir-guia' list.id %}" class=" btn btn-success tip" title="Imprimir o Guia de Transferencia" target="_blank">
                                                  Emitir o Guia
                                              </a>
                                         </li>
-                                        <li>
+                                        <!--<li>
                                             <a href="{% url 'transferencia:atualizar-pedido' list.id %}" class="btn btn-primary tip" title="Editar os Dado">
                                                Editar Transferência
                                          </a>
-                                        </li>
+                                        </li>-->
 
                                     </ul>
                                 </div>

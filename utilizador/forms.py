@@ -38,20 +38,13 @@ class LoginForm(forms.Form):
 
 
 class Troca_senhaPadrao_Form(forms.Form):
-    senhaPadrao = forms.CharField(max_length=20, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'password Antiga'}))
+    nome_utilizador = forms.CharField(max_length=70, label="Nome de utilizador:", required=True, widget=forms.TextInput(attrs={'placeholder': 'Nome de utilizador'}))
     senhaNova = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'password Nova'}))
     confirmaSenha = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'confirma a nova password'}))
-
-    def clean_senha_padrao(self):
-        senhaPadrao = self.cleaned_data.get('senhaPadrao')
-        if senhaPadrao != header.views_core.SENHA_PADRAO:
-            raise forms.ValidationError("A senha padrão não esta correta")
-        else:
-            return senhaPadrao
     
     def clean_senhaNova(self):
         senhaNova = self.cleaned_data.get('senhaNova')
-        if len(senhaNova) < 7:
+        if len(senhaNova) < 6:
             raise forms.ValidationError(" A senha tem que ser maior que 6 caracter")
         elif senhaNova in header.views_core.SENHA_PADRAO_NAOVALIDA:
             raise forms.ValidationError("A senha não pode ser semelhante a senha padrão")
@@ -63,5 +56,28 @@ class Troca_senhaPadrao_Form(forms.Form):
         confirmaSenha = self.cleaned_data.get('confirmaSenha')
         if confirmaSenha != senhaNova:
             raise forms.ValidationError(" A senha é diferente da Nova")
+        return confirmaSenha
+
+
+
+
+
+class Alterar_senha_UtilizadorForm(forms.Form):
+    senhaNova = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'password Nova'}))
+    confirmaSenha = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'confirma a nova password'}))
+    
+    def clean_senhaNova(self):
+        senhaNova = self.cleaned_data.get('senhaNova')
+        if len(senhaNova) < 7:
+            raise forms.ValidationError(" A senha tem que ser maior que 7 caracter")
+        elif senhaNova in header.views_core.SENHA_PADRAO_NAOVALIDA:
+            raise forms.ValidationError("A senha não pode ser semelhante a senha padrão")
         else:
-            return confirmaSenha
+            return senhaNova
+
+    def clean_confirmaSenha(self):
+        senhaNova = self.cleaned_data.get('senhaNova')
+        confirmaSenha = self.cleaned_data.get('confirmaSenha')
+        if confirmaSenha != senhaNova:
+            raise forms.ValidationError(" A senha é diferente da Nova")
+        return confirmaSenha

@@ -108,19 +108,20 @@ def editar_cadastro(request, id):
         form = PessoaForm_atualizar(request.POST or None, instance=pessoa)
         form2 = AgenteForm_atualizar(request.POST or None, instance=agente)
         form3 = OrgaoForm_atualizar(request.POST or None, instance=orgao)
-        if form3.is_valid():
-            form.save()
-            form2.save()
-            form3.save()
-            sweetify.success(request, 'Dados do agente alterado com sucesso !..', button='Ok', timer='4000')
-            return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
+        if request.method == 'POST':
+            if form3.is_valid():
+                form.save()
+                form2.save()
+                form3.save()
+                sweetify.success(request, 'Dados do agente alterado com sucesso !..', button='Ok', timer='4000')
+                return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 
-        dados = {'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
+        dados = {'fotos':request.session['salakiaku'],'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
         template = TEMPLATE_PESSOAQUADRO['cadastro']
         return render(request, template, dados)
     except ValueError as e:
         print(e)
-    dados = {'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO, 'fotos':request.session['salakiaku']}
+    dados = {'fotos':request.session['salakiaku'],'form': form, 'form2': form2, 'form3': form3, 'pessoa': pessoa, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = TEMPLATE_PESSOAQUADRO['cadastro']
     return render(request, template, dados)
 
@@ -973,7 +974,6 @@ def cadastrar(request):
 
 
 
-
 def cabecarioFicha(id):
     lista = []
     lista = Orgao.objects.select_related('agente').get(agente_id=id)
@@ -989,11 +989,13 @@ def cabecarioFicha(id):
     logo_tabela = os.path.join(settings.MEDIA_ROOT, str('claro.png'))
 
     style = getSampleStyleSheet()
-    estilosB = style["Normal"]
+    estilosB = style["BodyText"]
+    #estilosB = style['Heading3']
     estilosB.alignment = TA_LEFT
     estilosB.fontSize = 11
-    estilosB.fontName = 'Times-Roman'
-    estilosB.fstcolor = 'blod'
+    estilosB.fontName = 'Times-Bold'
+    #estilosB.box = 'lightblue'
+    estilosB.textColor = 'black'
 
     # as colunas de cada linha
     nome = Paragraph(''' Nome Completo ''',estilosB)
@@ -1029,44 +1031,49 @@ def cabecarioFicha(id):
 
     data1 = []
     data2 = []
-    data3 = []
-    data4 = []
-    data5 = []
-    data6 = []
-    data7 = []
-    data8 = []
+   
+    #Dados pessoal -- primaeira linha
     data1.append([nome, nascimento, provincia])
-    data2.append([pai, bi, municipio])
-    data3.append([mae, genero, residencia])
-    data4.append([email, estado, telefone])
-
-    data5.append([patente, categoria, ingresso])
-    data6.append([area_formacao, academico, data_colocacao])
-    data7.append([curso, contribuite, nip])
-    data8.append([orgao, social, numero_agente])
-
-    
-    #Dados pessoal
-    dados1 = [str (lista.agente.pessoa.nome).upper(), str (lista.agente.pessoa.data_nascimento).upper(), 
+    dados1 = [str(lista.agente.pessoa.nome).upper(), str (lista.agente.pessoa.data_nascimento).upper(), 
     str (lista.agente.pessoa.provincia).upper()]
-    dados2 = [str (lista.agente.pessoa.nome_pai).upper() ,str (lista.agente.pessoa.bi).upper(),
+    data1.append(dados1)
+    #linha do pai
+    data1.append([pai, bi, municipio])
+    dados1 =[str(lista.agente.pessoa.nome_pai).upper() ,str (lista.agente.pessoa.bi).upper(),
     str (lista.agente.pessoa.municipio).upper()]
-    dados3 = [str (lista.agente.pessoa.nome_mae).upper(), str (lista.agente.pessoa.genero).upper(), 
+    data1.append(dados1)
+    #linha da mae
+    data1.append([mae, genero, residencia])
+    dados1 = [str (lista.agente.pessoa.nome_mae).upper(), str (lista.agente.pessoa.genero).upper(), 
     str (lista.agente.pessoa.residencia).upper()]
-    dados4 = [str (lista.agente.pessoa.email).upper(), str (lista.agente.pessoa.estado_civil).upper(), 
+    data1.append(dados1)
+    # linha do email
+    data1.append([email, estado, telefone])
+    dados1 = [str (lista.agente.pessoa.email), str (lista.agente.pessoa.estado_civil).upper(), 
     str (lista.agente.pessoa.telefone).upper()]
+    data1.append(dados1)
 
     # dados de agente
-    dados5 = [str (lista.agente.patente).upper(), str (lista.agente.categoria).upper(),
+    data2.append([patente, categoria, ingresso])
+    dados2 = [str (lista.agente.patente).upper(), str (lista.agente.categoria).upper(),
     str (lista.agente.data_igresso)]
-    dados6 = [ str (lista.agente.area_formacao).upper(), str (lista.agente.nivel_academico).upper(),
-    str (lista.data_colocacao)]
-    dados7 = [str (lista.agente.curso).upper(), str (lista.agente.numero_contribuite).upper(),
-    str (lista.agente.nip)]
-    dados8 = [str (lista.orgao_colocacao).upper(), str (lista.agente.numero_caixa_social),
-    str (lista.agente.numero_agente)]
+    data2.append(dados2)
 
-    data1.append(dados1)
+    # dados agente linha 2
+    data2.append([area_formacao, academico, data_colocacao])
+    dados2 = [ str (lista.agente.area_formacao).upper(), str (lista.agente.nivel_academico).upper(),
+    str (lista.data_colocacao)]
+    data2.append(dados2)
+    # dados agente linha 3
+    data2.append([curso, contribuite, nip])
+    dados2 = [str (lista.agente.curso).upper(), str (lista.agente.numero_contribuite).upper(),
+    str (lista.agente.nip)]
+    data2.append(dados2)
+
+    data2.append([orgao, social, numero_agente])
+    dados2 = [str (lista.orgao_colocacao).upper(), str (lista.agente.numero_caixa_social),
+    str(lista.agente.numero_agente)]
+    data2.append(dados2)
 
     # tabela 1 dos dao pessoais
     table1 = Table(data1, colWidths=[9 * cm, 4.8 * cm, 5.4 * cm, 1.1 * cm])
@@ -1075,75 +1082,38 @@ def cabecarioFicha(id):
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
     ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
-
-    #tabela 2
-    data2.append(dados2)
-    table2 = Table(data2, colWidths=[9 * cm, 4.8 * cm, 5.4 * cm, 1.1 * cm])
+  
+    #dados de agente
+    table2 = Table(data2, colWidths=[9 * cm, 6.6 * cm, 3.6 * cm, 1 * cm])
     table2.setStyle(TableStyle([
     ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
     ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
     ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
     ]))
 
-    #tabela3
-    data3.append(dados3)
-    table3 = Table(data3, colWidths=[9 * cm, 4.8 * cm, 5.4 * cm, 1.1* cm])
-    table3.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
 
-    #tabela4
-    data4.append(dados4)
-    table4 = Table(data4, colWidths=[9 * cm, 4.8 * cm, 5.4 * cm, 1.1* cm])
-    table4.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
-
-
-    #dados de agente
-    data5.append(dados5)
-    table5 = Table(data5, colWidths=[9 * cm, 6.8 * cm, 3.4 * cm, 1.1 * cm])
-    table5.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
-
-    #tabela 6
-    data6.append(dados6)
-    table6 = Table(data6, colWidths=[9 * cm, 6.8 * cm, 3.4 * cm, 1.1 * cm])
-    table6.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
-
-    #tabela 7
-    data7.append(dados7)
-    table7 = Table(data7, colWidths=[9 * cm, 6.8 * cm, 3.4 * cm, 1.1 * cm])
-    table7.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
-
-    #tabela 7
-    data8.append(dados8)
-    table8 = Table(data8, colWidths=[9 * cm, 6.8 * cm, 3.4 * cm, 1.1 * cm])
-    table8.setStyle(TableStyle([
-    ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-    ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-    ]))
     p.saveState()
-    p.line(0, 0.86 * inch,600, 0.86 * inch)
-    p.drawString(inch, 0.72 * inch,'CPL / SALAKIAKU')
+    policia = os.path.join(settings.MEDIA_ROOT, str("policia.png"))
+    p.drawImage(policia, 1.40 * inch,0.65 * inch, width=40, height=40, mask=None)
+    #p.line(0, 0.70 * inch,600, 0.70 * inch)
+    p.drawString(0.60 *inch, 0.45 * inch,'Comando Províncial de Luanda')
+
+    qr = qrcode.QRCode(
+    version=1,
+    error_correction=qrcode.constants.ERROR_CORRECT_H,
+    box_size=10,
+    border=2
+    )
+    data = 'cpl-salakiaku %s' %(lista.agente.nip)
+    qr.add_data(data)
+    qr.make(fit=True)
+    nome =  str(random.random()) + ".png"
+    img = qr.make_image(fill_color='black', back_color='white')
+    img.save(settings.MEDIA_ROOT+'/codigo_qr/'+nome)
+    p.drawImage(settings.MEDIA_ROOT+'/codigo_qr/'+nome, 5.60 * inch,0.65 * inch, width=40, height=40, mask=None)
+    p.drawString(4.50 *inch, 0.45 * inch,'Salakiaku / Processado por computador')
     p.restoreState()
-    return (buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, table3, table4, table5, table6, table7, table8, estilosB, style)
+    return (buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, estilosB, style)
 
 
 
@@ -1157,102 +1127,7 @@ def ficha_pessoal(request, id=None):
             response = HttpResponse(content_type='application/pdf')
             response['Content-Disposition'] = 'inline; filename="ficha_pessoal.pdf"'
 
-            buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, table3, table4, table5, table6, table7, table8, estilosB, style = cabecarioFicha(id)
-
-            #tamanho da linha
-            p.setLineWidth(2)
-
-            #logo do centro da angola
-            p.drawImage(logo, 253.5, 750, width=65, height=70, mask=None)
-
-            # dados da respublica
-            p.drawString(218,737,'REPÚBLICA DE ANGOLA')
-            p.drawString(212.6,723,'MINISTÉRIO DO INTERIOR')
-            p.drawString(231.6,709,'POLICIA NACIONAL')
-            p.drawString(179,695,'COMANDO PROVÍNCIAL DE LUANDA')
-            p.drawString(142,681,'DIRECÇÃO PROVÍNCIAL DE RECURSOS HUMANOS')
-            p.line(100,670,500,670)
-
-            #foto civil a primeira
-            p.drawImage(fotocivil, 100, 605, width=60, height=60, mask=None)
-            # logo da fotofardado
-            p.drawImage(fotofardado, 440, 605, width=60, height=60, mask=None)
-
-            # zo    template = TEMPLATE_PESSOAQUADRO['nomiar']
-            #na do comunicado o informação que deve ser descrita 
-            p.drawString(248,620,'FICHA DO AGENTE')
-
-            #imagem para os dados pessoal
-            p.drawImage(logo_tabela, 24.5, 560.3, width=544.6, height=40, mask=None)
-            p.drawString(30,580,'DADOS PESSOAL')
-
-            #imagem para os dados de agente
-            p.drawImage(logo_tabela, 24.5, 390.5, width=544.6, height=35, mask=None)
-            p.drawString(30,405.5,'DADOS DE AGENTE')
-
-
-            width, height = A4
-            #0nde começa a ser construida a tabela dos dados pessoais
-            # primeira linha
-            table1.wrapOn(p, width, height)
-            table1.drawOn(p, 25, 535)
-            # segunda linha
-            table2.wrapOn(p, width, height)
-            table2.drawOn(p, 25, 499)
-            #terecira linha
-            table3.wrapOn(p, width, height)
-            table3.drawOn(p, 25, 462.5)
-            #quarta linha
-            table4.wrapOn(p, width, height)
-            table4.drawOn(p, 25, 428.4)
-
-            #onde começa se construida a tabela de dados de agente
-            #quinta linha
-            table5.wrapOn(p, width, height)
-            table5.drawOn(p, 25, 365)
-
-            #sexta
-            table6.wrapOn(p, width, height)
-            table6.drawOn(p, 25, 329.6)
-            #setima
-            table7.wrapOn(p, width, height)
-            table7.drawOn(p, 25, 294.5)
-            #oitava
-            table8.wrapOn(p, width, height)
-            table8.drawOn(p, 25, 260.5)
-
-            p.showPage()
-            p.save()
-            pdf = buffer.getvalue()
-            buffer.close()
-            response.write(pdf)
-            return response
-        else:
-
-            print("erro--")
-
-    except Exception as e:
-        raise e
-
-    context = {'pessoalQuadro': MENU_PESSOAL_QUADRO}
-    template = TEMPLATE_UTILIZADOR['pq']
-    return render(request, template, context)
-
-
-
-
-#Ficha para o processo disciplinar
-@login_required
-def ficha_processo_disciplinar(request, id=None):
-
-    try:
-        if id > 0 :
-
-            disciplina = Disciplina.objects.select_related('agente').get(agente_id=id)
-            response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = 'inline; filename="ficha_pessoal.pdf"'
-
-            buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, table3, table4, table5, table6, table7, table8, estilosB, style = cabecarioFicha(id)
+            buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, estilosB, style = cabecarioFicha(id)
 
             #tamanho da linha
             p.setLineWidth(2)
@@ -1282,14 +1157,86 @@ def ficha_processo_disciplinar(request, id=None):
 
             #imagem para os dados de agente
             p.drawImage(logo_tabela, 24.5, 390.5, width=544.6, height=35, mask=None)
-            p.drawString(30,405.5,'DADOS DE AGENTE')
+            p.drawString(30,410.5,'DADOS DE AGENTE')
+            #criando dados para o processo disciplinar
+
+            width, height = A4
+            #0nde começa a ser construida a tabela dos dados pessoais
+            # primeira tabela
+            table1.wrapOn(p, width, height)
+            table1.drawOn(p, 25, 428.3)
+
+            #onde começa se construida a tabela de dados de agente
+            #segunda  tabela dados agente
+            table2.wrapOn(p, width, height)
+            table2.drawOn(p, 25, 261)
+           
+            p.showPage()
+            p.save()
+            pdf = buffer.getvalue()
+            buffer.close()
+            response.write(pdf)
+            return response
+        else:
+
+            print("erro--")
+    except Exception as e:
+        raise e
+
+    context = {'pessoalQuadro': MENU_PESSOAL_QUADRO}
+    template = TEMPLATE_UTILIZADOR['pq']
+    return render(request, template, context)
+
+
+
+#Ficha para o processo disciplinar
+@login_required
+def ficha_processo_disciplinar(request, id=None):
+
+    try:
+        if id > 0 :
+
+            disciplina = Disciplina.objects.select_related('agente').get(agente_id=id)
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'inline; filename="processo_disciplinar.pdf"'
+
+            buffer, p, logo, fotofardado, fotocivil, logo_tabela, table1, table2, estilosB, style = cabecarioFicha(id)
+
+            #tamanho da linha
+            p.setLineWidth(2)
+
+            #logo do centro da angola
+            p.drawImage(logo, 253.5, 750, width=65, height=70, mask=None)
+
+            # dados da respublica
+            p.drawString(218,737,'REPÚBLICA DE ANGOLA')
+            p.drawString(212.6,723,'MINISTÉRIO DO INTERIOR')
+            p.drawString(231.6,709,'POLICIA NACIONAL')
+            p.drawString(179,695,'COMANDO PROVÍNCIAL DE LUANDA')
+            p.drawString(142,681,'DIRECÇÃO PROVÍNCIAL DE RECURSOS HUMANOS')
+            p.line(100,670,500,670)
+
+            #foto civil a primeira
+            p.drawImage(fotocivil, 100, 605, width=60, height=60, mask=None)
+            # logo da fotofardado
+            p.drawImage(fotofardado, 440, 605, width=60, height=60, mask=None)
+
+            # zona do comunicado o informação que deve ser descrita 
+            p.drawString(180,620,'INFORMÇÃO DO PROCESSO DISCIPLINAR')
+
+            #imagem para os dados pessoal
+            p.drawImage(logo_tabela, 24.5, 560.3, width=544.6, height=40, mask=None)
+            p.drawString(30,580,'DADOS PESSOAL')
+
+            #imagem para os dados de agente
+            p.drawImage(logo_tabela, 24.5, 390.5, width=544.6, height=35, mask=None)
+            p.drawString(30,410.5,'DADOS DE AGENTE')
             #criando dados para o processo disciplinar
             #imagem para dados disciplinar
             p.drawImage(logo_tabela, 24.5, 223.3, width=544.6, height=35, mask=None)
             p.drawString(30,237.7,'PROCESSO DISCIPLINAR')
 
-
-             #0nde começa a ser construida a tabela
+            #0nde começa a ser construida a tabela
             processo = Paragraph(''' Processo Nº''',estilosB)
             data_disc = Paragraph(''' Data ''',estilosB)
             motivo = Paragraph(''' Motivo ''',estilosB)
@@ -1298,48 +1245,28 @@ def ficha_processo_disciplinar(request, id=None):
             descricao = Paragraph(''' Descrição ''',estilosB)
 
             discip1 = []
-            discip2 = []
+            
             discip1.append([processo, data_disc, dispacho])
-            discip2.append([pena, motivo])
-            
-            dados_disciplinar = [str (disciplina.numero_processo), str (disciplina.data),
+            disciplinar = [str (disciplina.numero_processo), str (disciplina.data),
             str (disciplina.dispacho)]
+            discip1.append(disciplinar)
             
-            dados_disciplinar2 = [str (disciplina.pena).upper(), str (disciplina.motivo).upper()]
+            discip1.append([pena, motivo])
+            disciplinar = [str (disciplina.pena).upper(), str (disciplina.motivo).upper()]
+            discip1.append(disciplinar)
 
             width, height = A4
             #0nde começa a ser construida a tabela dos dados pessoais
-            # primeira linha
+            # primeira tabela
             table1.wrapOn(p, width, height)
-            table1.drawOn(p, 25, 535)
-            # segunda linha
-            table2.wrapOn(p, width, height)
-            table2.drawOn(p, 25, 499)
-            #terecira linha
-            table3.wrapOn(p, width, height)
-            table3.drawOn(p, 25, 462.5)
-            #quarta linha
-            table4.wrapOn(p, width, height)
-
-            table4.drawOn(p, 25, 428.4)
+            table1.drawOn(p, 25, 428.3)
 
             #onde começa se construida a tabela de dados de agente
-            #quarta linha
-            table5.wrapOn(p, width, height)
-            table5.drawOn(p, 25, 365)
-
-            #sexta
-            table6.wrapOn(p, width, height)
-            table6.drawOn(p, 25, 329.6)
-            #setima
-            table7.wrapOn(p, width, height)
-            table7.drawOn(p, 25, 294.5)
-            #oitava
-            table8.wrapOn(p, width, height)
-            table8.drawOn(p, 25, 260.5)
-
+            #segunda  tabela dados agente
+            table2.wrapOn(p, width, height)
+            table2.drawOn(p, 25, 261)
+           
             # tabela de dados da disciplina
-            discip1.append(dados_disciplinar)
             table = Table(discip1, colWidths=[9 * cm, 6.8 * cm, 3.4 * cm, 1.1 * cm])
             table.setStyle(TableStyle([
             ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
@@ -1347,17 +1274,7 @@ def ficha_processo_disciplinar(request, id=None):
             ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
             ]))
             table.wrapOn(p, width, height)
-            table.drawOn(p, 25, 198.5)
-
-            discip2.append(dados_disciplinar2)
-            table = Table(discip2, colWidths=[9 * cm, 10.2 * cm, 3.1 * cm, 1.1 * cm])
-            table.setStyle(TableStyle([
-            ('GRID', (0, 0), (6, -1), 1.3,  colors.black),
-            ('LINEBELOW', (0, 0), (-1, 0), 1.3, colors.black),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue)
-            ]))
-            table.wrapOn(p, width, height)
-            table.drawOn(p, 25, 163.2)
+            table.drawOn(p, 25, 157.8)
 
             estilo = style["Normal"]
             style.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))

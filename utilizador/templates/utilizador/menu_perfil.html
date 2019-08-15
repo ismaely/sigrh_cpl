@@ -1,6 +1,6 @@
 {% extends 'base_salakiaku.html' %}{% block menu %}{% load static %}
 
-<div class="container">
+<div class="container ">
     <div class="row">
         <div class="col-md-12">
 
@@ -15,40 +15,12 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-
-                            <a href="{% url 'estatistica:area' %}">
+                            <a href="#">
                                 <span class="icon-home"></span> SALAKIAKU
                             </a>
-
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-file-text"></span> Gerar Listas em PDF</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'estatistica:normal' %}">Normal</a></li>
-                                <li><a href="{% url 'estatistica:nivel_academico' %}">Nivel academico</a></li>
-                                {% if user.email == 'Gestor' %}
-                                <li><a href="{% url 'estatistica:reforma' %}"> Reforma</a> </li>
-                                <li><a href="{% url 'estatistica:baixa' %}">Baixa </a></li>
-                                <li><a href="{% url 'estatistica:lista-disciplinar' %}">Processo Disciplinar</a></li>
-                                {% endif %}
-                                <li><a href="{% url 'estatistica:formacao' %}">Formação</a></li>
-                            </ul>
-
                         </li>
 
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-bar-chart"></span> Estatística</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'estatistica:transferencia' %}">Transferências</a></li>
-                                <li><a href="{% url 'estatistica:estatistica-baixas' %}">Baixas </a></li>
-                                <li><a href="{% url 'estatistica:estatistica-reforma' %}">Reformas</a></li>
-                                <!--<li><a href="#">Reforma Anticipada</a></li>-->
-                                <li><a href="{% url 'estatistica:estatistica-selecionado' %}"> Selecionado para Formação</a></li>
-                                <li><a href="{% url 'estatistica:estatistica-conclusao' %}"> Formação Concluida</a></li>
-                            </ul>
-                        </li>
                         <!--
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> ÁREAS DE TRABALHO</a>
@@ -57,11 +29,13 @@
                                 <li><a href="{% url 'transferencia:area-transferencia' %}">TRANSFERÊNCIA</a></li>
                                 <li><a href="{% url 'formacao:area-formacao' %}">FORMAÇÃO</a></li>
                                 <li><a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">PESSOAL E QUADRO</a></li>
+
                             </ul>
                         </li>
                         -->
-
                     </ul>
+
+
                     <div class="navbar-header navbar-right dropdown">
                         <a class=" dropdown-toggle" data-toggle="dropdown" href="#">
 
@@ -76,17 +50,15 @@
                         </a>
                     </div>
                 </div>
+
             </nav>
+
         </div>
     </div>
     <div class="row">
-
         <div class="col-md-12">
-
             <div class="block block-drop-shadow">
-
                 {% block corpo %} {% endblock %}
-
             </div>
         </div>
 
@@ -103,17 +75,8 @@
 
 
 
-
-
     <div class="row">
-        <!-- <div class="page-footer">
-            <div class="page-footer-wrap">
-                <div class="side text-center">
-                    © SALAKIAKU - (SIGRH-CPL) Todo Direito Reservado.
-                </div>
-            </div>
-        </div>
-           </div>-->
+
     </div>
 
 </div>
