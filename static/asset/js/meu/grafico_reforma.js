@@ -8,8 +8,10 @@
 
 
 var total_anticipada = $('#total_anticipada').text();
-var total_normal = $('#total_normal').text();
-var total_reforma = $('#total_reforma').text();
+var total_Incapacidade = $('#total_Incapacidade').text();
+var total_acidente = $('#total_acidente').text();
+var total_dificiencia = $('#total_dificiencia').text();
+var total_outro = $('#total_outro').text();
     Highcharts.chart('reforma_container', {
         chart: {
             type: 'pie',
@@ -40,21 +42,31 @@ var total_reforma = $('#total_reforma').text();
         series: [{
             name: 'Percentagem',
             colorByPoint: true,
-            data: [{
-                name: 'Reforma Normal',
-                y: Number(total_normal),
+            data: [
+                {
+                name: 'Incapacidade',
+                y: Number(total_Incapacidade),
                 sliced: true,
                 selected: true
             }, {
-                name: 'Reforma Anticipada',
-                y: Number(total_anticipada),
+                name: 'Acidente',
+                y: Number(total_acidente),
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Total na Reforma',
-                y: Number(total_reforma),
-                
-            }]
+            },
+             {
+                name: 'Dificiencia',
+                y: Number(total_dificiencia),
+                sliced: true,
+                selected: true
+            },
+             {
+                name: 'Outros',
+                y: Number(total_outro),
+                sliced: true,
+                selected: true
+            }
+        ]
         }]
 
     });

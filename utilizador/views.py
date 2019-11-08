@@ -1,10 +1,44 @@
 from header.includes import *
 import sys
+from django.conf.urls import (
+handler400, handler403, handler404, handler500
+)
+
+
+
+
+
+def custom_403(request, exception):
+    return render(request, 'utilizador/403.html', {})
+
+
+"""def handler404(request, exception, template_name="utilizador/404.html"):
+    response = render_to_response("utilizador/404.html")
+    response.status_code = 404
+    return response
+"""
+
+def handler404(request, exception):
+    response.status_code = 404
+    return render(request, 'utilizador/404.html',  status=404)
+
+
+
+def handler500(request, exception):
+    
+    response.status_code = 500
+    return render(request, 'utilizador/500.html',  status=500)
+
+
+
+def handler504(request, exception):
+    return render(request, 'utilizador/504.html', {})
+
 
 
 def home(request):
-    a ='2019-07-12'
-    print(a[:-3])
+    #a ='2019-07-12'
+    #print(a[:-3])
     template = header.rotas.TEMPLATE_UTILIZADOR['home']
     return render(request, template)
 
@@ -45,12 +79,9 @@ def listar_utilizador(request):
         agente = []
         lista = User.objects.all()
         for n in lista:
-            agente.append([Agente.objects.get(id=int(n.first_name))])
-        
-
+            agente.append(Agente.objects.get(id=int(n.first_name)))
     except Exception as e:
         print(e)
-    #print(agente)
     #print(lista)
     context = {'lista': lista, 'agente':agente, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
     template = header.rotas.TEMPLATE_UTILIZADOR['listar']
@@ -102,14 +133,12 @@ def eliminar_conta(request, id):
 def redifinir_senha(request, id):
     if id > 0:
         user = User.objects.get(id=id)
-        #novo = User.objects.create_user(username=user.nome,first_name=user.agente.id,last_name=0, email=user.categoria,password=header.views_core.SENHA_PADRAO)
         user.last_name = 0
         user.save()
         sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
-        return HttpResponseRedirect(reverse('utilizador:listar'))
     else:
         sweetify.sweetalert(request, 'Falha não foi possivel alterar...', type="error", button='Ok', timer='3600')
-        return HttpResponseRedirect(reverse('utilizador:listar'))
+    return HttpResponseRedirect(reverse('utilizador:listar'))
 
 
 @login_required
@@ -117,7 +146,11 @@ def alterar_senha_utilizador(request, id):
     form = Alterar_senha_UtilizadorForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            pass
+            #senha = form.cleaned_data.get('senhaNova')
+            user = User.objects.get(id=id)
+            user.set_password(form.cleaned_data.get('senhaNova'))
+            user.save()
+            sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
 
     template = header.rotas.TEMPLATE_UTILIZADOR['senha_utilizador']
     return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
@@ -133,15 +166,17 @@ def alterar_senha_padrao(request, id):
             nome = form.cleaned_data.get('nome_utilizador')
             user = User.objects.get(username=nome)
             if int(user.id) == id and int(user.last_name) == 0:
-                nome= user.username
-                nivel = user.email
-                id_pessoa = user.first_name
-                user.delete()
+                user.set_password(form.cleaned_data.get('senhaNova'))
+                user.save()
+                #nome= user.username
+                #nivel = user.email 
+                #id_pessoa = user.first_name
+                #user.delete()
                 sweetify.success(request, 'Senha alterada com sucesso! já podes fazer Login.', persistent='OK', timer='3100')
-                if nome is not None:
+                #if nome is not None:
                     #last_name = 1  demostra que ja fez alteração da senha quando last_name ser 1
-                    novo = User.objects.create_user(username=nome, first_name=id_pessoa, last_name=1,email=nivel,password=senha)
-                    novo.save()
+                    #novo = User.objects.create_user(username=nome, first_name=id_pessoa, last_name=1,email=nivel,password=senha)
+                    #novo.save()
                     
                 return HttpResponseRedirect(reverse('utilizador:login'))
             else:
@@ -307,20 +342,16 @@ def login_utilizador(request):
                         form = Troca_senhaPadrao_Form(request.POST or None)
                         template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
                         return render(request, template, {'form': form, 'id': utilizador.id})
-                    
                 elif not utilizador.is_active:
                     messages.warning(request, 'A sua conta esta Desativada...')
-                    
                 else:
                     messages.warning(request, 'Dados errados do utilizador...')
-                    
         except User.DoesNotExist:
             messages.warning(request, 'A conta não existe...')
             
     dados = {'form': form}
     template = header.rotas.TEMPLATE_UTILIZADOR['login']
     return render(request, template, dados)
-
 
 
 

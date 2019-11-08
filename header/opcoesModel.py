@@ -138,6 +138,12 @@ GENERO = (
 )
 
 
+GENERO_AMBOS = (
+    ('M', 'Masculino'),
+    ('F', 'Feminino'),
+    ('Ambos', 'Ambos'),
+)
+
 
 APROVEITAMENTO = (
     ('Desistente', 'desistente'),
@@ -181,6 +187,24 @@ ORGAO_COMANDOS = (
 
 
 PATENTE = (
+    ('Agente-1ª-Classe', 'Agente 1ª Classe'),
+    ('Agente-2ª-Classe', 'Agente 2ª Classe'),
+    ('Agente-3ª-Classe', 'Agente 3ª Classe'),
+    ('1ª-Subchefe', '1ª subchefe'),
+    ('2ª-Subchefe', '2ª Subchefe'),
+    ('3ª-Subchefe', '3ª Subchefe'),
+    ('Inspector', 'Inspector'),
+    ('Sub-inspetor', 'Sub-inspetor'),
+    ('Inspector-chefe', 'Inspector-chefe'),
+    ('Intendente', 'Intendente'),
+    ('Superintendente', 'Superintendente'),
+    ('Sub-comissário', 'Sub-comissário'),
+    ('Comissário-chefe', 'Comissário chefe'),
+    ('Comissário-geral', 'Comissário geral'),
+)
+
+PATENTE_ESTATISTICA = (
+    (' ', ' '),
     ('Agente-1ª-Classe', 'Agente 1ª Classe'),
     ('Agente-2ª-Classe', 'Agente 2ª Classe'),
     ('Agente-3ª-Classe', 'Agente 3ª Classe'),
@@ -372,6 +396,16 @@ CIENCIA = ['Biologia', 'Ciências da Computação', 'Engenharia Geográfica', 'F
 SITUACAO_TRANSFERENCIA = (
     ('Espera', 'Espera'),
     ('Autorizado', 'Autorizado'),
+)
+MENU_ESTATIS_TRANSFERENCIA = (
+    ('', ' '),
+    ('Troca', 'Troca de Orgão'),
+    ('Espera', 'Em Espera'),
+    ('Aprovado', 'Transferidos'),
+)
+MENU_ESTATIS_REFORMA = (
+    ('', ' '),
+    ('Anticipada', 'Anticipada'),
 )
 
 

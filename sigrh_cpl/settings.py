@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kg(c4!q-+z16p%notic5v7%db1fwh0_-j19kh)@23-m072_h^t'
 
 
-ALLOWED_HOSTS = ['salakiaku.com','www.salakiaku.com','127.0.0.1','192.168.43.159']
+#ALLOWED_HOSTS = ['salakiaku.com','www.salakiaku.com','127.0.0.1','192.168.43.159']
+ALLOWED_HOSTS = ['*','127.0.0.1']
 #SECURE_PROXY_SSL_HEADER =('HTTP_X_FORWARDED_PROTO', 'https')
 #MODULOS DE SEGURANÇA PARA REQUEST. BASTA ATIVAR
 
@@ -161,10 +162,8 @@ LANGUAGE_CODE = 'pt-PT'
 LANGUAGES = (
     ('pt', u'Português'),
     ('en-us', u'English (US)'),
-    ('de', u'Deutsch'),
     ('en-gb', u'English (UK)'),
     ('es', u'Español'),
-    ('fr', u'Français'),
     
 )
 

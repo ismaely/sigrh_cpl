@@ -7,8 +7,9 @@
 
 
 
-var total_transfe = $('#total_transfe').text();
-var total_troca = $('#total_troca').text();
+var masculino = $('#total_transfe_masculino').text();
+var femenino = $('#total_transfe_femenino').text();
+var total = $('#total_transferencia').text();
     Highcharts.chart('trans_container', {
         chart: {
             type: 'pie',
@@ -39,20 +40,26 @@ var total_troca = $('#total_troca').text();
         series: [{
             name: 'Percentagem',
             colorByPoint: true,
-            data: [{
-                name: 'Transferência',
-                y: Number(total_transfe),
+            data: [
+                {
+                name: 'Masculino',
+                y: Number(masculino),
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Trocas',
-                y: Number(total_troca),
+                },
+                {
+                name: 'Femenino',
+                y: Number(femenino),
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Agentes',
-                y: 10.85
-            }]
+                },
+                {
+                name: 'Total de Agentes',
+                y: Number(total),
+                sliced: true,
+                selected: true
+                }
+            ]
         }]
 
     });

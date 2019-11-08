@@ -1,15 +1,12 @@
-<!DOCTYPE html>
 <!--
-@File   : formacao_pdf.html
+@File   : normal_pdf.html
 @Author : Gunza Ismael ({__email})
 @Link   : 
-@Date   : 2018-10-25 16:56:33
+@Date   : 2018-10-25 05:33:33
 -->
-
-
 {% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
 
-<div class="user bg-default bg-light-rtl">
+<div class="user">
     <div class="row">
         <div class="col-md-3">
         </div>
@@ -18,7 +15,7 @@
             <div class="block block-fill ">
                 <div class="header">
                     <p></p>
-                    <h4><b><span class="icon-file-text"></span>   Criar listagem de formação</b> </h4>
+                    <h4><b><span class="icon-file-text"></span>  Criar lista nominal de Transferência</b> </h4>
                 </div>
 
                 <div class="content controls container">
@@ -36,25 +33,30 @@
                         </div>
                     </p>
                     {% endif %}
-                    <form class="" action="{% url 'estatistica:formacao' %}" method="POST" target="_blank">
+                    <form class="" action="{% url 'estatistica:transferencia_lista' %}" method="POST" target="_blank">
                         {% csrf_token %} {% autoescape on %}
                         <div class="form-row">
                             <div class="col-md-12">
-                                <b>Titulo da Lista:</b> {{ formacao.titulo }} {{ formacao.titulo.errors }}
+                                <b>Titulo da Lista:</b> {{ normal.titulo }} {{ normal.titulo.errors }}
                             </div>
                         </div>
+
                         <div class="form-row">
-                            <div class="col-md-6"><b>Situação</b> {{ formacao.tipo }} {{ formacao.tipo.errors }}
+                            <div class="col-md-6"><b>Patente do Agente</b> {{ normal.patente }} {{ normal.patente.errors }}
                             </div>
-                            <div class="col-md-6"><b>Data:</b> {{ formacao.data }} {{ formacao.data.errors }}
+                            <div class="col-md-6"><b>Genero</b> {{ normal.genero }} {{ normal.genero.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Data</b> {{ normal.data }} {{ normal.data.errors }}
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="col-md-12">
-                                <b>Descrição:</b> {{ formacao.descricao }} {{ formacao.descricao.errors }}
+                                <b>Descrição:</b> {{ normal.descricao }} {{ normal.descricao.errors }}
                             </div>
                         </div>
+
+
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
@@ -73,11 +75,10 @@
                 </div>
             </div>
 
+            <div class="col-md-3">
 
-        </div>
-        <div class="col-md-3">
-
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    {% endblock %}

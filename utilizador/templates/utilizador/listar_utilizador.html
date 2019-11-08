@@ -27,16 +27,13 @@
                     </thead>
                     <tbody>
 
-                        {% for k in lista %}
-
-
-
+                        {% for k in lista %} {% for ag in agente %} {% if k.first_name|floatformat:"0" == ag.id|floatformat:"0" %}
                         <tr>
                             {% autoescape on %}
                             <td>
-                                <!--<a><img src="/media/{{ agen.foto_fardado }}" width=38px class="img-circle ">
+                                <a><img src="/media/{{ ag.foto_fardado }}" width=38px class="img-circle ">
 
-                                </a>-->
+                                </a>
                             </td>
                             <td>{{ ag.pessoa.nome }}</td>
                             <td>{{ k.username }}</td>
@@ -64,7 +61,7 @@
                                 </a>
                             </td>
                         </tr>
-                        {% endfor %}
+                        {% endif %} {% endfor %} {% endfor %}
 
                     </tbody>
                 </table>

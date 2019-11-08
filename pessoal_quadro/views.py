@@ -923,7 +923,6 @@ def registar_processoDisciplinar(request):
 def registar_documentos(request):
     form = DocumentoForm(request.POST or None)
     if request.method == 'POST':   
-
         if form.is_valid():
             if documentacao.views.registar_documento(request):
                 sweetify.success(request, 'Documento Cadastrado com sucesso...', button='Ok')
@@ -1149,7 +1148,7 @@ def ficha_pessoal(request, id=None):
             p.drawImage(fotofardado, 440, 605, width=60, height=60, mask=None)
 
             # zona do comunicado o informação que deve ser descrita 
-            p.drawString(180,620,'INFORMÇÃO DO PROCESSO DISCIPLINAR')
+            p.drawString(240,620,'Ficha Pessoal do Agente')
 
             #imagem para os dados pessoal
             p.drawImage(logo_tabela, 24.5, 560.3, width=544.6, height=40, mask=None)
@@ -1222,7 +1221,7 @@ def ficha_processo_disciplinar(request, id=None):
             p.drawImage(fotofardado, 440, 605, width=60, height=60, mask=None)
 
             # zona do comunicado o informação que deve ser descrita 
-            p.drawString(180,620,'INFORMÇÃO DO PROCESSO DISCIPLINAR')
+            p.drawString(216.9,620,'Informação do Processo Disciplinar')
 
             #imagem para os dados pessoal
             p.drawImage(logo_tabela, 24.5, 560.3, width=544.6, height=40, mask=None)

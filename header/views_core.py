@@ -29,19 +29,6 @@ PATENTENS = [
 
 
 
-def custom_403(request):
-    return render(request, 'header/403.html', {})
-
-def custom_404(request):
-    return render(request, 'header/404.html', {})
-
-def custom_500(request):
-    return render(request, 'header/500.html', {})
-
-
-def custom_504(request):
-    return render(request, 'header/504.html', {})
-
 
 
 #FUNÇÃO QUE VAI RETORNA AS CATEGORIAS DAS PATENTE

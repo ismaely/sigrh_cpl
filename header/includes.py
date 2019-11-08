@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, Http404, HttpResponse, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
@@ -71,7 +71,7 @@ Nomiacao_Cargo, Patentiamento, Disciplina, Falecimento)
 from pessoal_quadro.forms import (PessoaForm, AgenteForm, BaixaForm, DespromocaoForm, FeriaForm,
 OrgaoForm, Nomiacao_cargoForm, Atualizar_patenteForm, Reforma_anticipadaForm, DisciplinaForm, FalecimentoForm)
 from pessoal_quadro.forms_atualizar import PessoaForm_atualizar, AgenteForm_atualizar, OrgaoForm_atualizar
-from pessoal_quadro.views import  cabecarioFicha
+#from pessoal_quadro.views import cabecarioFicha
 
 
 
@@ -80,8 +80,8 @@ from formacao.models import Formacao_conclusao, Selecionado_formacao, Presenca
 from formacao.forms import SelecionarForm, FormacaoConlusao_Form
 
 #ESTATISTICA
-from estatistica.forms import (NivelAcademico_Form, NormalPatente_Form, BaixaLista_Form,
-ReformaLista_Form, DisciplinarLista_Form, FormacaoLista_Form)
+from estatistica.forms import (NivelAcademico_Form, Lista_Transferencia_Form, BaixaLista_Form, ReformaLista_Form, DisciplinarLista_Form,
+FormacaoLista_Form, Estatistica_Transferencia_Form, Estatistica_Baixa_Form, Estatistica_reforma_Form, Estatistica_AgentesSelecionados_Form, Estatistica_ConclusaoFormacao_Form)
 
 #TRANSFERENCIA
 from transferencia.models import Transferencia, Troca

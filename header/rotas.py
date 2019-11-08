@@ -107,7 +107,7 @@ TEMPLATE_TRANSFERENCIA = {
 TEMPLATE_ESTATISTICA = {
     'estat_transfer': "estatistica/estatistica_transferencia.html",
     'menu': "estatistica/menu2.html",
-    'normal': "estatistica/normal_pdf.html",
+    'transferencia_pdf': "estatistica/transferencia_pdf.html",
     'academico': "estatistica/nivel_academico_pdf.html",
     'reforma': "estatistica/reforma_pdf.html",
     'baixa': "estatistica/baixa_pdf.html",
@@ -118,4 +118,9 @@ TEMPLATE_ESTATISTICA = {
     'estat_baixa': "estatistica/estat_baixas.html",
     'selecionado': "estatistica/estat_selecionado.html",
     'conclusao': "estatistica/estat_conclusao.html",
+    'menu_transfer': "estatistica/menu_estat_transferencia.html",
+    'menu_baixa': "estatistica/menu_estat_baixa.html",
+    'menu_reforma': "estatistica/menu_estat_reforma.html",
+    'menu_selecionado': "estatistica/menu_estat_selecionado.html",
+    'menu_conclusao': "estatistica/menu_estat_conclusao.html",
 }
