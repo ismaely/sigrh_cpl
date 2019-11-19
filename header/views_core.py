@@ -6,8 +6,8 @@ from header.includes import *
 
 alf = 'abcdefghijklmnopqrstuvxwyz'
 numero = '01234567890'
-SENHA_PADRAO = 'CPL0203'
-SENHA_PADRAO_NAOVALIDA = ['cpl0203', 'CPL0203', 'cpl0302', 'CPL0302','123456789','1234567','987654321','1234']
+SENHA_PADRAO = 'CPL123'
+SENHA_PADRAO_NAOVALIDA = ['cpl123', 'CPL123','123456789','1234567','987654321','12345','cp123']
 
 PATENTENS = [
     'Agente-1ª-Classe',

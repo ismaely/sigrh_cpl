@@ -4,7 +4,10 @@ from header.opcoesModel import AREA_TRABALHO, CATEGORIA_USUARIO
 from header.validators import validar_comprimento_4, validar_bi, consultar_bi, consultar_numero_agente, verficar_bi_numero_agente
 from pessoal_quadro.models import Pessoa
 import header
+from header.views_core import SENHA_PADRAO_NAOVALIDA
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.http import HttpRequest, request
 
 
 
@@ -63,14 +66,16 @@ class Troca_senhaPadrao_Form(forms.Form):
 
 
 class Alterar_senha_UtilizadorForm(forms.Form):
+    antigaSenha = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'password Antiga'}))
     senhaNova = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'password Nova'}))
     confirmaSenha = forms.CharField(max_length=20,  required=True, widget=forms.PasswordInput(attrs={'placeholder': 'confirma a nova password'}))
     
+        
     def clean_senhaNova(self):
         senhaNova = self.cleaned_data.get('senhaNova')
-        if len(senhaNova) < 7:
-            raise forms.ValidationError(" A senha tem que ser maior que 7 caracter")
-        elif senhaNova in header.views_core.SENHA_PADRAO_NAOVALIDA:
+        if len(senhaNova) < 5:
+            raise forms.ValidationError(" A senha tem que ser maior que 5 caracter")
+        elif senhaNova in SENHA_PADRAO_NAOVALIDA:
             raise forms.ValidationError("A senha não pode ser semelhante a senha padrão")
         else:
             return senhaNova

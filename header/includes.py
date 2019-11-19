@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
 from django.core import serializers
-from django.urls import reverse
+from django.urls import reverse, path
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -13,19 +13,17 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from http import cookies
-import json
-import re
-import cv2
-import base64
-import random
+import json, re, cv2, random, os, sweetify
 from django.template import Context, loader
 from django.db.models import Count, Q
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import update_session_auth_hash
+from django.conf import settings
 
-from sigrh_cpl.settings import (DATA_ANO, DATA_MES, DATE_FORMAT, DATA_HORA_ZONA, MEDIA_ROOT, MEDIA_URL,
- STATICFILES_DIRS, STATIC_URL, DATE_INPUT_FORMATAR, MAX_UPLOAD_SIZE, CONTENT_TYPES)
-import sweetify
+from sigrh_cpl.settings import (DATA_ANO, DATA_MES, DATE_FORMAT, DATA_HORA_ZONA, MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, STATIC_URL, DATE_INPUT_FORMATAR, 
+MAX_UPLOAD_SIZE, CONTENT_TYPES)
+
 #biblioteca para cria PDF
-import os
 from io import BytesIO
 import reportlab
 from reportlab.pdfgen import canvas
@@ -36,11 +34,10 @@ from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, cm, letter, landscape
 from reportlab.platypus import (Image, PageBegin, PageBreak, Paragraph, Table, TableStyle, SimpleDocTemplate,
- Spacer, NextPageTemplate, Frame, PageTemplate)
+Spacer, NextPageTemplate, Frame, PageTemplate)
 from reportlab.rl_config import defaultPageSize
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
-from django.conf import settings
-from django.urls import path
+
 
 #DOCUMENTAÇÃO
 from documentacao.models import Documento

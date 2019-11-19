@@ -144,14 +144,20 @@ def redifinir_senha(request, id):
 @login_required
 def alterar_senha_utilizador(request, id):
     form = Alterar_senha_UtilizadorForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            #senha = form.cleaned_data.get('senhaNova')
-            user = User.objects.get(id=id)
-            user.set_password(form.cleaned_data.get('senhaNova'))
-            user.save()
-            sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
-
+    if request.method == 'POST' and request.user.is_authenticated:
+        antiga = request.POST.get('antigaSenha')
+        user = User.objects.get(id=request.user.id)
+        verif = check_password(antiga, user.password)
+        if request.user.id != id or verif == False:
+            messages.warning(request, "A sua senha Antiga esta incorrenta.")
+        else:
+            if form.is_valid() and verif:
+                user.set_password(form.cleaned_data.get('senhaNova'))
+                user.save()
+                #update_session_auth_hash(request, form.user)
+                sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
+                return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
+            
     template = header.rotas.TEMPLATE_UTILIZADOR['senha_utilizador']
     return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
 
@@ -168,15 +174,7 @@ def alterar_senha_padrao(request, id):
             if int(user.id) == id and int(user.last_name) == 0:
                 user.set_password(form.cleaned_data.get('senhaNova'))
                 user.save()
-                #nome= user.username
-                #nivel = user.email 
-                #id_pessoa = user.first_name
-                #user.delete()
                 sweetify.success(request, 'Senha alterada com sucesso! já podes fazer Login.', persistent='OK', timer='3100')
-                #if nome is not None:
-                    #last_name = 1  demostra que ja fez alteração da senha quando last_name ser 1
-                    #novo = User.objects.create_user(username=nome, first_name=id_pessoa, last_name=1,email=nivel,password=senha)
-                    #novo.save()
                     
                 return HttpResponseRedirect(reverse('utilizador:login'))
             else:

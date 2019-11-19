@@ -39,16 +39,23 @@
                     <form class="" action="{% url 'estatistica:baixa' %}" method="POST" target="_blank">
                         {% csrf_token %} {% autoescape on %}
                         <div class="form-row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <b>Titulo da Lista:</b> {{ baixa.titulo }} {{ baixa.titulo.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Motivo:</b> {{ baixa.motivo }} {{ baixa.motivo.errors }}
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="col-md-6"><b>Motivo:</b> {{ baixa.motivo }} {{ baixa.motivo.errors }}
+                            <div class="header">
+                                <h2 class="">DATAS </h2>
                             </div>
-                            <div class="col-md-6"><b>Data:</b> {{ baixa.data }} {{ baixa.data.errors }}
+
+                            <div class="col-md-6"><b>Data Inicial:</b> {{ baixa.data }} {{ baixa.data.errors }}
                             </div>
+                            <div class="col-md-6"><b>Data Final:</b> {{ baixa.data_final }} {{ baixa.data_final.errors }}
+                            </div>
+
                         </div>
 
                         <div class="form-row">

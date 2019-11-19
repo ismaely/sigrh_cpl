@@ -212,3 +212,5 @@ DATE_INPUT_FORMATAR = ('%d/%m/%Y')
 MAX_UPLOAD_SIZE = 5242880
 CONTENT_TYPES = ['application/pdf', 'application/docx', 'application/pptx']
 
+#minha senha da conta ROOT 00203
+

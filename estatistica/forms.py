@@ -37,6 +37,7 @@ class BaixaLista_Form(forms.Form):
     motivo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=MOTIVO_BAIXA))
     titulo = forms.CharField(max_length=90, required=True)
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','length':3000}))
     
 
