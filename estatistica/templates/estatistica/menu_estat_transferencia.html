@@ -38,18 +38,22 @@
                         {% csrf_token %} {% autoescape on %}
                         <div class="form-row">
                             <div class="col-md-12">
-                                <b>Legenda:</b> {{ form.titulo }} {{ form.titulo.errors }}
+                                <b>Legenda (Titulo):</b> {{ form.titulo }} {{ form.titulo.errors }}
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="col-md-6"><b>Patente:</b> {{ form.patente }} {{ normal.patente.errors }}
-                            </div>
-
-                            <div class="col-md-6"><b>Data:</b> {{ form.data }} {{ normal.data.errors }}
+                            <div class="col-md-6"><b>Patente:</b> {{ form.patente }} {{ form.patente.errors }}
                             </div>
                             <div class="col-md-6"><b>Opção:</b> {{ form.tipo }} {{ normal.tipo.errors }}
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6"><b>Data incial:</b> {{ form.data }} {{ form.data.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Data final:</b> {{ form.data_final }} {{ form.data_final.errors }}
+                            </div>
+
                         </div>
 
                         <div class="form-row">

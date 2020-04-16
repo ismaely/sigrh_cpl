@@ -894,7 +894,7 @@ def registar_reforma_anticipada(request):
             return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
 
     context = {'form': form, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-    template = TEMPLATE_PESSOAQUADRO['reforma']
+    template = 'pessoal_quadro/registar_reforma.html'
     return render(request, template, context)
 
 
@@ -905,7 +905,7 @@ def registar_processoDisciplinar(request):
     form = DisciplinaForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            id = header.views_core.retorna_numero_bi(form.cleaned_data.get('bi'))
+            id = form.cleaned_data.get('bi')
             desc = form.save(commit=False)
             desc.agente_id = id
             desc.save()

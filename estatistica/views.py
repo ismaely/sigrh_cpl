@@ -34,10 +34,11 @@ def estatistica_transferencia(request):
             patente = form.cleaned_data.get('patente')
             titulo = form.cleaned_data.get('titulo')
             data = form.cleaned_data.get('data')
+            data_final = form.cleaned_data.get('data_final')
             tipo = form.cleaned_data.get('tipo')
             if patente:
-                if data and tipo != 'Troca' and tipo is not None:
-                    transferencia=Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__startswith=data[:-3], situacao=tipo)
+                if data < data_final and tipo != 'Troca' and data_final:
+                    transferencia=Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__range=(data, data_final), situacao=tipo)
                     total = len(transferencia)
                     for item in transferencia:
                         if item.agente.pessoa.genero == 'M':
@@ -50,8 +51,22 @@ def estatistica_transferencia(request):
                     template = TEMPLATE_ESTATISTICA["estat_transf"]
                     return render(request, template, context)
                 
-                elif data is not None and tipo == 'Troca':
-                    trocas=Troca.objects.select_related('agente').filter(Q(primeiro_agente__patente=patente)|Q(segundo_agente__patente=patente),data_entrada__startswith=data[:-3])
+                elif data and tipo != 'Troca' and tipo:
+                    transferencia=Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__contains=data[:-3], situacao=tipo)
+                    total = len(transferencia)
+                    for item in transferencia:
+                        if item.agente.pessoa.genero == 'M':
+                            masculino += 1
+                        elif item.agente.pessoa.genero == 'F':
+                            femenino += 1
+                    context = {
+                    'masculino':json.dumps( masculino), 'femenino': json.dumps(femenino), 'total': json.dumps(total),
+                    'estatistcas': MENU_ESTATISTICA,  'fotos':request.session['salakiaku']}
+                    template = TEMPLATE_ESTATISTICA["estat_transf"]
+                    return render(request, template, context)
+                
+                elif data < data_final and tipo == 'Troca' and data_final:
+                    trocas=Troca.objects.select_related('agente').filter(Q(primeiro_agente__patente=patente)|Q(segundo_agente__patente=patente),data_entrada__range=(data, data_final))
                     total = len(trocas)
                     for item in trocas:
                         if item.agente.pessoa.genero == 'M':
@@ -64,7 +79,21 @@ def estatistica_transferencia(request):
                     template = TEMPLATE_ESTATISTICA["estat_transf"]
                     return render(request, template, context)
                 
-                elif tipo != 'Troca' and tipo is not None:
+                elif data and tipo == 'Troca':
+                    trocas=Troca.objects.select_related('agente').filter(Q(primeiro_agente__patente=patente)|Q(segundo_agente__patente=patente),data_entrada__contains=data[:-3])
+                    total = len(trocas)
+                    for item in trocas:
+                        if item.agente.pessoa.genero == 'M':
+                            masculino += 1
+                        elif item.agente.pessoa.genero == 'F':
+                            femenino += 1
+                    context = {
+                    'masculino':json.dumps( masculino), 'femenino': json.dumps(femenino), 'total': json.dumps(total),
+                    'estatistcas': MENU_ESTATISTICA,  'fotos':request.session['salakiaku']}
+                    template = TEMPLATE_ESTATISTICA["estat_transf"]
+                    return render(request, template, context)
+                
+                elif tipo != 'Troca':
                     transferencia=Transferencia.objects.select_related('agente').filter(agente__patente=patente, situacao=tipo)
                     total = len(transferencia)
                     for item in transferencia:
@@ -79,8 +108,8 @@ def estatistica_transferencia(request):
                     return render(request, template, context)
             #DATA
             elif data:
-                if data is not None and tipo != 'Troca' and tipo is not None:
-                    transferencia=Transferencia.objects.select_related('agente').filter(data_entrada__startswith=data[:-3], situacao=tipo)
+                if data < data_final and tipo != 'Troca' and tipo and data_final:
+                    transferencia=Transferencia.objects.select_related('agente').filter(data_entrada__range=(data, data_final), situacao=tipo)
                     total = len(transferencia)
                     for item in transferencia:
                         if item.agente.pessoa.genero == 'M':
@@ -107,7 +136,7 @@ def estatistica_transferencia(request):
                     template = TEMPLATE_ESTATISTICA["estat_transf"]
                     return render(request, template, context)
                 
-                elif data is not None:
+                elif data:
                     transferencia=Transferencia.objects.select_related('agente').filter(data_entrada__startswith=data[:-3])
                     total = len(transferencia)
                     for item in transferencia:
@@ -172,10 +201,11 @@ def estatistica_baixas(request):
             patente = form.cleaned_data.get('patente')
             titulo = form.cleaned_data.get('titulo')
             data = form.cleaned_data.get('data')
+            data_final = form.cleaned_data.get('data_final')
 
             if patente:
-                if data:
-                    baixa = Baixa.objects.select_related('agente').filter(agente__patente=patente,data_oucorrencia__startswith=data[:-3])
+                if data and data_final:
+                    baixa = Baixa.objects.select_related('agente').filter(agente__patente=patente,data_oucorrencia__range=(data, data_final))
                     for cont, p in enumerate(baixa, 1):
                         if p.motivo_baixa == 'Reforma':
                             total_Reforma += 1
@@ -274,6 +304,7 @@ def estatistica_reforma(request):
             patente = form.cleaned_data.get('patente')
             tipo = form.cleaned_data.get('tipo')
             data = form.cleaned_data.get('data')
+            data_final = form.cleaned_data.get('data_final')
             total_anticipada = 0
             total_Incapacidade =0
             total_acidente = 0
@@ -539,6 +570,7 @@ def estatistica_formacaoConcluida(request):
             patente = form.cleaned_data.get('patente')
             data = form.cleaned_data.get('data')
             tipo = form.cleaned_data.get('tipo')
+            data_final = form.cleaned_data.get('data_final')
             total_desistente = 0
             total_aprovados = 0
             total_reprovado = 0
@@ -686,6 +718,7 @@ def retorna_idade(value):
 def cabecario_listas():
     dados = []
     buffer = BytesIO()
+    #response = HttpResponse(content_type='application/pdf')
     doc = SimpleDocTemplate(buffer, rightMargin=16, leftMargin=20,topMargin=20, bottomMargin=25, pagesize=letter,)
                         
     styles = getSampleStyleSheet()
@@ -788,6 +821,7 @@ def lista_Transferencia(request):
             genero = form.cleaned_data.get('genero')
             titulo = form.cleaned_data.get('titulo')
             data = form.cleaned_data.get('data')
+            data_final = form.cleaned_data.get('data_final')
             descricao = form.cleaned_data.get('descricao')
             #   aque e onde começa a criação do pdf
             response = HttpResponse(content_type='application/pdf')
@@ -808,17 +842,23 @@ def lista_Transferencia(request):
             lista = []
             if genero =='Ambos':
                 cabeca = ('AGENTE Nº', 'NOME', 'GENERO', 'PROVINCIA', 'TELEFONE', 'PATENTE') 
-                if data is not None:
+                if data < data_final and data_final:
                     lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.genero, p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.agente.patente)
-                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__startswith=data[:-3]), 1)]
+                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__range=(data, data_final)), 1)]
+                elif data:
+                    lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.genero, p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.agente.patente)
+                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__patente=patente,data_entrada__contains=data[:-3]), 1)]
                 else:
                     lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.genero, p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.agente.patente)
                     for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__patente=patente), 1)]
             else:
                 cabeca = ('AGENTE Nº', 'NOME',  'PROVINCIA', 'TELEFONE', 'DESTINO') 
-                if data is not None:
+                if data < data_final and data_final:
                     lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.orgao_destino)
-                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__pessoa__genero=genero,agente__patente=patente,data_entrada__startswith=data[:-3]), 1)]
+                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__pessoa__genero=genero,agente__patente=patente,data_entrada__range=(data, data_final)), 1)]
+                elif data:
+                    lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.orgao_destino)
+                    for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__pessoa__genero=genero,agente__patente=patente,data_entrada__contains=data[:-3]), 1)]
                 else:
                     lista = [(p.agente.numero_agente, p.agente.pessoa.nome,  p.agente.pessoa.provincia, p.agente.pessoa.telefone, p.orgao_destino)
                     for cont, p in enumerate(Transferencia.objects.select_related('agente').filter(agente__pessoa__genero=genero,agente__patente=patente), 1)]
@@ -859,9 +899,9 @@ def listar_nivel_academico(request):
             dados.append(header)
 
             lista = []
-            cabeca = ('#', 'AGENTE Nº', 'NOME', 'GENERO', 'NIVEL ACADEMICO', 'CURSO', 'FUNÇÃO', 'PATENTE') 
+            cabeca = ('AGENTE Nº', 'NOME', 'GENERO', 'NIVEL ACADEMICO', 'CURSO', 'PATENTE') 
             if nivel_academico:
-                lista = [(cont, p.numero_agente, p.pessoa.nome, p.pessoa.genero, p.nivel_academico, p.curso, p.funcao, p.patente) 
+                lista = [( p.numero_agente, p.pessoa.nome, p.pessoa.genero, p.nivel_academico, p.curso, p.patente) 
                 for cont, p in enumerate(Agente.objects.select_related('pessoa').filter(nivel_academico=nivel_academico), 1)  if p.patente == patente ]
             
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
@@ -882,6 +922,7 @@ def listar_reforma(request):
             patente = form.cleaned_data.get('patente')
             titulo = form.cleaned_data.get('titulo')
             anticipada = form.cleaned_data.get('anticipada')
+            data_final = form.cleaned_data.get('data_final')
             descricao = form.cleaned_data.get('descricao')
             data = form.cleaned_data.get('data')
             #  aque e onde começa a criação do pdf
@@ -898,20 +939,28 @@ def listar_reforma(request):
             header = Paragraph(descricao, styles['Normal'])
             styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
             dados.append(header)
+            
             cabeca =""
             lista = [] 
-            if anticipada == 'Anticipada':
+            if anticipada:
                 cabeca = ('#', 'NOME', 'GENERO', 'DATA NASCIMENTO', 'IDADE', 'REFORMA', 'PATENTE') 
-                if data is not None:
+                if data < data_final and data_final:
                     lista = [(cont, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
-                    for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,data__startswith=data[:-3],reforma=anticipada), 1)]
+                    for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada, data__range=(data, data_final)), 1)]
+                elif data:
+                    lista = [(cont, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
+                    for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada, data__contains=data[:-3]), 1)]
                 else:
                     lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
                     for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada), 1)]
                 
             else:
                 cabeca = ('#', 'AGENTE Nº', 'NOME', 'GENERO', 'DATA NASCIMENTO', 'IDADE', 'PATENTE') 
-                if data is not None:
+                if data < data_final and data_final:
+                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento), p.agente.patente)
+                    for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,data__range=(data, data_final)), 1)]
+               
+                elif data:
                     lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento), p.agente.patente)
                     for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,data__startswith=data[:-3]), 1)]
                
@@ -937,10 +986,12 @@ def listar_baixa(request):
             motivo = form.cleaned_data.get('motivo')
             titulo = form.cleaned_data.get('titulo')
             data = form.cleaned_data.get('data')
+            data_final = form.cleaned_data.get('data_final')
             descricao = form.cleaned_data.get('descricao')
             #  aque e onde começa a criação do pdf
             response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = 'inline; filename={0}.pdf'.format(titulo)
+            nome = response['Content-Disposition'] = 'inline; filename={}.pdf'.format(titulo)
+            #nome = response['Content-Disposition'] = 'attachment; filename={}.pdf'.format(titulo)
             
             #A PASSSAR OSO DADOS DO CABECARIO
             buffer, dados, doc, styles = cabecario_listas()
@@ -957,14 +1008,22 @@ def listar_baixa(request):
             lista = [] 
             cabeca =()
             if motivo is not None:
-                cabeca = ('#', 'Nª AGENTE', 'NOME', 'GENERO', 'DATA', 'MOTIVO', 'INVALIDEZ', 'PATENTE') 
-                if data is not None:
-                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.data_oucorrencia, p.motivo_baixa, p.tipo_invalidez, p.agente.patente) 
+                cabeca = ('#', 'Nª AGENTE', 'NOME', 'GENERO', 'DATA', 'INVALIDEZ', 'PATENTE') 
+                if data < data_final and data_final:
+                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.data_oucorrencia, p.tipo_invalidez, p.agente.patente) 
+                    for cont, p in enumerate(Baixa.objects.select_related('agente').filter(motivo_baixa=motivo, data_entrada__range=(data, data_final)), 1) ]
+                elif data:
+                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.data_oucorrencia, p.tipo_invalidez, p.agente.patente) 
                     for cont, p in enumerate(Baixa.objects.select_related('agente').filter(motivo_baixa=motivo, data_entrada__startswith=data[:-3]), 1) ]
                 else:
-                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.provincia,  p.data_oucorrencia, p.motivo_baixa, p.agente.patente) 
+                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero,  p.data_oucorrencia, p.tipo_invalidez, p.agente.patente) 
                     for cont, p in enumerate(Baixa.objects.select_related('agente').filter(motivo_baixa=motivo), 1) ]
             listar_tabelas(dados, cabeca, lista, doc, response, buffer)
+            #print(nome[21:])
+           
+            #FileResponse(response, as_attachment=True, filename='{}.pdf'.format(titulo))
+            #context = {'response':nome[21:], 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }
+            #return render(request, 'estatistica/visualizar_pdf.html', context) 
             return response
 
     context = {'baixa': form, 'fotos':request.session['salakiaku'], 'estatistcas': MENU_ESTATISTICA }

@@ -14,6 +14,15 @@ class Lista_Transferencia_Form(forms.Form):
     titulo = forms.CharField(max_length=90, required=True)
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','length':3000}))
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError(" A data final não pode ser menor que a inicial")
+        return data_final
+    
+
 
 #formulario para gerar a lista em pdf de nivel academico
 class NivelAcademico_Form(forms.Form):
@@ -28,9 +37,18 @@ class ReformaLista_Form(forms.Form):
     patente = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=PATENTE))
     titulo = forms.CharField(max_length=90, required=True)
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date', 'id': 'reservation'}))
     anticipada = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=REFORMA_ANTICIPADA))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control', 'length':3000}))
     
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError(" A data final não pode ser menor que a inicial")
+        return data_final
+
+
 
    #formulario para gerar a lista em pdf das Baixas  
 class BaixaLista_Form(forms.Form):
@@ -40,15 +58,22 @@ class BaixaLista_Form(forms.Form):
     data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','length':3000}))
     
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError("A data final não pode ser menor que a inicial")
+        return data_final
+
 
 #formulario para gerar a lista em pdf dos processo disciplinar
 class DisciplinarLista_Form(forms.Form):
     motivo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=MOTIVO_DISCILINAR ))
     titulo = forms.CharField(max_length=90, required=True)
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
     descricao = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control','length':3000}))
     
-
 #formulario para gerar a lista em pdf das formações realizada e selecionada
 class FormacaoLista_Form(forms.Form):
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
@@ -60,9 +85,16 @@ class FormacaoLista_Form(forms.Form):
 # formulario da estatistica de transferencia
 class Estatistica_Transferencia_Form(forms.Form):
     patente = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=PATENTE_ESTATISTICA))
-    titulo = forms.CharField(max_length=90, required=False)
+    titulo = forms.CharField(max_length=90, required=True)
     tipo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=MENU_ESTATIS_TRANSFERENCIA))
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError("A data final não pode ser menor que a inicial")
+        return data_final
 
 
 #ESTATISTICA BAIXA
@@ -70,6 +102,13 @@ class Estatistica_Baixa_Form(forms.Form):
     patente = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=PATENTE_ESTATISTICA))
     titulo = forms.CharField(max_length=90, required=False)
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError("A data final não pode ser menor que a inicial")
+        return data_final
 
 
 # ESTATISTICA REFORMA
@@ -77,6 +116,13 @@ class Estatistica_reforma_Form(forms.Form):
     patente = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=PATENTE_ESTATISTICA))
     tipo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=MENU_ESTATIS_REFORMA))
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError("A data final não pode ser menor que a inicial")
+        return data_final
 
 # estatistica para agentes selecionados
 class Estatistica_AgentesSelecionados_Form(forms.Form):
@@ -90,3 +136,10 @@ class Estatistica_ConclusaoFormacao_Form(forms.Form):
     patente = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=PATENTE_ESTATISTICA))
     tipo = forms.CharField(max_length=100, required=False, widget=forms.Select(choices=RAZAO_DA_POSSE))
     data = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    data_final = forms.CharField(required=False, widget=forms.DateInput(attrs={'type': 'date', 'name': 'date'}))
+    def clean_data_final(self):
+        data_final = self.cleaned_data.get('data_final')
+        data = self.cleaned_data.get('data')
+        if data > data_final and data_final:
+            raise forms.ValidationError("A data final não pode ser menor que a inicial")
+        return data_final

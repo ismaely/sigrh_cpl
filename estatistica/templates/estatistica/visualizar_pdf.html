@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+@File   : visualizar_pdf.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 20/11/2019, 13:09:26
+-->
+
+{% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
+
+<div class="user bg-default bg-light-rtl">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-6">
+            <div class="block  ">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-file-text"></span>  Visualização</b> </h4>
+                </div>
+
+                <div class="x_content">
+                    <object data="{{ response }}" type="application/pdf" class="col-md-12 col-sm-12 col-xs-12" height="780">
+                        <p>Seu navegador não tem um plugin pra PDF</p>
+                      </object>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

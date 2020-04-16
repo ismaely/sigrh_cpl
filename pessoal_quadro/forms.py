@@ -9,6 +9,8 @@ from header.validators import (consultar_bi_existe, validar_comprimento_4, valid
 from pessoal_quadro.models import Baixa, Feria, Orgao, Pessoa, Agente, Despromocao, Nomiacao_Cargo, Reforma, Patentiamento, Disciplina,Falecimento
 import header
 
+
+
 class PessoaForm(ModelForm):
     nome = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}), validators=[validar_comprimento_4, validar_string])
     nome_pai = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control maiuscula'}))
@@ -232,6 +234,12 @@ class DisciplinaForm(ModelForm):
         model = Disciplina
         fields = ['numero_processo', 'data', 'motivo', 'pena',  'dispacho', 'descricao', 'arquivo']
 
+    def clean_bi(self):
+        bi = header.views_core.retorna_numero_bi(self.cleaned_data.get('bi')) 
+        if bi > 0:
+            return bi
+        else:
+            raise forms.ValidationError(" O numero não é valido")
     
 
 

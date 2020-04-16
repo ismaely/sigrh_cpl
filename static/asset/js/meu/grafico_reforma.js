@@ -34,7 +34,7 @@ var total_outro = $('#total_outro').text();
                 depth: 35,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    format: '<b>{point.name}</b>:{point.y} ({point.percentage:.1f} %)',
                 }
             }
         },

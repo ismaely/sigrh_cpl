@@ -1,5 +1,6 @@
 from header.includes import *
 import sys
+from django.contrib.auth.hashers import check_password
 from django.conf.urls import (
 handler400, handler403, handler404, handler500
 )
@@ -39,7 +40,7 @@ def handler504(request, exception):
 def home(request):
     #a ='2019-07-12'
     #print(a[:-3])
-    template = header.rotas.TEMPLATE_UTILIZADOR['home']
+    template = 'utilizador/home.html'
     return render(request, template)
 
 
@@ -48,11 +49,11 @@ def home(request):
 @login_required
 def areas_servico(request):
     dados = {}
-    template =  header.rotas.TEMPLATE_UTILIZADOR['areas_servico']
+    template =  'utilizador/areas_servico.html'
     return render(request, template, dados)
 
 
-
+@login_required
 def perfil_utilizador(request):
     try:
         lista = []
@@ -61,13 +62,13 @@ def perfil_utilizador(request):
         dados = {'lista': lista, 'fotos':request.session['salakiaku'],  'perfil': MENU_PERFIL}
     except Exception as e:
         raise e
-    template =  header.rotas.TEMPLATE_UTILIZADOR['utilizador_perfil']
+    template =  'utilizador/utilizador_perfil.html'
     return render(request, template, dados)
    
-
+@login_required
 def utilizador_home(request):
     dados = {'perfil': MENU_PERFIL}
-    template =  header.rotas.TEMPLATE_UTILIZADOR['utilizador_perfil']
+    template = 'utilizador/utilizador_perfil.html'
     return render(request, template, dados)
  
 
@@ -84,7 +85,7 @@ def listar_utilizador(request):
         print(e)
     #print(lista)
     context = {'lista': lista, 'agente':agente, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-    template = header.rotas.TEMPLATE_UTILIZADOR['listar']
+    template = 'utilizador/listar_utilizador.html'
     return render(request, template, context)
 
 
@@ -158,7 +159,7 @@ def alterar_senha_utilizador(request, id):
                 sweetify.sweetalert(request, 'Senha Alterada com sucesso...', type="success", button='Ok', timer='3600')
                 return HttpResponseRedirect(reverse('pessoal_quadro:area-pessoal-quadro'))
             
-    template = header.rotas.TEMPLATE_UTILIZADOR['senha_utilizador']
+    template = 'utilizador/alterar_senha_utilizador.html'
     return render(request, template, {'form': form, 'id': id, 'fotos':request.session['salakiaku']})
 
 
@@ -180,7 +181,7 @@ def alterar_senha_padrao(request, id):
             else:
                 sweetify.success(request, 'Essa conta Não ś sua! Consulto Admin.', persistent='OK', timer='3100')
     
-    template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
+    template = 'utilizador/troca_senhaPadrao.html'
     return render(request, template, {'form': form, 'id': id})
             
 
@@ -206,7 +207,7 @@ def adicionar_Utilizador(request):
                 except Exception as e:
                     messages.warning(request, 'O Numero não é valido..')
                     dados = {'form': form, 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-                    template = header.rotas.TEMPLATE_UTILIZADOR['utilizador']
+                    template = 'utilizador/adicionar_utilizador.html'
                     return render(request, template, dados)
                 todos = pessoa.nome.split(' ')
                 nome = todos[0]
@@ -285,7 +286,7 @@ def adicionar_Utilizador(request):
                             break
                 
             context={'agente':agente, 'nome':nome, 'senha':senha, 'fotos':request.session['salakiaku'], 'pessoalQuadro': MENU_PESSOAL_QUADRO}
-            template = header.rotas.TEMPLATE_UTILIZADOR['sucesso']
+            template = 'utilizador/sucesso_conta.html'
             sweetify.sweetalert(request, 'Conta criado com sucesso..', type="success", button='Ok', timer='3600')
             #messages.success(request, 'Conta do Utilizador criado com sucesso...')
             return render(request, template, context)
@@ -322,10 +323,11 @@ def login_utilizador(request):
                 lista = []
                 senha = form.cleaned_data.get('senha')
                 nome = form.cleaned_data.get('nome_utilizador')
-                user = authenticate(username=nome,password=senha)
                 utilizador = User.objects.get(username=nome)
-                if user is not None:
-                    if user.is_active and int(utilizador.last_name) == 1:
+                password = check_password(senha, utilizador.password)
+                if utilizador.username == nome and password:
+                    if utilizador.is_active and int(utilizador.last_name) == 1:
+                        user = authenticate(username=nome,password=senha)
                         login(request, user)
                         sofia = Agente.objects.get(id=int(utilizador.first_name))
 
@@ -334,11 +336,11 @@ def login_utilizador(request):
                             'foto_civil': str(sofia.foto_civil),
                             'foto_fardado': str(sofia.foto_fardado)
                         }
-                        template = header.rotas.TEMPLATE_UTILIZADOR['areas']
+                        template = 'utilizador:areas-servico'
                         return HttpResponseRedirect(reverse(template))
                     else:
                         form = Troca_senhaPadrao_Form(request.POST or None)
-                        template = header.rotas.TEMPLATE_UTILIZADOR['troca_padrao']
+                        template = 'utilizador/troca_senhaPadrao.html'
                         return render(request, template, {'form': form, 'id': utilizador.id})
                 elif not utilizador.is_active:
                     messages.warning(request, 'A sua conta esta Desativada...')
@@ -348,7 +350,7 @@ def login_utilizador(request):
             messages.warning(request, 'A conta não existe...')
             
     dados = {'form': form}
-    template = header.rotas.TEMPLATE_UTILIZADOR['login']
+    template = 'utilizador/login.html',
     return render(request, template, dados)
 
 
@@ -359,6 +361,6 @@ def sair(request):
         del request.session['salakiaku']
         logout(request)
         
-        return HttpResponseRedirect(reverse('utilizador:sair'))
+        return HttpResponseRedirect(reverse('utilizador:login'))
     except Exception as e:
         raise Http404("erro a terminar a sessão %s " % (e))

@@ -1,5 +1,5 @@
 from header.includes import *
-
+from pessoal_quadro.models import Pessoa, Agente
 
 # a que teremos o crudo do projecto, que vai fazer solicitando dados no banco de dados
 
@@ -64,8 +64,6 @@ def retorna_numero_bi(value):
            return agente.id
        except Agente.DoesNotExist:
            return 0
-
-
 
 
 

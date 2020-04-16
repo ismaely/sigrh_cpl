@@ -309,7 +309,7 @@ def adicionar_agente_formacao(request):
     form = SelecionarForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            agen = header.views_core.retorna_numero_agente(form.cleaned_data.get('bi'))
+            agen = form.cleaned_data.get('bi')
             if header.validators.validar_selecionar_formacao(request) and header.validators.verficar_falecimento(request, agen):
                 desp = form.save(commit=False)
                 desp.agente_id = agen

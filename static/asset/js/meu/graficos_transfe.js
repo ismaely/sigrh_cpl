@@ -22,9 +22,7 @@ var total = $('#total_transferencia').text();
         title: {
             text: 'Estatistica de Transferência e Troca'
         },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
+       
         plotOptions: {
             pie: {
                 allowPointSelect: true,
@@ -32,8 +30,10 @@ var total = $('#total_transferencia').text();
                 depth: 35,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                }
+                    format: '<b>{point.name}</b>:{point.y} ({point.percentage:.1f} %)',
+                },
+                showInLegend: true
+                
             }
         },
 
@@ -52,13 +52,8 @@ var total = $('#total_transferencia').text();
                 y: Number(femenino),
                 sliced: true,
                 selected: true
-                },
-                {
-                name: 'Total de Agentes',
-                y: Number(total),
-                sliced: true,
-                selected: true
                 }
+               
             ]
         }]
 

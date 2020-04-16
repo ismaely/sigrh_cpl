@@ -39,7 +39,21 @@ def validar_reforma_anticipada(request):
         else:
             return True
     except Exception as e:
-        return True
+        try:
+            bai = Baixa.objects.get(agente_id=bix)
+            if bai.motivo_baixa == 'Falecimento':
+                messages.warning(request," O agente é falecido, não pode ser adicionado..")
+                return False
+            elif bix >  0:
+                return True
+            else:
+                return False
+        except Exception as e:
+            if bix >  0:
+                return True
+            else:
+                messages.warning(request," O Nip ou o Nº BI não é valido..")
+                return False
 
 
 
