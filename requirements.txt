@@ -60,7 +60,7 @@ sweetify==1.0.3
 tabulate==0.8.2
 traitlets==4.3.2
 urllib3==1.22
-uvicorn==0.6.1
+uvicorn==0.11.7
 uvloop==0.12.2
 uWSGI==2.0.17.1
 validators==0.12.1
