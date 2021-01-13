@@ -22,7 +22,9 @@
                             <th>Género</th>
                             <th>Reforma / Idade</th>
                             <th> Patente</th>
+                            {% if user.email == '5' or user.email == '4' %}
                             <th>Acção</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +44,7 @@
                             <td>{{ list.pessoa.genero|safe|upper }}</td>
                             <td class="">{{ value }}</td>
                             <td>{{ list.patente|safe|upper }}</td>
+                            {% if user.email == '5' or user.email == '4' %}
                             <td>
 
                                 <div class="btn-group">
@@ -63,6 +66,7 @@
                                 </div>
 
                             </td>
+                            {% endif %}
 
                         </tr>
                         {% endif %} {% endfor %} {% endfor %}

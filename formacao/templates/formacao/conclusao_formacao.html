@@ -11,7 +11,14 @@
             <div class="block block-fill ">
                 <div class="header">
                     <p></p>
-                    <h4><b><span class="icon-group"></span>Adicionar conclusão da formação</b> </h4>
+                    <h4><b><span class="icon-group"></span>
+                        {% if forma.id %}
+                        Atualizar conclusão da formação
+                    
+                        {% else %}
+                        Adicionar conclusão da formação
+                        {% endif %}
+                    </b> </h4>
 
                 </div>
 

@@ -1,0 +1,107 @@
+{% extends 'formacao/menu_formacao.html' %} {% load static %} {% block corpo %}
+<div class="">
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default ">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_fardado }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default ">
+                <span class=" text-center">
+                    <h5>REPÚBLICA DE ANGOLA<br>MINISTÉRIO DO INTERIOR<br>COMANDO PROVÍNCIAL DE LUANDA <br>DIRECÇÃO PROVÍNCIAL DE RECURSOS HUMANOS</h5>
+                </span> &nbsp;
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="block block-drop-shadow">
+            <div class="user bg-default ">
+                <div class="info">
+
+                    <img src="/media/{{ lista.agente.foto_civil }}" width=90px class="img-circle img-thumbnail" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="">
+        <div class=" ">
+            <div class="header">
+                <h3><b>Dados da Formação / Foi enviado uma notificação por E-mail e Telefone no agente</b></h3>
+            </div>
+            <div class="block block-drop-shadow">
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Género</th>
+                            <th>Data de Nascimento</th>
+                            <th>Nº de Agente</th>
+                            <th>Patente</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.agente.pessoa.nome|safe|upper }} </td>
+                            <td> {{ lista.agente.pessoa.genero|safe|upper }}</td>
+                            <td> {{ lista.agente.pessoa.data_nascimento }}</td>
+                            <td> {{ lista.agente.numero_agente }}</td>
+                            <td>{{ lista.agente.patente|safe|upper }}</td>
+
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Tipo da Posse</th>
+                            <th>Local de Formação</th>
+                            <th>Instituição</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{ lista.curso }}</td>
+                            <td> {{ lista.razao_posse }}</td>
+                            <td> {{ lista.pais }}</td>
+                            <td> {{ lista.instituicao }}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="block block-drop-shadow  right-sidebar">
+                <div class="header">
+                    <h2><b><a href="#" class=" btn btn-primary tip" title="Imprimir a Ficha" target="_blank">
+                                <span class="icon-print col-md-12 "></span>
+                            </a></b></h2>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

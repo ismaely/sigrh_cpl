@@ -51,16 +51,19 @@
                                      Acção <span class="caret"></span>
                                      </button>
                                     <ul class="dropdown-menu lista" role="menu">
+                                        {% if user.email == '5' or user.email == '4' %}
                                         <li class="">
                                             <a href="{% url 'pessoal_quadro:editar-dados-nomiacao' des.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                               Editar     
                                              </a>
                                         </li>
-                                        <li>{% if user.email == 'Gestor' %}
+                                        {% endif %} {% if user.email == '5' %}
+                                        <li>
                                             <a onclick=eliminar_nomiacao({{ des.id }}) class="btn btn-danger tip" title="Remover do Cargo">
                                              Eliminar
-                                             </a> {% endif %}
+                                             </a>
                                         </li>
+                                        {% endif %}
 
                                     </ul>
                                 </div>

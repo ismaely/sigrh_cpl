@@ -31,7 +31,7 @@
                             </td>
                             <td>{{ list.numero_guia}}</td>
                             <td>
-                                {{ list.agente.pessoa.nome|capfirst|safe }}
+                                {{ list.agente.pessoa.nome|capfirst|safe|upper }}
                             </td>
 
                             <td> {{ list.orgao_destino }}</td>

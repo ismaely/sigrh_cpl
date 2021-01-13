@@ -56,7 +56,7 @@ def categoria_patente(value):
 def retorna_numero_bi(value):
    try:
        bi = Pessoa.objects.get(bi=value)
-       if bi.id is not None:
+       if bi.id:
            return bi.id
    except Pessoa.DoesNotExist:
        try:
@@ -124,8 +124,6 @@ def retorna_numero_agente_id(value):
                 return agente.id
         except Agente.DoesNotExist:
             return False
-
-
 
 
 

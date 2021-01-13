@@ -6,7 +6,7 @@ app_name ='utilizador'
 urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login_utilizador, name='login'),
-    path(blake2b(b'accounts/login').hexdigest()+'/', views.login_utilizador, name='login'),
+    path('accounts/login/', views.login_utilizador, name='login'),
     path(blake2b(b'areas_servico').hexdigest()+'/', views.areas_servico, name='areas-servico'),
     path(blake2b(b'sair').hexdigest()+'/', views.sair, name='sair'),
     path(blake2b(b'adicionar_utilizador').hexdigest()+'/', views.adicionar_Utilizador, name='adicionar-utilizador'),
@@ -18,6 +18,11 @@ urlpatterns = [
     path(blake2b(b'redifinir_senha').hexdigest()+'/<int:id>/', views.redifinir_senha, name='redifinir-senha'),
     path(blake2b(b'alterar_senha_padrao').hexdigest()+'/<int:id>/', views.alterar_senha_padrao, name='alterar-senha-padrao'),
     path(blake2b(b'alterar_senha_utilizador').hexdigest()+'/<int:id>/', views.alterar_senha_utilizador, name='alterar-senha-utilizador'),
+    path(blake2b(b'user_previlegio').hexdigest()+'/<int:id>/<int:pk>/',
+         views.userPrevilegio, name='user-previlegio'),
     path(blake2b(b'utilizador_home').hexdigest()+'/', views.utilizador_home, name='home'),
+    path('403/', views.response_error_handler403),
+    path('404/', views.permission_denied_handler404),
+    path('500/', views.server_error_handler500),
     # EXcel avançado---cpl
 ]

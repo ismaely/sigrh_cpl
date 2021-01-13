@@ -1,69 +1,54 @@
 {% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
 <div class="">
-    <div class="">
-        <div class="block">
-            <div class="header">
-                <h2><b>Listagem dos Documentos</b></h2>
-            </div>
-            <div class="content">
-                <table id="example" class="table table-bordered table-striped  datatable-example">
-                    <thead>
-                        <tr>
-                            <th> - # -</th>
-                            <th>Numero de ordem</th>
-                            <th>Categoria</th>
-                            <th>Data de Entrada</th>
-                            <th>Descrição</th>
-                            <th>Acção</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {% for doc in listar %}
-                        <tr>
-                            <td> {{ doc.id }}</td>
-                            <td> {{ doc.numero_ordem }}</td>
-                            <td> {{ doc.categoria|safe|upper }}</td>
-                            <td> {{ doc.data_entrada }}</td>
-                            <td> {{ doc.descricao|safe|upper|truncatewords:"10" }}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
-                                         Acção <span class="caret"></span>
-                                     </button>
-                                    <ul class="dropdown-menu lista" role="menu">
-                                        <li class="">
-                                            <a href="{% url 'documentacao:visualizar-documentos' doc.id %}" class="btn btn-success tip" title="Visualizar o Documento" target="_blank">
-                                              Abre Documento
-                                            </a>
-                                        </li>
-                                        {% if user.email == 'Gestor' %}
-                                        <li>
-                                            <a href="{% url 'documentacao:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados">
-                                              Editar Documento
-                                            </a>
-
-                                        </li>
-                                        <li>
-                                            <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
-                                             Eliminar Documento
-                                            </a>
-
-                                        </li>
-                                        {% endif %}
-
-                                    </ul>
-                                </div>
-
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
+  <div class="">
+    <div class="block">
+      <div class="header">
+        <h2><b>Listagem dos Documentos</b></h2>
+      </div>
+      <div class="content">
+        <table id="example" class="table table-bordered table-striped datatable-example">
+          <thead>
+            <tr>
+              <th>- # -</th>
+              <th>Numero de ordem</th>
+              <th>Categoria</th>
+              <th>Data de Entrada</th>
+              <th>Descrição</th>
+              <th>Acção</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for doc in listar %}
+            <tr>
+              <td>{{ doc.id }}</td>
+              <td>{{ doc.numero_ordem }}</td>
+              <td>{{ doc.categoria|safe|upper }}</td>
+              <td>{{ doc.data_entrada }}</td>
+              <td>{{ doc.descricao|safe|upper|truncatewords:"10" }}</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">Acção <span class="caret"></span></button>
+                  <ul class="dropdown-menu lista" role="menu">
+                    <li class="">
+                      <a href="{% url 'documentacao:visualizar-documentos' doc.id %}" class="btn btn-success tip" title="Visualizar o Documento" target="_blank"> Abre Documento </a>
+                    </li>
+                    {% if user.email == '5' %}
+                    <li>
+                      <a href="{% url 'documentacao:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados"> Editar Documento </a>
+                    </li>
+                    <li>
+                      <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista"> Eliminar Documento </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

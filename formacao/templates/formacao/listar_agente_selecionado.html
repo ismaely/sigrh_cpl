@@ -18,7 +18,9 @@
                             <th>Bolsa</th>
                             <th>Formação</th>
                             <th>Patente</th>
+                            {% if user.email == '5' or user.email == '4' %}
                             <th> Ação</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +34,7 @@
                             </td>
                             <td>{{ list.agente.nip }}</td>
                             <td>
-                                {{ list.agente.pessoa.nome|capfirst|safe }}
+                                {{ list.agente.pessoa.nome|capfirst|safe|upper }}
 
                             </td>
                             <td>{{ list.pais }}</td>
@@ -40,8 +42,8 @@
                             <td> {{ list.razao_posse }}</td>
                             <td> {{ list.curso }}</td>
                             <td> {{ list.agente.patente }}</td>
+                            {% if user.email == '5' or user.email == '4' %}
                             <td>
-                                {% if user.email == 'Gestor' %}
                                 <a href="{% url 'formacao:atualizar-selecionado' list.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                     <span class="icon-edit"></span> </a>
                                 {% for prese in presenca %} {% if prese.selecionado_id == list.id %} {% else %}
@@ -53,8 +55,8 @@
                                 <a onclick="remover_agente_selecionado({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
-                                {% endif %}
-                            </td>
+</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

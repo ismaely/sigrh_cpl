@@ -10,7 +10,15 @@
             <div class="block block-fill">
                 <div class="header">
                     <p></p>
-                    <h4><b><span class="icon-group"></span> Registar Baixa de Oucorrências</b> </h4>
+                    <h4><b><span class="icon-group"></span>
+                        {% if baixa %}
+                          Atualizar Dados da Baixa de Oucorrências
+                        
+                        {% else %}
+                        Registar Baixa de Oucorrências
+                        {% endif %}
+                    
+                    </b> </h4>
                 </div>
 
                 <div class="content controls container">
@@ -33,17 +41,12 @@
                         <form class="" action="{% url 'pessoal_quadro:registar-baixa' %}" method="POST">
                             {% endif %} {% csrf_token %} {% autoescape on %}
                             <div class="form-row">
-                                {% if baixa.id %}
-                                <div class="col-md-6">
-                                    <b>Nip ou BI Nº:</b> {{ form2.bi }} {{ form2.bi.errors }}
-                                    <span class="error" style="display:none"> </span>
-                                </div>
-                                {% else %}
+
                                 <div class="col-md-6">
                                     <b>Nip ou BI Nº:</b> {{ form.bi }} {{ form.bi.errors }}
                                     <span class="error" style="display:none"> </span>
                                 </div>
-                                {% endif %}
+
                                 <div class="col-md-6"><b>Despacho:</b> {{ form.dispacho }} {{ form.dispacho.errors }} </div>
                             </div>
 

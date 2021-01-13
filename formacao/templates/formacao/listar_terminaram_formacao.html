@@ -48,12 +48,14 @@
                                 <a href="{% url 'formacao:informacao-conclusao' list.agente.pessoa.id %}" class="btn btn-success tip" title="Visualizar informação">
                                     <span class="icon-user"></span>
                                 </a>
+                                {% if user.email == '5' or user.email == '4' %}
                                 <a href="{% url 'formacao:atualizar-conclusao' list.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                     <span class="icon-edit"></span> </a>
 
                                 <a onclick="remover_conclusao({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

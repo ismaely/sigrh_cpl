@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from header.opcoesModel import AREA_TRABALHO, CATEGORIA_USUARIO 
 from header.validators import validar_comprimento_4, validar_bi, consultar_bi, consultar_numero_agente, verficar_bi_numero_agente
 from pessoal_quadro.models import Pessoa
+from utilizador.models import Previlegio
 import header
 from header.views_core import SENHA_PADRAO_NAOVALIDA
 from django.contrib.auth.models import User
@@ -11,9 +12,12 @@ from django.http import HttpRequest, request
 
 
 
+CATEGORIA = []
+for value in Previlegio.objects.all():
+    CATEGORIA.append([int(value.id), str(value.nome)])
 class UtilizadorForm(forms.Form):
     
-    categoria = forms.CharField(max_length=20 ,widget=forms.Select(choices=CATEGORIA_USUARIO ))
+    categoria = forms.CharField(max_length=20 ,widget=forms.Select(choices=CATEGORIA))
     bi= forms.CharField(max_length=14, required=True, validators=[validar_bi])
     
     def clean_bi(self):

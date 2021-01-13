@@ -46,23 +46,27 @@
                                       Acção <span class="caret"></span>
                                      </button>
                                     <ul class="dropdown-menu lista" role="menu">
+                                        {% if user.email == '5' %}
                                         <li class="">
                                             <a href="#aprovar_transferencia" data-toggle="modal" class=" btn btn-success tip" title="Aprovar a Transferencia">
                                              Aprovar Transferenciaa
                                             </a>
                                         </li>
+                                        {% endif %}
                                         <li>
                                             <a href="{% url 'transferencia:atualizar-pedido' list.id %}" class="btn btn-primary tip" title="Editar os Dado">
                                                Editar Transferencia
                                             </a>
 
                                         </li>
+                                        {% if user.email == '5' %}
                                         <li>
                                             <a onclick="remover_pedido_transferencia({{ list.id }})" class="btn btn-danger tip" title="Remover da lista">
                                              Remover Transferencia
                                          </a>
 
                                         </li>
+                                        {% endif %}
                                     </ul>
                                 </div>
 

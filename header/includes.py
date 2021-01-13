@@ -14,6 +14,7 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from http import cookies
 import json, re, cv2, random, os, sweetify
+import base64
 from django.template import Context, loader
 from django.db.models import Count, Q
 from django.contrib.auth.hashers import check_password

@@ -945,13 +945,13 @@ def listar_reforma(request):
             if anticipada:
                 cabeca = ('#', 'NOME', 'GENERO', 'DATA NASCIMENTO', 'IDADE', 'REFORMA', 'PATENTE') 
                 if data < data_final and data_final:
-                    lista = [(cont, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
+                    lista = [(p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
                     for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada, data__range=(data, data_final)), 1)]
                 elif data:
-                    lista = [(cont, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
+                    lista = [(p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
                     for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada, data__contains=data[:-3]), 1)]
                 else:
-                    lista = [(cont, p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
+                    lista = [(p.agente.numero_agente, p.agente.pessoa.nome, p.agente.pessoa.genero, p.agente.pessoa.data_nascimento, retorna_idade(p.agente.pessoa.data_nascimento),  p.reforma, p.agente.patente)
                     for cont, p in enumerate(Reforma.objects.select_related('agente').filter(agente__patente=patente,reforma=anticipada), 1)]
                 
             else:

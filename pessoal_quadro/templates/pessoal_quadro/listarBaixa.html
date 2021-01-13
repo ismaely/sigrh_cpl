@@ -54,11 +54,13 @@
                                                Editar
                                              </a>
                                         </li>
-                                        <li>{% if user.email == 'Gestor' %}
+                                        {% if user.email == '5' or user.email == '4' %}
+                                        <li>
                                             <a onclick=eliminar_baixas({{ bax.id }}) class="btn btn-danger tip" title="Remover da lista">
                                              Eliminar
-                                            </a> {% endif %}
+                                            </a>
                                         </li>
+                                        {% endif %}
 
                                     </ul>
                                 </div>

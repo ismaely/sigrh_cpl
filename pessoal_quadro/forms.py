@@ -41,7 +41,8 @@ class PessoaForm(ModelForm):
 
 
 class AgenteForm(ModelForm):
-    numero_contribuite = forms.CharField(max_length=20, widget=forms.TextInput(attrs={ 'class': 'form-control nif_mask'}), validators=[validar_comprimento_3])
+    numero_contribuite = forms.CharField(max_length=20, required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control nif_mask'}))
     numero_caixa_social = forms.CharField(max_length=20,  widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validar_numeros, validar_numero_caixa_social])
     nivel_academico = forms.CharField(max_length=20,  widget=forms.Select(choices=NIVEL_ACADEMICO))
     curso = forms.CharField(max_length=80, required=False, widget=forms.Select(choices=''))

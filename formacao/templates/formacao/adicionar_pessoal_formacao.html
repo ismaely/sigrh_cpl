@@ -10,7 +10,14 @@
             <div class="block block-fill ">
                 <div class="header">
                     <p></p>
-                    <h4><b><span class="icon-group"></span>Adicionar agente para formação</b> </h4>
+                    <h4><b><span class="icon-group"></span>
+                        {% if forma.id  %}
+                        Atualizar agente para formação
+                    {% else %}
+                    Adicionar agente para formação</b>
+                        </b>
+                        {% endif %}
+                    </h4>
                 </div>
 
                 <div class="content controls container">
@@ -33,17 +40,12 @@
                         <form class="" action="{% url 'formacao:adicionar-agente-formacao' %}" method="POST" enctype="multipart/form-data">
                             {% endif %} {% csrf_token %} {% autoescape on %}
                             <div class="form-row">
-                                {% if forma.id %}
-                                <div class="col-md-6">
-                                    <b>Nip:</b> {{ form2.bi }} {{ form2.bi.errors }}
-                                    <span class="error" style="display:none"> </span>
-                                </div>
-                                {% else %}
+
                                 <div class="col-md-6">
                                     <b> Nip: </b> {{ form.bi }} {{ form.bi.errors }}
                                     <span class="error" style="display:none"> </span>
                                 </div>
-                                {% endif %}
+
 
                                 <div class="col-md-6">
                                     <b>Razão da Posse:</b> {{ form.razao_posse }} {{ form.razao_posse.errors }}

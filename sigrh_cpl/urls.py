@@ -20,12 +20,10 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 # from django.shortcuts import render
 from django.conf.urls import (
-handler400, handler403, handler404, handler500
+    handler400, handler403, handler404, handler500
 )
 import utilizador
 #from header.views_core import custom_404, custom_500, custom_403, custom_504
-
-
 
 
 urlpatterns = [
@@ -36,11 +34,11 @@ urlpatterns = [
     path('formacao/', include('formacao.urls')),
     path('documentacao/', include('documentacao.urls')),
     path('estatistica/', include('estatistica.urls')),
-    path('robots.txt/', lambda x: HttpResponse("User-Agent: *\nDisallow", content_type="text/plain"), name="robots_file"),
-] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
 
+    path('robots.txt/', lambda x: HttpResponse("User-Agent: *\nDisallow",
+                                               content_type="text/plain"), name="robots_file"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 #handler404 = 'utilizador.views.handler404'
 #handler500 = 'utilizador.views.handler500'
-
