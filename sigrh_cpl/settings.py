@@ -4,8 +4,6 @@ SALAKIAKU
 For more information on this file, see
 https://docs.djangoproject.com/en/2.1/topics/settings/
 
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
@@ -24,15 +22,15 @@ SECRET_KEY = 'kg(c4!q-+z16p%notic5v7%db1fwh0_-j19kh)@23-m072_h^t'
 
 
 #ALLOWED_HOSTS = ['salakiaku.com','www.salakiaku.com','127.0.0.1','192.168.43.159']
-ALLOWED_HOSTS = ['*','127.0.0.1']
+ALLOWED_HOSTS = ['*', '127.0.0.1']
 #SECURE_PROXY_SSL_HEADER =('HTTP_X_FORWARDED_PROTO', 'https')
-#MODULOS DE SEGURANÇA PARA REQUEST. BASTA ATIVAR
+# MODULOS DE SEGURANÇA PARA REQUEST. BASTA ATIVAR
 
 #SECURE_SSL_REDIRECT = True
 #SECURE_BROWSER_XSS_FILTER = True
 #CSRF_COOKIE_NAME = 'salakiaku'
 #SESSION_COOKIE_SECURE = True
-#Se deve usar o HTTPOnlysinalizador no cookie da sessão. Se isso estiver definido como True, 
+# Se deve usar o HTTPOnlysinalizador no cookie da sessão. Se isso estiver definido como True,
 # o JavaScript do lado do cliente não poderá acessar o cookie da sessão.
 #SESSION_COOKIE_HTTPONLY = True
 #SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -47,7 +45,6 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 APPEND_SLASH = True
-
 
 
 # Application definition
@@ -78,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'sigrh_cpl.urls'
@@ -99,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-#Cache de Memória Local , para usar no desempenho e nas seçoes
+# Cache de Memória Local , para usar no desempenho e nas seçoes
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -121,12 +118,12 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
-        'autocommit': True,
-    },
+            'autocommit': True,
+        },
     }
 }
 
-#acrecentado  para uso no algoritmo das senhas
+# acrecentado  para uso no algoritmo das senhas
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
@@ -164,7 +161,7 @@ LANGUAGES = (
     ('en-us', u'English (US)'),
     ('en-gb', u'English (UK)'),
     ('es', u'Español'),
-    
+
 )
 
 TIME_ZONE = 'UTC'
@@ -176,7 +173,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# possible options: 'sweetalert', 'sweetalert2' - default is 'sweetalert2'
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 # Static files (CSS, JavaScript, Images)
@@ -188,10 +184,10 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 MEDIA_ROOT = '{}/media'.format(BASE_DIR)
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-LOGIN_REDIRECT_URL = '/login/' 
+LOGIN_REDIRECT_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Aque é onde esto a pegar a hora e as datas que esto a usar para alguns casos 
+# Aque é onde esto a pegar a hora e as datas que esto a usar para alguns casos
 DATE_FORMAT = date.today()
 DATA_ANO = timezone.now().year
 DATA_MES = timezone.now().month
@@ -212,5 +208,4 @@ DATE_INPUT_FORMATAR = ('%d/%m/%Y')
 MAX_UPLOAD_SIZE = 5242880
 CONTENT_TYPES = ['application/pdf', 'application/docx', 'application/pptx']
 
-#minha senha da conta ROOT 00203
-
+# minha senha da conta ROOT 00203
