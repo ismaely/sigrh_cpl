@@ -53,9 +53,11 @@
                                 <a onclick=editarDespromocao({{ des.id }}) class="btn btn-primary tip" title="Editar os Dados">
                                     <span class="icon-edit"></span>
                                 </a>
+                                {% if user.email == '5' or user.email == '4' %}
                                 <a onclick="remover_despromocao({{ des.id }})" class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

@@ -1,13 +1,13 @@
 from header.includes import *
-
+from pessoal_quadro.models import Pessoa, Agente
 
 # a que teremos o crudo do projecto, que vai fazer solicitando dados no banco de dados
 
 
 alf = 'abcdefghijklmnopqrstuvxwyz'
 numero = '01234567890'
-SENHA_PADRAO = 'CPL0203'
-SENHA_PADRAO_NAOVALIDA = ['cpl0203', 'CPL0203', 'cpl0302', 'CPL0302']
+SENHA_PADRAO = 'CPL123'
+SENHA_PADRAO_NAOVALIDA = ['cpl123', 'CPL123','123456789','1234567','987654321','12345','cp123']
 
 PATENTENS = [
     'Agente-1ª-Classe',
@@ -29,19 +29,6 @@ PATENTENS = [
 
 
 
-def custom_403(request):
-    return render(request, 'header/403.html', {})
-
-def custom_404(request):
-    return render(request, 'header/404.html', {})
-
-def custom_500(request):
-    return render(request, 'header/500.html', {})
-
-
-def custom_504(request):
-    return render(request, 'header/504.html', {})
-
 
 
 #FUNÇÃO QUE VAI RETORNA AS CATEGORIAS DAS PATENTE
@@ -52,10 +39,7 @@ def categoria_patente(value):
 
         elif value == dados and idx >= 4 and idx < 7:
             return 'Classe de subchefe'
-
-        elif value == dados and idx >= 4 and idx < 7:
-            return 'Classe de subchefe'
-
+       
         elif value == dados and idx >= 7 and idx < 10:
             return 'Classe de oficiais subalterno'
 
@@ -72,7 +56,7 @@ def categoria_patente(value):
 def retorna_numero_bi(value):
    try:
        bi = Pessoa.objects.get(bi=value)
-       if bi.id is not None:
+       if bi.id:
            return bi.id
    except Pessoa.DoesNotExist:
        try:
@@ -80,8 +64,6 @@ def retorna_numero_bi(value):
            return agente.id
        except Agente.DoesNotExist:
            return 0
-
-
 
 
 
@@ -142,8 +124,6 @@ def retorna_numero_agente_id(value):
                 return agente.id
         except Agente.DoesNotExist:
             return False
-
-
 
 
 
@@ -337,3 +317,11 @@ def prepara_foto(request):
 #função que vai inserir o codigo de segurança pela primeira vez qdo esta vazio a tabela
 def inserir_codigo():
     inserir = Codigo.objects.create(cadastro=gerar_codigo_cadastro(), atualizar=gerar_codigo_atualiadr(), eliminar=gerar_codigo_eliminar(), listar=gerar_codigo_listar(), data=DATE_FORMAT)
+
+
+def rodape_imagem_Vertical(canvas, doc):
+    #logo = os.path.join(settings.MEDIA_ROOT, str('logo/folha_simples.png'))
+    #canvas.drawImage(logo, 0, 15, width=580, height=764, mask=None)
+    page_num = canvas.getPageNumber()
+    #text = "Pagina #%s" % page_num
+    #canvas.drawRightString(200*mm, 20*mm, text)

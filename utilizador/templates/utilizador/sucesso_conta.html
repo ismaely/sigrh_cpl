@@ -5,7 +5,7 @@
 @Link   : 
 @Date   : 2018-10-29 18:17:24
 -->
-{% extends 'salakiaku.html' %} {% block corpo %} {% load static %}
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %} {% load static %}
 
 <div class="row">
     <p>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="content list-group">
-            <a href="#" class="list-group-item">NOME DE UTILIZADOR: {{ nome }}</a>
+            <a href="#" class="list-group-item">NOME DE UTILIZADOR: <strong> {{ nome }}</strong></a>
             <a href="#" class="list-group-item">NUMERO DE AGENTE: {{ agente.numero_agente }}</a>
             <a href="#" class="list-group-item">SENHA PADRÃO: {{ senha }}</a>
         </div>

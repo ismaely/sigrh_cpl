@@ -4,7 +4,7 @@
 @Link   : 
 @Date   : 2018-8-29 19:28:26
 -->
-{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %} {% load helpUtilizador %}
 <div class="">
     <div class="">
         <div class="block ">
@@ -17,56 +17,100 @@
                     <thead>
                         <tr>
 
-                            <th>Foto</th>
+                            <th>#</th>
                             <th>Nome</th>
                             <th>username</th>
+                            {% if user.email == '5' %}
                             <th>Categoria</th>
+                            {% endif %}
                             <th>Estado da conta</th>
-                            <th>Patente</th>
                             <th>Ação</th>
+                            {% if user.email == '5' %}
+                            <th>Previlégios</th>
+                            {% endif %}
+
                         </tr>
                     </thead>
                     <tbody>
 
-                        {% for list in lista %} {% for key, agen in agente.items %} {% if key == list.first_name %}
+                        {% for k in lista %} {% for ag in agente %} {% if k.first_name|floatformat:"0" == ag.id|floatformat:"0" %}
                         <tr>
                             {% autoescape on %}
                             <td>
-                                <a><img src="/media/{{ agen.foto_fardado }}" width=38px class="img-circle ">
+                                <a><img src="/media/{{ ag.foto_fardado }}" width=38px class="img-circle ">
 
                                 </a>
                             </td>
-                            <td>{{ agen.pessoa.nome|capfirst|safe }}</td>
-                            <td>{{ list.username }}</td>
-                            <td>{{ list.email }}</td>
-                            {% if list.is_active == 1 %}
+                            <td>{{ ag.pessoa.nome }}</td>
+                            {% if user.email == '5' %}
+                            <td>{{ k.username }}</td>
+                            {% endif %}
+                            <td>{% retornaCategoria k.email %}</td>
+                            {% if k.is_active == 1 %}
                             <td> <span class="label-success">Ativado</span> </td>
                             {% else %}
                             <td> <span class=" label-danger">Desativada</span> </td>
-                            {% endif %}
-
-                            <td>{{ agen.patente }}</td>
-                            {% endautoescape %}
+                            {% endif %} {% endautoescape %}
                             <td>
-                                <a href="{% url 'utilizador:redifinir-senha' list %} " class="btn btn-primary tip" title="Redifinir a senha">
+                                <a href="{% url 'utilizador:redifinir-senha' k.id %} " class="btn btn-primary tip" title="Redifinir a senha">
                                     <span class="icon-key"></span>
                                 </a>
-                                <a href="{% url 'utilizador:desativar' list %} " class="btn btn-warning tip" title="Desativar a conta">
+                                {% if k.is_active == 1 %}
+                                <a href="{% url 'utilizador:desativar' k.id %} " class="btn btn-warning tip" title="Desativar a conta">
                                     <span class="icon-unlock-alt"></span> </a>
-
-                                <a href="{% url 'utilizador:ativar' list %} " class="btn btn-success tip" title="Ativar a conta">
+                                {% else %}
+                                <a href="{% url 'utilizador:ativar' k.id %} " class="btn btn-success tip" title="Ativar a conta">
                                     <span class="icon-unlock"></span> </a>
-
-
-                                <a href="{% url 'utilizador:eliminar' list %} " class="btn btn-danger tip" title="Remover da lista">
+                                {% endif %} {% if user.email == '5' %}
+                                <a href="{% url 'utilizador:eliminar' k.id %} " class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
+                                {% endif %}
+
+
                             </td>
+                            {% if user.email == '5' %}
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                        Previlégios<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <li class="">
+                                            <a href="{% url 'utilizador:user-previlegio' k.id 1 %}" class="" title=""> Pessoal e Quadro
+                                             </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{% url 'utilizador:user-previlegio' k.id 2 %}" class="" title=""> Formação
+                                             </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{% url 'utilizador:user-previlegio' k.id 3 %}" class="" title=""> Transferência
+                                             </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{% url 'utilizador:user-previlegio' k.id 4 %}" class="" title=""> Gestor
+                                             </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{% url 'utilizador:user-previlegio' k.id 5 %}" class="" title=""> Administrador
+                                             </a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            {% endif %}
+
                         </tr>
                         {% endif %} {% endfor %} {% endfor %}
+
                     </tbody>
                 </table>
 
+                <p>
+                </p>
             </div>
         </div>
 

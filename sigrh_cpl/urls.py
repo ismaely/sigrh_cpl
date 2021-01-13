@@ -19,23 +19,26 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 # from django.shortcuts import render
-from header.views_core import custom_404, custom_500, custom_403, custom_504
-
-
+from django.conf.urls import (
+    handler400, handler403, handler404, handler500
+)
+import utilizador
+#from header.views_core import custom_404, custom_500, custom_403, custom_504
 
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path('pessoal_quadro/', include('pessoal_quadro.urls')),
     path('', include('utilizador.urls')),
+    path('pessoal_quadro/', include('pessoal_quadro.urls')),
     path('transferencia/', include('transferencia.urls')),
     path('formacao/', include('formacao.urls')),
     path('documentacao/', include('documentacao.urls')),
     path('estatistica/', include('estatistica.urls')),
-    #path('robots.txt/', lambda r: HttpResponse("User-agent: *\nDisallow", content_type="text/plain")),
-] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+
+    path('robots.txt/', lambda x: HttpResponse("User-Agent: *\nDisallow",
+                                               content_type="text/plain"), name="robots_file"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-#handler404 = custom_404
-
-#handler500 = custom_500
+#handler404 = 'utilizador.views.handler404'
+#handler500 = 'utilizador.views.handler500'

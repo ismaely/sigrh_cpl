@@ -6,6 +6,7 @@ from header.validators import consultar_bi_existe, validar_comprimento_4, valida
 from formacao.models import Selecionado_formacao, Formacao_conclusao
 from pessoal_quadro.models import Agente, Pessoa
 import sweetify
+import header
 
 
 class SelecionarForm(ModelForm):
@@ -22,7 +23,13 @@ class SelecionarForm(ModelForm):
         model = Selecionado_formacao
         fields = ['curso', 'dispacho', 'data', 'dispacho','razao_posse', 'instituicao', 'pais']
 
-
+    def clean_bi(self):
+        bi = header.views_core.retorna_numero_bi(self.cleaned_data.get('bi')) 
+        if bi > 0:
+            return bi
+        else:
+            raise forms.ValidationError(" O numero não é valido")
+    
 
 
 class FormacaoConlusao_Form(ModelForm):

@@ -109,6 +109,11 @@
         $(document).ready(function() {
             $(":input").inputmask();
         });
+        $(function() {
+            $('.maiuscula').keyup(function() {
+                this.value = this.value.toLocaleUpperCase();
+            });
+        });
     </script>
 
     {% block javascript %}

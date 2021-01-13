@@ -7,8 +7,9 @@
 
 
 
-var total_transfe = $('#total_transfe').text();
-var total_troca = $('#total_troca').text();
+var masculino = $('#total_transfe_masculino').text();
+var femenino = $('#total_transfe_femenino').text();
+var total = $('#total_transferencia').text();
     Highcharts.chart('trans_container', {
         chart: {
             type: 'pie',
@@ -21,9 +22,7 @@ var total_troca = $('#total_troca').text();
         title: {
             text: 'Estatistica de Transferência e Troca'
         },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
+       
         plotOptions: {
             pie: {
                 allowPointSelect: true,
@@ -31,28 +30,31 @@ var total_troca = $('#total_troca').text();
                 depth: 35,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                }
+                    format: '<b>{point.name}</b>:{point.y} ({point.percentage:.1f} %)',
+                },
+                showInLegend: true
+                
             }
         },
 
         series: [{
             name: 'Percentagem',
             colorByPoint: true,
-            data: [{
-                name: 'Transferência',
-                y: Number(total_transfe),
+            data: [
+                {
+                name: 'Masculino',
+                y: Number(masculino),
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Trocas',
-                y: Number(total_troca),
+                },
+                {
+                name: 'Femenino',
+                y: Number(femenino),
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Agentes',
-                y: 10.85
-            }]
+                }
+               
+            ]
         }]
 
     });

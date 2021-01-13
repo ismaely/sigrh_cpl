@@ -27,6 +27,10 @@
                             <td> {{ doc.data_entrada }}</td>
                             <td> {{ doc.descricao| truncatewords:"10" }}</td>
                             <td>
+                                <a href="{% url 'documentacao:visualizar-documentos' doc.id %}" class="btn btn-success tip" title="Visualizar o Documento" target="_blank">
+                                    <span class="icon-user"></span>
+                                </a>
+                                {% if user.email == '5' or user.email == '4' %}
                                 <a href="{% url 'transferencia:atualizar-documento' doc.id %}" class="btn btn-primary tip" title="Editar os Dados">
                                     <i class="icon-edit"></i>
                                 </a>
@@ -34,6 +38,7 @@
                                 <a href="{% url 'transferencia:eliminar-documento' doc.id %}" class="btn btn-danger tip" title="Remover da lista">
                                     <i class="icon-trash"></i>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

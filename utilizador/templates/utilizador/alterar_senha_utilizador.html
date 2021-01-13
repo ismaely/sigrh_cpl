@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+@File   : alterar_senha_utilizador.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 14/08/2019, 17:43:31
+-->
+{% extends 'utilizador/menu_perfil.html' %} {% block corpo %} {% load static %}
+
+
+<body class="">
+
+    <div class="container">
+
+        <div class="login-block">
+            <div class="block block-transparent">
+                <!-- <div class="head">
+
+                    <div class="user">
+                        <div class="info">
+                            <img src="{% static '/asset/img/poli5.png' %}" width="180px" class="img-circle img-thumbnail" />
+                            <div class="user-change-button">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>-->
+                {% if messages %}
+                <div class="block container">
+                    <div class="alert alert-danger">
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+
+                                </li>
+                                {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="content controls npt">
+                    <form action="{% url 'utilizador:alterar-senha-utilizador' id %}" method="post">
+                        {% csrf_token %} {% autoescape on %}
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-key"></span>
+                                    </div>
+                                    password Antiga: {{ form.antigaSenha }} {{ form.antigaSenha.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-key"></span>
+                                    </div>
+                                    Nova Password: {{ form.senhaNova }} {{ form.senhaNova.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="icon-key"></span>
+                                    </div>
+                                    Confirma a Password {{ form.confirmaSenha }} {{ form.confirmaSenha.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-block"><span class="icon"></span> &nbsp; Enviar</button>
+
+                            </div>
+                        </div>
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+
+{% endblock %}

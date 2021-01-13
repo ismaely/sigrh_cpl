@@ -6,61 +6,59 @@
 -->
 {% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
 <div class="">
-    <div class="">
-        <div class="block">
-            <div class="header">
-                <h2><b> Lista de Processos Disciplinar </b></h2>
-            </div>
-            <div class="content">
-                <table id="example" class="table table-bordered table-striped  datatable-example">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>Nº Processo</th>
-                            <th>Data</th>
-                            <th>Motivo</th>
-                            <th>Pena</th>
-                            <th>Patente</th>
-                            <th>Acção</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+  <div class="">
+    <div class="block">
+      <div class="header">
+        <h2><b> Lista de Processos Disciplinar </b></h2>
+      </div>
+      <div class="content">
+        <table id="example" class="table table-bordered table-striped datatable-example">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Nº Processo</th>
+              <th>Data</th>
+              <th>Motivo</th>
+              <th>Pena</th>
+              <th>Patente</th>
+              <th>Acção</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for list in lista %}
+            <tr>
+              <td>
+                <a><img src="/media/{{ list.agente.foto_fardado }}" width="38px" class="img-circle" /> </a>
+              </td>
 
-                        {% for list in lista %}
-                        <tr>
-                            <td>
-                                <a><img src="/media/{{ list.agente.foto_fardado }}" width=38px class="img-circle ">
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ list.agente.pessoa.nome|capfirst|safe }}
-                            </td>
-                            <td>{{ list.numero_processo }}</td>
-                            <td>{{ list.data }}</td>
-                            <td class="">{{ list.motivo }}</td>
-                            <td> {{ list.pena }}</td>
-                            <td>{{ list.agente.patente|safe|upper }}</td>
-                            <td>
-                                <a href="{% url 'pessoal_quadro:pessoal-informacao' list.id %}" class="btn btn-success tip" title="Visualizar o Processo">
-                                    <span class="icon-user"></span>
-                                </a>
-
-
-                                <a onclick=eliminar_processoDisciplinar({{ list.id }}) class="btn btn-danger tip" title="Eliminar o Processo">
-                                    <i class="icon-trash"></i>
-                                </a>
-                            </td>
-
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
+              <td>{{ list.agente.pessoa.nome|capfirst|safe|upper }}</td>
+              <td>{{ list.numero_processo }}</td>
+              <td>{{ list.data }}</td>
+              <td class="">{{ list.motivo|safe|upper }}</td>
+              <td>{{ list.pena|safe|upper }}</td>
+              <td>{{ list.agente.patente|safe|upper }}</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">Acção <span class="caret"></span></button>
+                  <ul class="dropdown-menu lista" role="menu">
+                    <li class="">
+                      <a href="{% url 'pessoal_quadro:pessoal-informacao' list.id %}" class="btn btn-success tip" title="Visualizar o Processo"> Ver Processo </a>
+                    </li>
+                    {% if user.email == '5' %}
+                    <li>
+                      <a onclick="eliminar_processoDisciplinar({{ list.id }})" class="btn btn-danger tip" title="Eliminar o Processo"> Eliminar o Processo </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

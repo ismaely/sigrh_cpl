@@ -31,6 +31,7 @@ TEMPLATE_PESSOAQUADRO = {
     'disciplina': 'pessoal_quadro/registar_disciplina.html', 
     'lista_discip': 'pessoal_quadro/listar_disciplina.html',
     'info_processo': 'pessoal_quadro/informacao_processoDisciplinar.html',
+    'listar_falecimento': 'pessoal_quadro/listar_falecimento.html',
 }
 
 """ Rotas e templeate do modulo utilizador """
@@ -52,6 +53,7 @@ TEMPLATE_UTILIZADOR = {
     'listar': 'utilizador/listar_utilizador.html',
     'troca_padrao': 'utilizador/troca_senhaPadrao.html',
     'mensagem': 'header/mensagem.html',
+    'senha_utilizador': 'utilizador/alterar_senha_utilizador.html',
 }
 
 """ Rotas e templeate do modulo documento """
@@ -90,7 +92,7 @@ TEMPLATE_ORGAO = {
 """ Rotas e templeate do modulo transferencia """
 TEMPLATE_TRANSFERENCIA = {
     'transferencia': 'transferencia/adicionar_transferencia.html',
-    'listar_pedido': 'transferencia/listar_transferencia.html',
+    'listar_pedido': 'transferencia/listar_pedido_transferencia.html',
     'listar_troca': 'transferencia/listar_troca.html',
     'consultar': 'transferencia/consulta.html',
     'consultar_doc': 'transferencia/consultar_docs.html',
@@ -98,13 +100,14 @@ TEMPLATE_TRANSFERENCIA = {
     'transferido': 'transferencia/listar_pessoal_transferido.html',
     'docs': 'transferencia/registar_documento.html',
     'listar_docs': 'transferencia/listar_documento.html',
+    'mensagem': 'transferencia/mensagem.html',
 }
 
 
 TEMPLATE_ESTATISTICA = {
     'estat_transfer': "estatistica/estatistica_transferencia.html",
     'menu': "estatistica/menu2.html",
-    'normal': "estatistica/normal_pdf.html",
+    'transferencia_pdf': "estatistica/transferencia_pdf.html",
     'academico': "estatistica/nivel_academico_pdf.html",
     'reforma': "estatistica/reforma_pdf.html",
     'baixa': "estatistica/baixa_pdf.html",
@@ -115,4 +118,9 @@ TEMPLATE_ESTATISTICA = {
     'estat_baixa': "estatistica/estat_baixas.html",
     'selecionado': "estatistica/estat_selecionado.html",
     'conclusao': "estatistica/estat_conclusao.html",
+    'menu_transfer': "estatistica/menu_estat_transferencia.html",
+    'menu_baixa': "estatistica/menu_estat_baixa.html",
+    'menu_reforma': "estatistica/menu_estat_reforma.html",
+    'menu_selecionado': "estatistica/menu_estat_selecionado.html",
+    'menu_conclusao': "estatistica/menu_estat_conclusao.html",
 }

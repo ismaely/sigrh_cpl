@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 import validators
-from pessoal_quadro.models import Agente, Pessoa, Nomiacao_Cargo, Baixa
+from pessoal_quadro.models import Agente, Pessoa, Nomiacao_Cargo, Baixa, Reforma
 from formacao.models import Selecionado_formacao, Formacao_conclusao
 from transferencia.models import Transferencia, Troca
 from django.contrib import messages
@@ -8,8 +8,78 @@ import sweetify
 import re
 from django.contrib.auth.decorators import login_required
 import header
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 
 
+def verficarAcessoAdmin(request):
+    if request.user.email != '5':
+        return True
+
+
+def verficarAcessoAdminGestor(request):
+    if request.user.email != '5' and request.user.email != '4':
+        return True
+
+
+def verficarAcessoPessoalQuadro(request):
+    if request.user.email != '5' and request.user.email != '4' and request.user.email != '1':
+        return True
+
+
+def verficarAcessoFormacao(request):
+    if request.user.email != '5' and request.user.email != '4' and request.user.email != '2':
+        return True
+
+
+def verficarAcessoTransferencia(request):
+    if request.user.email != '5' and request.user.email != '4' and request.user.email != '3':
+        return True
+
+
+def validar_baixa(request):
+    try:
+        bix = header.views_core.retorna_numero_agente(request.POST['bi'])
+        bx = Baixa.objects.get(agente_id=bix)
+        if bx.motivo_baixa == 'Reforma' or bx.motivo_baixa == 'Falecimento':
+            #messages.warning(request," Não pode! ja existe uma baixa com as mesma carateristica..")
+            foto = str(bx.agente.foto_fardado)
+            sweetify.error(request, 'Não pode! ja existe uma baixa com as mesma carateristica!...',
+                           imageUrl='../static/asset/img/user.jpg',  persistent='Ok', timer='4000')
+            return False
+        else:
+            return True
+    except Exception as e:
+        return True
+
+
+def validar_reforma_anticipada(request):
+    try:
+        bix = header.views_core.retorna_numero_agente(request.POST['bi'])
+        ref = Reforma.objects.get(agente_id=bix)
+        if ref.reforma == 'Anticipada':
+            messages.warning(request, " Não pode! ja existe na reforma..")
+            return False
+        else:
+            return True
+    except Exception as e:
+        try:
+            bai = Baixa.objects.get(agente_id=bix)
+            if bai.motivo_baixa == 'Falecimento':
+                messages.warning(
+                    request, " O agente é falecido, não pode ser adicionado..")
+                return False
+            elif bix > 0:
+                return True
+            else:
+                return False
+        except Exception as e:
+            if bix > 0:
+                return True
+            else:
+                messages.warning(request, " O Nip ou o Nº BI não é valido..")
+                return False
 
 
 def validar_pedido_transferencia(request):
@@ -18,51 +88,52 @@ def validar_pedido_transferencia(request):
         bix = header.views_core.retorna_numero_agente(bi)
         bis = Transferencia.objects.get(agente_id=bix)
         if bis.id is not None:
-            messages.warning("Ja existe uma transferencia a espera com esses dados....")
+            messages.warning(
+                "Ja existe uma transferencia a espera com esses dados....")
             return False
     except Transferencia.DoesNotExist:
         return True
 
 
 def validar_selecionar_formacao(request):
-        bi = request.POST['bi']
-        id = header.views_core.retorna_numero_agente(bi)
-        try:
-            seleciona = Selecionado_formacao.objects.get(agente_id=id)
-            if seleciona.id is not None:
-                #messages.warning(request, 'O agente ja existe na lista selecionado para uma formação, Para continuar deve remover da lista ...')
-                sweetify.error(request, 'O agente ja existe na lista, selecionado para uma formação, para continua deve ser removido da lista.......', button='Ok', timer='6100')
-                return False
-        except Selecionado_formacao.DoesNotExist:
-            return True
+    bi = request.POST['bi']
+    id = header.views_core.retorna_numero_agente(bi)
+    try:
+        seleciona = Selecionado_formacao.objects.get(agente_id=id)
+        if seleciona.id is not None:
+            #messages.warning(request, 'O agente ja existe na lista selecionado para uma formação, Para continuar deve remover da lista ...')
+            sweetify.error(
+                request, 'O agente ja existe na lista, selecionado para uma formação, para continua deve ser removido da lista....', persistent='Ok', timer='6000')
+            return False
+    except Selecionado_formacao.DoesNotExist:
+        return True
 
 
-def verficar_falecimento(request, value = None):
+def verficar_falecimento(request, value=None):
     try:
         baixa = Baixa.objects.get(agente_id=value)
         if baixa.motivo_baixa == 'Falecimento':
-            messages.warning(request, 'Não pode adicionar o agente; O agente ja é falecido')
+            messages.warning(
+                request, 'Não pode adicionar o agente; O agente ja é falecido')
             return False
         else:
             return True
     except Baixa.DoesNotExist:
         return True
-    
-
 
 
 def validar_conclusao_formacao(request):
-        bi = request.POST['bi']
-        #pessoa = Pessoa.objects.get(bi=bi.upper())
-        agente = header.views_core.retorna_numero_agente(bi)
-        try:
-            seleciona = Selecionado_formacao.objects.get(agente_id=agente)
-            if seleciona.id is not None:
-                return True
-        except Selecionado_formacao.DoesNotExist:
-            messages.warning(request, 'O agente não existe na lista dos selecionados, não pode ser adicionado a conclusão da formação ...')
-            return False
-
+    bi = request.POST['bi']
+    #pessoa = Pessoa.objects.get(bi=bi.upper())
+    agente = header.views_core.retorna_numero_agente(bi)
+    try:
+        seleciona = Selecionado_formacao.objects.get(agente_id=agente)
+        if seleciona.id is not None:
+            return True
+    except Selecionado_formacao.DoesNotExist:
+        messages.warning(
+            request, 'O agente não existe na lista dos selecionados, não pode ser adicionado a conclusão da formação ...')
+        return False
 
 
 def validar_data_nascimento_igresso_colocacao(request):
@@ -72,15 +143,18 @@ def validar_data_nascimento_igresso_colocacao(request):
     nascimento = nascimento.split("-")
     igresso = igresso.split("-")
     colocacao = colocacao.split("-")
-    igress = int (igresso[0]) - int (nascimento[0])
+    igress = int(igresso[0]) - int(nascimento[0])
     if nascimento[0] > igresso[0] or nascimento[0] > colocacao[0]:
-        messages.warning(request, ' O ano de nascimento não poder ser maior que ano de igresso, nem ano de Colocação....')
+        messages.warning(
+            request, ' O ano de nascimento não poder ser maior que ano de igresso, nem ano de Colocação....')
         return False
     elif igresso[0] > colocacao[0] or igress < 18:
-        messages.warning(request, ' a data de igresso não é valida pelo ano de Colocação....')
+        messages.warning(
+            request, ' a data de igresso não é valida pelo ano de Colocação....')
         return False
     elif igress < 18:
-        messages.warning(request, ' A data de igresso diz que vc é menor de idade, na data de nascimento....')
+        messages.warning(
+            request, ' A data de igresso diz que vc é menor de idade, na data de nascimento....')
         return False
     else:
         return True
@@ -96,26 +170,28 @@ def verficar_bi_numero_agente(request):
             if agente.pessoa_id == pessoa.id:
                 return True
             else:
-                messages.warning(request, ' O Bi e o numero de agente não pertence a mesma pessoa...')
+                messages.warning(
+                    request, ' O Bi e o numero de agente não pertence a mesma pessoa...')
                 return False
     except Pessoa.DoesNotExist:
-        messages.warning(request, ' Não existe agente com esse numero de bi e numero de agente...')
+        messages.warning(
+            request, ' Não existe agente com esse numero de bi e numero de agente...')
         return False
 
 
-
-#FUNÇÃO QUE VALIDA SE O BI EXISTE E RETORNA ERRO SE EXISTIR CASO CONTRAIO TRUE
+# FUNÇÃO QUE VALIDA SE O BI EXISTE E RETORNA ERRO SE EXISTIR CASO CONTRAIO TRUE
 def consultar_bi(value):
     try:
         bi = Pessoa.objects.get(bi=value.upper())
         if bi.bi is not None:
-            raise ValidationError("Ja existe agente com esse numero de bi no sistema ")
-            #return False
+            raise ValidationError(
+                "Ja existe agente com esse numero de bi no sistema ")
+            # return False
     except Pessoa.DoesNotExist:
         return True
 
 
-#FUNÇÃO QUE VALIDA SE O BI OU NIP SE EXISTE E RETORNA TRUE SE EXISTE , CASO CONTRARIO ERRO
+# FUNÇÃO QUE VALIDA SE O BI OU NIP SE EXISTE E RETORNA TRUE SE EXISTE , CASO CONTRARIO ERRO
 def consultar_bi_existe(value):
     try:
         bis = Pessoa.objects.get(bi=value.upper())
@@ -134,11 +210,11 @@ def consultar_bi_existe(value):
             except Pessoa.DoesNotExist:
                 try:
                     agente = Agente.objects.filter(nip=value)
-                    if len(agente) >  0:
+                    if len(agente) > 0:
                         return True
                 except Agente.DoesNotExist:
-                    raise ValidationError("Numero do Nip ou Bi, Não existe....")
-
+                    raise ValidationError(
+                        "Numero do Nip ou Bi, Não existe....")
 
 
 def consultar_bi_True_False(value):
@@ -150,18 +226,16 @@ def consultar_bi_True_False(value):
         return (False, None)
 
 
-
-
-#@login_required
+# @login_required
 def consultar_numero_agente(value):
     try:
         ng = Agente.objects.get(numero_agente=value)
     except Agente.DoesNotExist:
-        raise ValidationError(" Não existe agente com esse numero no sistema.!")
+        raise ValidationError(
+            " Não existe agente com esse numero no sistema.!")
 
 
-
-#@login_required
+# @login_required
 def validar_comprimento_4(value):
     if value is None or len(value) < 4:
         raise ValidationError(
@@ -170,7 +244,7 @@ def validar_comprimento_4(value):
         )
 
 
-#@login_required
+# @login_required
 def validar_email(value):
     if not validators.email(value):
         raise ValidationError(
@@ -179,7 +253,7 @@ def validar_email(value):
         )
 
 
-#função que esta validar o BI e o nip do agente
+# função que esta validar o BI e o nip do agente
 def validar_bi(value):
     try:
         numero = 0
@@ -219,8 +293,8 @@ def validar_bi(value):
                 xl = xl + 1
     except IndexError:
         raise ValidationError(
-                ('O numero do Bi não é valido.! erro'),
-            )
+            ('O numero do Bi não é valido.! erro'),
+        )
 
 
 def validar_comprimento_3(value):
@@ -245,7 +319,7 @@ def validar_string(value):
         )
 
 
-#VALIDAR CAIXA SOCIAL   
+# VALIDAR CAIXA SOCIAL
 def validar_numero_caixa_social(value):
     try:
         valor = Agente.objects.get(numero_caixa_social=value)

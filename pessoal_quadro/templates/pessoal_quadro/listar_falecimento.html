@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+@File   : listar_falecimento.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 04/07/2019, 03:14:28
+-->
+{% extends 'pessoal_quadro/menu_pessoal.html' %} {% load static %} {% block corpo %}
+<div class="">
+    <div class="">
+        <div class="block">
+            <div class="header">
+                <h2><b> Lista de agente Falecidos</b></h2>
+            </div>
+            <div class="content">
+                <table id="example" class="table table-bordered table-striped  datatable-example">
+                    <thead>
+                        <tr>
+                            <th>-#-</th>
+                            <th>Nome</th>
+                            <th>Genero</th>
+                            <th>Cimiteiro</th>
+                            <th>Número da Campa</th>
+                            <th>Data</th>
+                            <th> Patente</th>
+                            <th> Acção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for bax in lista %}
+                        <tr>
+                            <td>
+                                <a><img src="/media/{{ bax.agente.foto_fardado }}" width=38px class="img-circle ">
+
+                                </a>
+                            </td>
+                            <td>
+                                {{ bax.agente.pessoa.nome|capfirst|safe|safe|upper }}
+                            </td>
+                            <td>{{ bax.agente.pessoa.genero|striptags|capfirst|safe|upper }}</td>
+                            <td>{{ bax.cimiteiro|striptags|capfirst|safe|upper }}</td>
+                            <td>{{ bax.numero_campa }}</td>
+                            <td>{{ bax.data_enterro}}</td>
+                            <td>{{ bax.agente.patente|safe|upper }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown">
+                                    Acção <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu lista" role="menu">
+                                        <!--
+                                        <li>{% if user.email == 'Gestor' %}
+                                            <a onclick=eliminar_baixas({{ bax.id }}) class="btn btn-danger tip" title="Remover da lista">
+                                             Eliminar
+                                            </a> {% endif %}
+                                        </li>
+                                        -->
+
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

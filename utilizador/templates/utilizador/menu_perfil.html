@@ -1,0 +1,86 @@
+{% extends 'base_salakiaku.html' %}{% block menu %}{% load static %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-md-12">
+
+            <nav class="navbar brb" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-reorder"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'utilizador:areas-servico' %}"><img src="{% static '/asset/img/poli5.png' %}" width="35px" class="img-circle" /></a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#">
+                                <span class="icon-home"></span> SALAKIAKU
+                            </a>
+                        </li>
+
+
+                        <!--
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> ÁREAS DE TRABALHO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'estatistica:area' %}"> ESTATÍSTICA</a></li>
+                                <li><a href="{% url 'transferencia:area-transferencia' %}">TRANSFERÊNCIA</a></li>
+                                <li><a href="{% url 'formacao:area-formacao' %}">FORMAÇÃO</a></li>
+                                <li><a href="{% url 'pessoal_quadro:area-pessoal-quadro' %}">PESSOAL E QUADRO</a></li>
+
+                            </ul>
+                        </li>
+                        -->
+                    </ul>
+
+
+                    <div class="navbar-header navbar-right dropdown">
+                        <a class=" dropdown-toggle" data-toggle="dropdown" href="#">
+
+                           {{ user.username }}
+
+                            <img src="/media/{{ fotos.foto_fardado }}" width="35px" class="img-circle " />
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'utilizador:perfil-utilizador' %}">Perfil</a></li>
+                        <li><a href="{% url 'utilizador:sair' %}">Sair</a></li>
+
+                        </ul>
+                        </a>
+                    </div>
+                </div>
+
+            </nav>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block block-drop-shadow">
+                {% block corpo %} {% endblock %}
+            </div>
+        </div>
+
+    </div>
+    &nbsp;&nbsp;
+    <div class="row">
+        <div class="col-lg-12">
+            &nbsp;
+            <p>
+
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

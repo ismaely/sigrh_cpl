@@ -1,0 +1,86 @@
+<!--
+@File   : normal_pdf.html
+@Author : Gunza Ismael ({__email})
+@Link   : 
+@Date   : 2018-10-25 05:33:33
+-->
+{% extends 'estatistica/menu_estatistica.html' %} {% block corpo %}
+
+<div class="user">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-6">
+            <div class="block block-fill ">
+                <div class="header">
+                    <p></p>
+                    <h4><b><span class="icon-file-text"></span>  Criar lista nominal de Transferência</b> </h4>
+                </div>
+
+                <div class="content controls container">
+                    {% if messages %}
+                    <p>
+                        <div class="block">
+                            <div class="alert alert-danger">
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="danger {{ message.tags }}" {% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        </div>
+                    </p>
+                    {% endif %}
+                    <form class="" action="{% url 'estatistica:transferencia_lista' %}" method="POST" target="_blank">
+                        {% csrf_token %} {% autoescape on %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <b>Titulo da Lista:</b> {{ normal.titulo }} {{ normal.titulo.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6"><b>Patente do Agente</b> {{ normal.patente }} {{ normal.patente.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Genero</b> {{ normal.genero }} {{ normal.genero.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Data</b> {{ normal.data }} {{ normal.data.errors }}
+                            </div>
+                            <div class="col-md-6"><b>Data final</b> {{ normal.data_final }} {{ normal.data_final.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <b>Descrição:</b> {{ normal.descricao }} {{ normal.descricao.errors }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="col-md-5">
+                                </div>
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary " type="submit">Criar</button>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {% endautoescape %}
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

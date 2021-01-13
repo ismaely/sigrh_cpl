@@ -1,0 +1,45 @@
+ {% extends 'base.html' %} {% block titulo %}
+
+<title>
+    SALAKIAKU(SIGRH-CPL)
+</title>
+
+{% endblock %} {% block corpo %} {% load static %}
+
+
+<body class="bg-img-num1">
+
+    <div class="container">
+
+        <div class="registration-block">
+            <div class="block block-transparent">
+
+                &nbsp;&nbsp; &nbsp; &nbsp;
+
+                <div class="content controls npt">
+                    <div class="head tac">
+                        <a href="{% url 'utilizador:login' %}">
+                            <img src="{% static '/asset/img/acesso1.png' %}" title="LOGIN NO SISTEMA" width="260px" height="260px" class="img-circle " alt="Login utilizado">
+                        </a>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 tac">
+                        <p>
+                            <!-- TRABALHA O QUÉ É TEU # SALAKIAKU -->
+                            <h2 class="red"> <strong>AVISO</strong> </h2>
+                        </p>
+                        <p>
+                            <h2><b>ACESSO NEGADO!.. A sua conta sera bloquiado, se tentar outra vez....</b> </h2>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+{% endblock %}

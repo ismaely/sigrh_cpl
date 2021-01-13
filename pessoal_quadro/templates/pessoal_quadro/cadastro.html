@@ -37,7 +37,7 @@
                         </div>
                     </p>
                     {% endif %} {% if pessoa %}
-                    <form action="{% url 'pessoal_quadro:editar-cadastro' pessoa.id %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
+                    <form action="{% url 'pessoal_quadro:editar-cadastro' pessoa %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
                         {% else %}
                         <form action="{% url 'pessoal_quadro:cadastrar' %}" method="POST" enctype="multipart/form-data" id="wizard_validate">
                             {% endif %} {% csrf_token %} {% autoescape on %}
@@ -45,7 +45,7 @@
                                 <legend></legend>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Nome completo *:</b> {{ form.nome }} {{ form.nome.errors }}
+                                        <b>Nome completo<span class="error">*</span>:</b> {{ form.nome }} {{ form.nome.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-4"><b>Data de Nascimento *:</b>
+                                    <div class="col-md-4"><b>Data de Nascimento<span class="error">*</span>:</b>
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-calendar"></span></div>
                                             {{ form.data_nascimento }} {{ form.data_nascimento.errors }}
@@ -68,7 +68,7 @@
 
 
                                     <div class="col-md-4">
-                                        <b>Género *:</b> {{ form.genero }} {{ form.genero.errors }}
+                                        <b>Género <span class="error">*</span>:</b> {{ form.genero }} {{ form.genero.errors }}
                                     </div>
                                     <div class="col-md-4">
                                         <b>Estado Civil:</b> {{ form.estado_civil }} {{ form.estado_civil.errors }}
@@ -76,10 +76,10 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Província *:</b> {{ form.provincia }} {{ form.provincia.errors }}
+                                        <b>Província<span class="error">*</span>:</b> {{ form.provincia }} {{ form.provincia.errors }}
                                     </div>
                                     <div class="col-md-4">
-                                        <b>BI Nº *:</b> {{ form.bi }} {{ form.bi.errors }}
+                                        <b>BI Nº<span class="error">*</span>:</b> {{ form.bi }} {{ form.bi.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -89,11 +89,11 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Residência:</b> {{ form.residencia }} {{ form.residencia.errors }}
+                                        <b>Residência <span class="error">*</span>:</b> {{ form.residencia }} {{ form.residencia.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Telefone *:</b> {{ form.telefone }} {{ form.telefone.errors }}
+                                        <b>Telefone<span class="error">*</span>:</b> {{ form.telefone }} {{ form.telefone.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
@@ -109,15 +109,18 @@
 
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <b>Número de Contribuite (NIF) *:</b> {{ form2.numero_contribuite}} {{ form2.numero_contribuite.errors }}
+                                        <b>Orgão de Colocação:</b> {{ form3.orgao_colocacao }} {{ form3.orgao_colocacao.errors }}
+                                        <!--
+                                                                                <b>Número de Contribuite (NIF)<span class="error">*</span>:</b> {{ form2.numero_contribuite}} {{ form2.numero_contribuite.errors }}
                                         <span class="error" style="display:none"> </span>
+                                        -->
                                     </div>
                                     <div class="col-md-4">
                                         <b>Número da Caixa Social:</b> {{ form2.numero_caixa_social }} {{ form2.numero_caixa_social.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Nível Acádemico *:</b> {{ form2.nivel_academico }} {{ form2.nivel_academico.errors }}
+                                        <b>Nível Acádemico <span class="error">*</span>:</b> {{ form2.nivel_academico }} {{ form2.nivel_academico.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
 
@@ -133,7 +136,7 @@
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Patente *:</b> {{ form2.patente }} {{ form2.patente.errors }}
+                                        <b>Patente<span class="error">*</span>:</b> {{ form2.patente }} {{ form2.patente.errors }}
                                     </div>
 
 
@@ -141,15 +144,15 @@
                                 <div class="form-row">
 
                                     <div class="col-md-4">
-                                        <b>Número de Agente *:</b> {{ form2.numero_agente }} {{ form2.numero_agente.errors }}
+                                        <b>Número de Agente <span class="error">*</span>:</b> {{ form2.numero_agente }} {{ form2.numero_agente.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Nip *:</b> {{ form2.nip }} {{ form2.nip.errors }}
+                                        <b>Nip<span class="error">*</span>:</b> {{ form2.nip }} {{ form2.nip.errors }}
                                         <span class="error" style="display:none"> </span>
                                     </div>
 
-                                    <div class="col-md-4"><b>Data de Ingresso *:</b>
+                                    <div class="col-md-4"><b>Data de Ingresso <span class="error">*</span>:</b>
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-calendar"></span></div>
                                             {{ form2.data_igresso }} {{ form2.data_igresso.errors }}
@@ -160,13 +163,13 @@
 
 
                                 </div>
+                                <!--
                                 <div class="form-row">
                                     <div class="col-md-4">
                                         <b>Orgão de Colocação:</b> {{ form3.orgao_colocacao }} {{ form3.orgao_colocacao.errors }}
                                     </div>
-
-
                                 </div>
+                                -->
 
                             </fieldset>
                             <fieldset title="3ª Passo">

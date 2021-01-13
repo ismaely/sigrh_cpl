@@ -5,14 +5,14 @@
 @Link   : 
 @Date   : 2018-10-29 18:17:24
 -->
-{% extends 'pessoal_quadro/menu_pessoal.html' %} {% block corpo %} {% load static %}
+{% extends 'utilizador/menu_perfil.html' %} {% block corpo %} {% load static %} {% load helpUtilizador %}
 
 
 <div class=" col-md-3">
     <div class="block block">
 
         <div class="user bg-default info">
-            <img src="{% static '/asset/img/user.jpg' %}" width="90px" class="img-circle img-thumbnail" />
+            <img src="/media/{{ fotos.foto_fardado }}" width="90px" class="img-circle img-thumbnail" />
             <img src="{% static '/asset/img/user.jpg' %}" width="90px" class="img-circle img-thumbnail" />
         </div>
         <div class="content list-group">
@@ -45,13 +45,13 @@
                     <tbody>
                         <tr>
                             <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
+                            <td>{% retornaCategoria user.email %}</td>
                             <td>{{ user.date_joined|truncatechars:13 }}</td>
                             <td>
-                                <a onclick="mostra_informacaoPerfil()" class="btn btn-primary tip" title="Outra Informação">
-                                    <span class="icon-ok"></span>
+                                <a href="{% url 'utilizador:alterar-senha-utilizador' user.id %} " class="btn btn-primary tip" title="Editar a Senha">
+                                    <span class="icon-key"></span>
                                 </a>
-                                <a onclick="fecha_informacaoPerfil()" class="btn btn-warning tip" title="Fechar">
+                                <a href="{% url 'utilizador:desativar' user.id %}" class="btn btn-warning tip" title="Cancelar a Conta">
                                     <span class="icon-remove-circle"></span> </a>
 
                             </td>

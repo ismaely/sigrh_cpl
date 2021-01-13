@@ -43,9 +43,7 @@ var total_conclusao = $('#total_conclusao').text();
             data: [
                 ['Desistente', Number(total_desistente) ],
                 ['Aprovados', Number(total_aprovados) ],
-                ['Reprovados', Number(total_reprovado) ],
-                ['Bolsa Externa', Number(total_bolsaExterna) ],
-                ['Bolsa Interna', Number(total_bolsaInterna) ]
+                ['Reprovados', Number(total_reprovado) ]
             ]
         }]
 

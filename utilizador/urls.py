@@ -1,21 +1,28 @@
 from django.urls import path
 from . import views
+from hashlib import blake2b
 
 app_name ='utilizador'
 urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login_utilizador, name='login'),
     path('accounts/login/', views.login_utilizador, name='login'),
-    path('areas_servico/', views.areas_servico, name='areas-servico'),
-    path('sair/', views.sair, name='sair'),
-    path('adicionar_utilizador/', views.adicionar_Utilizador, name='adicionar-utilizador'),
-    path('perfil_utilizador/', views.perfil_utilizador, name='perfil-utilizador'),
-    path('listar_utilizador/', views.listar_utilizador, name='listar'),
-    path('ativar_conta/<int:id>/', views.ativar_conta, name='ativar'),
-    path('desativar_conta/<int:id>/', views.desativar_conta, name='desativar'),
-    path('eliminar_conta/<int:id>/', views.eliminar_conta, name='eliminar'),
-    path('redifinir_senha/<int:id>/', views.redifinir_senha, name='redifinir-senha'),
-    path('alterar_senha_padrao/<int:id>/', views.alterar_senha_padrao, name='alterar-senha-padrao'),
-    path('utilizador_home/', views.utilizador_home, name='home'),
+    path(blake2b(b'areas_servico').hexdigest()+'/', views.areas_servico, name='areas-servico'),
+    path(blake2b(b'sair').hexdigest()+'/', views.sair, name='sair'),
+    path(blake2b(b'adicionar_utilizador').hexdigest()+'/', views.adicionar_Utilizador, name='adicionar-utilizador'),
+    path(blake2b(b'perfil_utilizador').hexdigest()+'/', views.perfil_utilizador, name='perfil-utilizador'),
+    path(blake2b(b'listar_utilizador').hexdigest()+'/', views.listar_utilizador, name='listar'),
+    path(blake2b(b'ativar_conta').hexdigest()+'/<int:id>/', views.ativar_conta, name='ativar'),
+    path(blake2b(b'desativar_conta').hexdigest()+'/<int:id>/', views.desativar_conta, name='desativar'),
+    path(blake2b(b'eliminar_conta').hexdigest()+'/<int:id>/', views.eliminar_conta, name='eliminar'),
+    path(blake2b(b'redifinir_senha').hexdigest()+'/<int:id>/', views.redifinir_senha, name='redifinir-senha'),
+    path(blake2b(b'alterar_senha_padrao').hexdigest()+'/<int:id>/', views.alterar_senha_padrao, name='alterar-senha-padrao'),
+    path(blake2b(b'alterar_senha_utilizador').hexdigest()+'/<int:id>/', views.alterar_senha_utilizador, name='alterar-senha-utilizador'),
+    path(blake2b(b'user_previlegio').hexdigest()+'/<int:id>/<int:pk>/',
+         views.userPrevilegio, name='user-previlegio'),
+    path(blake2b(b'utilizador_home').hexdigest()+'/', views.utilizador_home, name='home'),
+    path('403/', views.response_error_handler403),
+    path('404/', views.permission_denied_handler404),
+    path('500/', views.server_error_handler500),
     # EXcel avançado---cpl
 ]
